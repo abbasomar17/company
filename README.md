@@ -14,11 +14,8 @@ And if you like this project then ADD a STAR ⭐️  to this project 👆
 
 ## Donate
 
-**[PayPal](https://bit.ly/support-vijay-thapa)**
 
-**[Buy me a Coffee  ☕️](https://www.buymeacoffee.com/vijaythapa)**
-
-**Donate by wire transfer:** E-Mail at *donate@vijaythapa.com* for wire transfer details. 
+**Donate by wire transfer:** E-Mail at *abbasoa17@gmail.com.com* for wire transfer details. 
 
 
 ## How to Install and Run this project?
@@ -70,12 +67,12 @@ $  source venv/bin/activate
 
 **3. Clone this project**
 ```
-$  git clone https://github.com/vijaythapa333/django-student-management-system.git
+$  git clone https://github.com/abbasoa17/company.git
 ```
 
 Then, Enter the project
 ```
-$  cd rent
+$  cd company
 ```
 
 **4. Install Requirements from 'requirements.txt'**
