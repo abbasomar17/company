@@ -13,7 +13,7 @@ django-material
 Pillow
 django-imagekit
 opencv-contrib-python
-zipfile
+zipfile36
 os
 uuid
 string
