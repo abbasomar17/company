@@ -1,0 +1,116 @@
+{% extends 'hod_template/base_template.html' %}
+
+{% block page_title %}
+    Manage Driver
+{% endblock page_title %}
+
+{% block main_content %}
+
+{% load static %}
+
+<section class="content">
+        <div class="container-fluid">
+
+            <a class="btn btn-primary" href="{% url 'add_user' %}" role="button">+ Add Driver</a> <br/>&nbsp;
+            
+            {% if messages %}
+                                <div class="form-group">
+                                <div class="col-12">
+                                    {% for message in messages %}
+                                    {% if message.tags == "error" %}
+                                        <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-top: 10px;">
+                                        {{ message }}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        </div>
+                                    {% elif message.tags == "success" %}
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-top: 10px;">
+                                        {{ message }}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        </div>
+                                    {% endif %}
+                                    {% endfor %}
+                                </div>
+                                </div>
+                                {% endif %}
+
+            <div class="row">
+
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Driver Details</h3>
+
+                            <div class="card-tools">
+                            <div class="input-group input-group-sm" style="width: 150px;">
+                                <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+
+                                <div class="input-group-append">
+                                <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body table-responsive p-0">
+                            <table class="table table-hover text-nowrap">
+                            <thead>
+                                <tr>
+                                <th>ID</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Address</th>
+                                <th>Gender</th>
+                                <th>Profile Picture</th>
+								<th>Mobile Number</th>
+								<th>Vehicle Type</th>
+								<th>Licence Number</th>
+                                <th>Last Login</th>
+                                <th>Date Joined</th>
+                                <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for driver in drivers %}
+                                <tr>
+                                <td>{{ driver.id }}</td>
+                                <td>{{ driver.admin.user.first_name }}</td>
+                                <td>{{ driver.admin.user.last_name }}</td>
+                                <td>{{ driver.admin.user.username }}</td>
+                                <td>{{ driver.admin.user.email }}</td>
+                                <td>{{ driver.working_address }}</td>
+                                <td>{{ driver.gender }}</td>
+                                <td> <img src="{{ driver.profile_picture }}" style="width: 100px; height: 100px;" /> </td>
+								<td>{{ driver.mobile_number }}</td>
+								<td>{{ driver.vehicle_type }}</td>
+								<td>{{ driver.lnumber }}</td>
+                                <td>{{ driver.updated_at }}</td>
+                                <td>{{ driver.created_at }}</td>
+                                <td>
+                                    <a href="{% url 'edit_user' driver.id %}" class="btn btn-success">Edit</a> 
+                                    <a href="{% url 'delete_user' driver.id %}" class="btn btn-danger">Delete</a>
+									<a href="{% url 'edit_notification_driver' driver.id %}" class="btn btn-success">Send Notification</a>
+                                </td>
+                                </tr>
+                                {% endfor %}
+                                
+                            </tbody>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                        </div>
+                    <!-- /.card -->
+
+                </div>
+            </div>
+
+        </div><!-- /.container-fluid -->
+      </section>
+
+  {% endblock main_content %}

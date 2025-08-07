@@ -1,0 +1,863 @@
+{% load static %}
+
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+      <!-- Brand Logo -->
+      <a href="{% url 'hr_home' %}" class="brand-link">
+        <img src="{% static 'dist/img/AdminLTELogo.png' %}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+            style="opacity: .8">
+        <span class="brand-text font-weight-light">General System</span>
+      </a>
+
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <!-- Sidebar user panel (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+          <div class="image">
+            <img src="{% static 'dist/img/user2-160x160.jpg' %}" class="img-circle elevation-2" alt="User Image">
+          </div>
+          <div class="info">
+            <a href="{% url 'hr_profile' %}" class="d-block">{{ user.first_name }} {{ user.last_name }}</a>
+          </div>
+        </div>
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <!-- Add icons to the links using the .nav-icon class
+                with font-awesome or any other icon font library -->
+
+            <li class="nav-item">
+              {% url 'hr_home' as hr_home %}
+              <a href="{{ hr_home }}" class="nav-link {% if request.path == hr_home %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  Home
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'hr_view_ceo_attendance' as hr_view_ceo_attendance %}
+              <a href="{{ hr_view_ceo_attendance }}" class="nav-link {% if request.path == hr_view_ceo_attendance %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  My CEO Meeting Attendances
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'hr_view_hr_attendance' as hr_view_hr_attendance %}
+              <a href="{{ hr_view_hr_attendance }}" class="nav-link {% if request.path == hr_view_hr_attendance %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  My HR Meeting Attendances
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'hr_view_hr_resp' as hr_view_hr_resp %}
+              <a href="{{ hr_view_hr_resp }}" class="nav-link {% if request.path == hr_view_hr_resp %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  My Responsibilities
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'hr_view_acc_resp' as hr_view_acc_resp %}
+              <a href="{{ hr_view_acc_resp }}" class="nav-link {% if request.path == hr_view_acc_resp %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  Accountant Responsibilities
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'hr_view_admin_resp' as hr_view_admin_resp %}
+              <a href="{{ hr_view_admin_resp }}" class="nav-link {% if request.path == hr_view_admin_resp %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  Admin Responsibilities
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'hr_view_cs_resp' as hr_view_cs_resp %}
+              <a href="{{ hr_view_cs_resp }}" class="nav-link {% if request.path == hr_view_cs_resp %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  CS Responsibilities
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'hr_view_law_resp' as hr_view_law_resp %}
+              <a href="{{ hr_view_law_resp }}" class="nav-link {% if request.path == hr_view_law_resp %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  Lawyer Responsibilities
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'hr_view_swo_resp' as hr_view_swo_resp %}
+              <a href="{{ hr_view_swo_resp }}" class="nav-link {% if request.path == hr_view_swo_resp %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  SWO Responsibilities
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'hr_view_ceo_resp' as hr_view_ceo_resp %}
+              <a href="{{ hr_view_ceo_resp }}" class="nav-link {% if request.path == hr_view_ceo_resp %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  CEO Responsibilities
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'hr_view_notification' as hr_view_notification %}
+              <a href="{{ hr_view_notification }}" class="nav-link {% if request.path == hr_view_notification %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  My Notification
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'hr_view_def_notification' as hr_view_def_notification %}
+              <a href="{{ hr_view_def_notification }}" class="nav-link {% if request.path == hr_view_def_notification %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  My DEF Notification
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'hr_view_acu_notification' as hr_view_acu_notification %}
+              <a href="{{ hr_view_acu_notification }}" class="nav-link {% if request.path == hr_view_acu_notification %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  My ACU Notification
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'hr_feedback' as hr_feedback %}
+              <a href="{{ hr_feedback }}" class="nav-link {% if request.path == hr_feedback %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                 Add Feedbacks
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'view_ceo' as view_ceo %}
+              <a href="{{ view_ceo }}" class="nav-link {% if request.path == view_ceo %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  CEOs
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'manage_law' as manage_law %}
+              {% url 'edit_law' law_id=id as edit_law %}
+              <a href="{{ manage_law }}" class="nav-link {% if request.path == manage_law %} active {% endif %} {% if request.path == edit_law %} active {% endif %}">
+                <i class="nav-icon fas fa-chalkboard-teacher"></i>
+                <p>
+                  Manage Lawyer
+                </p>
+              </a>
+            </li>
+            
+            <li class="nav-item">
+              {% url 'add_law' as add_law %}
+              <a href="{{ add_law }}" class="nav-link {% if request.path == add_law %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Add Lawyer
+                </p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              {% url 'manage_swo' as manage_swo %}
+              {% url 'edit_swo' swo_id=id as edit_swo %}
+              <a href="{{ manage_swo }}" class="nav-link {% if request.path == manage_swo %} active {% endif %} {% if request.path == edit_swo %} active {% endif %}">
+                <i class="nav-icon fas fa-chalkboard-teacher"></i>
+                <p>
+                  Manage SWO
+                </p>
+              </a>
+            </li>
+            
+            <li class="nav-item">
+              {% url 'add_swo' as add_swo %}
+              <a href="{{ add_swo }}" class="nav-link {% if request.path == add_swo %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Add SWO
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'manage_cs' as manage_cs %}
+              {% url 'edit_cs' cs_id=id as edit_cs %}
+              <a href="{{ manage_cs }}" class="nav-link {% if request.path == manage_cs %} active {% endif %} {% if request.path == edit_cs %} active {% endif %}">
+                <i class="nav-icon fas fa-chalkboard-teacher"></i>
+                <p>
+                  Manage CS
+                </p>
+              </a>
+            </li>
+            
+            <li class="nav-item">
+              {% url 'add_cs' as add_cs %}
+              <a href="{{ add_cs }}" class="nav-link {% if request.path == add_cs %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Add CS
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'manage_acc' as manage_acc %}
+              {% url 'edit_acc' acc_id=id as edit_acc %}
+              <a href="{{ manage_acc }}" class="nav-link {% if request.path == manage_acc %} active {% endif %} {% if request.path == edit_acc %} active {% endif %}">
+                <i class="nav-icon fas fa-chalkboard-teacher"></i>
+                <p>
+                  Manage Accountant
+                </p>
+              </a>
+            </li>
+            
+            <li class="nav-item">
+              {% url 'add_acc' as add_acc %}
+              <a href="{{ add_acc }}" class="nav-link {% if request.path == add_acc %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Add Accountant
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'manage_h_admin' as manage_h_admin %}
+              {% url 'edit_h_admin' h_admin_id=id as edit_h_admin %}
+              <a href="{{ manage_h_admin }}" class="nav-link {% if request.path == manage_h_admin %} active {% endif %} {% if request.path == edit_h_admin %} active {% endif %}">
+                <i class="nav-icon fas fa-chalkboard-teacher"></i>
+                <p>
+                  Manage Hotel Admin
+                </p>
+              </a>
+            </li>
+            
+            <li class="nav-item">
+              {% url 'add_h_admin' as add_h_admin %}
+              <a href="{{ add_h_admin }}" class="nav-link {% if request.path == add_h_admin %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Add Hotel Admin
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'manage_admin' as manage_admin %}
+              {% url 'edit_admin' admin_id=id as edit_admin %}
+              <a href="{{ manage_admin }}" class="nav-link {% if request.path == manage_admin %} active {% endif %} {% if request.path == edit_admin %} active {% endif %}">
+                <i class="nav-icon fas fa-chalkboard-teacher"></i>
+                <p>
+                  Manage Apartment Admin
+                </p>
+              </a>
+            </li>
+            
+            <li class="nav-item">
+              {% url 'add_admin' as add_admin %}
+              <a href="{{ add_admin }}" class="nav-link {% if request.path == add_admin %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Add Apartment Admin
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'manage_disc_comm' as manage_disc_comm %}
+              {% url 'edit_disc_comm' disc_comm_id=id as edit_disc_comm %}
+              <a href="{{ manage_disc_comm }}" class="nav-link {% if request.path == manage_disc_comm %} active {% endif %} {% if request.path == edit_disc_comm %} active {% endif %}">
+                <i class="nav-icon fas fa-chalkboard-teacher"></i>
+                <p>
+                  Manage Discplinary Committee
+                </p>
+              </a>
+            </li>
+            
+            <li class="nav-item">
+              {% url 'add_disc_comm' as add_disc_comm %}
+              <a href="{{ add_disc_comm }}" class="nav-link {% if request.path == add_disc_comm %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Add Discplinary Committee
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'hr_view_goals' as hr_view_goals %}
+              <a href="{{ hr_view_goals }}" class="nav-link {% if request.path == hr_view_goals %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  View Goals
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'hr_view_code' as hr_view_code %}
+              <a href="{{ hr_view_code }}" class="nav-link {% if request.path == hr_view_code %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  Code of Conducts
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'view_overdue' as view_overdue %}
+              <a href="{{ view_overdue }}" class="nav-link {% if request.path == view_overdue %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  Office Expenses
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'view_ceo_salaries' as view_ceo_salaries %}
+              <a href="{{ view_ceo_salaries }}" class="nav-link {% if request.path == view_ceo_salaries %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  CEO Salaries
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'view_cs_salaries' as view_cs_salaries %}
+              <a href="{{ view_cs_salaries }}" class="nav-link {% if request.path == view_cs_salaries %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  Cs Salaries
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'view_admin_salaries' as view_admin_salaries %}
+              <a href="{{ view_admin_salaries }}" class="nav-link {% if request.path == view_admin_salaries %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  Admin Salaries
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'view_law_salaries' as view_law_salaries %}
+              <a href="{{ view_law_salaries }}" class="nav-link {% if request.path == view_law_salaries %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  Lawyer Salaries
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'view_swo_salaries' as view_swo_salaries %}
+              <a href="{{ view_swo_salaries }}" class="nav-link {% if request.path == view_swo_salaries %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  SWO Salaries
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'view_acc_salaries' as view_acc_salaries %}
+              <a href="{{ view_acc_salaries }}" class="nav-link {% if request.path == view_acc_salaries %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  Accountant Salaries
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'view_hr_salaries' as view_hr_salaries %}
+              <a href="{{ view_hr_salaries }}" class="nav-link {% if request.path == view_hr_salaries %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  HR Salaries
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'ceo_leave_view' as ceo_leave_view %}
+              <a href="{{ ceo_leave_view }}" class="nav-link {% if request.path == ceo_leave_view %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  CEO Leaves
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'ceo_permission_view' as ceo_permission_view %}
+              <a href="{{ ceo_permission_view }}" class="nav-link {% if request.path == ceo_permission_view %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  CEO Permissions
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'swo_leave_view' as swo_leave_view %}
+              <a href="{{ swo_leave_view }}" class="nav-link {% if request.path == swo_leave_view %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  SWO Leaves
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'swo_permission_view' as swo_permission_view %}
+              <a href="{{ swo_permission_view }}" class="nav-link {% if request.path == swo_permission_view %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  SWO Permissions
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'law_leave_view' as law_leave_view %}
+              <a href="{{ law_leave_view }}" class="nav-link {% if request.path == law_leave_view %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Lawyer Leaves
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'law_permission_view' as law_permission_view %}
+              <a href="{{ law_permission_view }}" class="nav-link {% if request.path == law_permission_view %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Lawyer Permissions
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'cs_leave_view' as cs_leave_view %}
+              <a href="{{ cs_leave_view }}" class="nav-link {% if request.path == cs_leave_view %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  CS Leaves
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'cs_permission_view' as cs_permission_view %}
+              <a href="{{ cs_permission_view }}" class="nav-link {% if request.path == cs_permission_view %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  CS Permissions
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'acc_leave_view' as acc_leave_view %}
+              <a href="{{ acc_leave_view }}" class="nav-link {% if request.path == acc_leave_view %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Accountant Leaves
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'acc_permission_view' as acc_permission_view %}
+              <a href="{{ acc_permission_view }}" class="nav-link {% if request.path == acc_permission_view %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Accountant Permissions
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'h_admin_leave_view' as h_admin_leave_view %}
+              <a href="{{ h_admin_leave_view }}" class="nav-link {% if request.path == h_admin_leave_view %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Hotel Admin Leaves
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'h_admin_permission_view' as h_admin_permission_view %}
+              <a href="{{ h_admin_permission_view }}" class="nav-link {% if request.path == h_admin_permission_view %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Hotel Admin Permissions
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'admin_leave_view' as admin_leave_view %}
+              <a href="{{ admin_leave_view }}" class="nav-link {% if request.path == admin_leave_view %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Apartment Admin Leaves
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'admin_permission_view' as admin_permission_view %}
+              <a href="{{ admin_permission_view }}" class="nav-link {% if request.path == admin_permission_view %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Apartment Admin Permissions
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'add_disc_meeting' as add_disc_meeting %}
+              <a href="{{ add_disc_meeting }}" class="nav-link {% if request.path == add_disc_meeting %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Arrange Discplinary Meeting
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'arranged_disc_meeting_view' as arranged_disc_meeting_view %}
+              <a href="{{ arranged_disc_meeting_view }}" class="nav-link {% if request.path == arranged_disc_meeting_view %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Arranged Discplinary Meeting
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'concluded_disc_meeting_view' as concluded_disc_meeting_view %}
+              <a href="{{ concluded_disc_meeting_view }}" class="nav-link {% if request.path == concluded_disc_meeting_view %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Concluded Discplinary Meeting
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'hr_cs_feedback_message' as hr_cs_feedback_message %}
+              <a href="{{ hr_cs_feedback_message }}" class="nav-link {% if request.path == hr_cs_feedback_message %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  Reply CS Feedbacks
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'hr_swo_feedback_message' as hr_swo_feedback_message %}
+              <a href="{{ hr_swo_feedback_message }}" class="nav-link {% if request.path == hr_swo_feedback_message %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  Reply SWO Feedbacks
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'hr_acc_feedback_message' as hr_acc_feedback_message %}
+              <a href="{{ hr_acc_feedback_message }}" class="nav-link {% if request.path == hr_acc_feedback_message %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  Reply Accountant Feedbacks
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'hr_h_admin_feedback_message' as hr_h_admin_feedback_message %}
+              <a href="{{ hr_h_admin_feedback_message }}" class="nav-link {% if request.path == hr_h_admin_feedback_message %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  Reply Hotel Admin Feedbacks
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'hr_admin_feedback_message' as hr_admin_feedback_message %}
+              <a href="{{ hr_admin_feedback_message }}" class="nav-link {% if request.path == hr_admin_feedback_message %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  Reply Apartment Admin Feedbacks
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'hr_lawyer_feedback_message' as hr_lawyer_feedback_message %}
+              <a href="{{ hr_lawyer_feedback_message }}" class="nav-link {% if request.path == hr_lawyer_feedback_message %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  Reply Lawyer Feedbacks
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'hr_manage_notification_ceo' as hr_manage_notification_ceo %}
+              <a href="{{ hr_manage_notification_ceo }}" class="nav-link {% if request.path == hr_manage_notification_ceo %} active {% endif %}">
+                <i class="nav-icon fas fa-user-graduate"></i>
+                <p>
+                  Manage CEO Notification
+                </p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              {% url 'hr_add_notification_ceo' as hr_add_notification_ceo %}
+              <a href="{{ hr_add_notification_ceo }}" class="nav-link {% if request.path == hr_add_notification_ceo %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Add CEO Notification
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'manage_notification_swo' as manage_notification_swo %}
+              <a href="{{ manage_notification_swo }}" class="nav-link {% if request.path == manage_notification_swo %} active {% endif %}">
+                <i class="nav-icon fas fa-user-graduate"></i>
+                <p>
+                  Manage SWO Notification
+                </p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              {% url 'add_notification_swo' as add_notification_swo %}
+              <a href="{{ add_notification_swo }}" class="nav-link {% if request.path == add_notification_swo %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Add SWO Notification
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'manage_notification_law' as manage_notification_law %}
+              <a href="{{ manage_notification_law }}" class="nav-link {% if request.path == manage_notification_law %} active {% endif %}">
+                <i class="nav-icon fas fa-user-graduate"></i>
+                <p>
+                  Manage Lawyer Notification
+                </p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              {% url 'add_notification_law' as add_notification_law %}
+              <a href="{{ add_notification_law }}" class="nav-link {% if request.path == add_notification_law %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Add Lawyer Notification
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'manage_notification_cs' as manage_notification_cs %}
+              <a href="{{ manage_notification_cs }}" class="nav-link {% if request.path == manage_notification_cs %} active {% endif %}">
+                <i class="nav-icon fas fa-user-graduate"></i>
+                <p>
+                  Manage CS Notification
+                </p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              {% url 'add_notification_cs' as add_notification_cs %}
+              <a href="{{ add_notification_cs }}" class="nav-link {% if request.path == add_notification_cs %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Add CS Notification
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'manage_notification_acc' as manage_notification_acc %}
+              <a href="{{ manage_notification_acc }}" class="nav-link {% if request.path == manage_notification_acc %} active {% endif %}">
+                <i class="nav-icon fas fa-user-graduate"></i>
+                <p>
+                  Manage Accountant Notification
+                </p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              {% url 'add_notification_acc' as add_notification_acc %}
+              <a href="{{ add_notification_acc }}" class="nav-link {% if request.path == add_notification_acc %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Add Accountant Notification
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'manage_notification_h_admin' as manage_notification_h_admin %}
+              <a href="{{ manage_notification_h_admin }}" class="nav-link {% if request.path == manage_notification_h_admin %} active {% endif %}">
+                <i class="nav-icon fas fa-user-graduate"></i>
+                <p>
+                  Manage Hotel Admin Notification
+                </p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              {% url 'add_notification_h_admin' as add_notification_h_admin %}
+              <a href="{{ add_notification_h_admin }}" class="nav-link {% if request.path == add_notification_h_admin %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Add Hotel Admin Notification
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'manage_notification_admin' as manage_notification_admin %}
+              <a href="{{ manage_notification_admin }}" class="nav-link {% if request.path == manage_notification_admin %} active {% endif %}">
+                <i class="nav-icon fas fa-user-graduate"></i>
+                <p>
+                  Manage Apartment Admin Notification
+                </p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              {% url 'add_notification_admin' as add_notification_admin %}
+              <a href="{{ add_notification_admin }}" class="nav-link {% if request.path == add_notification_admin %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Add Apartment Admin Notification
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'manage_hr_meeting' as manage_hr_meeting %}
+              {% url 'edit_hr_meeting' meeting_id=id as edit_hr_meeting %}
+              <a href="{{ manage_hr_meeting }}" class="nav-link {% if request.path == manage_hr_meeting %} active {% endif %} {% if request.path == edit_hr_meeting %} active {% endif %}">
+                <i class="nav-icon fas fa-chalkboard-teacher"></i>
+                <p>
+                  Manage Meetings
+                </p>
+              </a>
+            </li>
+            
+            <li class="nav-item">
+              {% url 'add_hr_meeting' as add_hr_meeting %}
+              <a href="{{ add_hr_meeting }}" class="nav-link {% if request.path == add_hr_meeting %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Add Meeting
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'manage_hr_topics' as manage_hr_topics %}
+              {% url 'edit_hr_topics' topic_id=id as edit_hr_topics %}
+              <a href="{{ manage_hr_topics }}" class="nav-link {% if request.path == manage_hr_topics %} active {% endif %} {% if request.path == edit_hr_topics %} active {% endif %}">
+                <i class="nav-icon fas fa-chalkboard-teacher"></i>
+                <p>
+                  Manage Meeting Agenda
+                </p>
+              </a>
+            </li>
+            
+            <li class="nav-item">
+              {% url 'add_hr_topics' as add_hr_topics %}
+              <a href="{{ add_hr_topics }}" class="nav-link {% if request.path == add_hr_topics %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Add Meeting Agenda
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'hr_apply_leave' as hr_apply_leave %}
+              <a href="{{ hr_apply_leave }}" class="nav-link {% if request.path == hr_apply_leave %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                 Apply Leave
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'hr_apply_permission' as hr_apply_permission %}
+              <a href="{{ hr_apply_permission }}" class="nav-link {% if request.path == hr_apply_permission %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                 Request Permission
+                </p>
+              </a>
+            </li>
+
+          </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+      </div>
+      <!-- /.sidebar -->
+    </aside>

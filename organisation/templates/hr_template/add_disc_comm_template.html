@@ -1,0 +1,161 @@
+{% extends 'hr_template/base_template.html' %}
+
+{% block page_title %}
+    Add Discpline Committee
+{% endblock page_title %}
+
+{% block main_content %}
+
+{% load static %}
+
+<section class="content">
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Add Discpline Committee</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form role="form" method="POST" action="{% url 'add_disc_comm_save' %}">
+                        {% csrf_token %}
+
+                        
+                                {% comment %} Display Messages {% endcomment %}
+                                {% if messages %}
+                                <div class="form-group">
+                                <div class="col-12">
+                                    {% for message in messages %}
+                                    {% if message.tags == "error" %}
+                                        <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-top: 10px;">
+                                        {{ message }}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        </div>
+                                    {% elif message.tags == "success" %}
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-top: 10px;">
+                                        {{ message }}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        </div>
+                                    {% endif %}
+                                    {% endfor %}
+                                </div>
+                                </div>
+                                {% endif %}
+                            
+
+                        <div class="card-body">
+							<div class="form-group">
+                                <label>CEO Representative </label>
+                                <select class="form-control" name="ceo">
+                                    {% for ceo in ceos %}
+                                        <option value="{{ceo.id}}">{{ ceo.admin.user.first_name }} {{ ceo.admin.user.last_name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+							
+							<div class="form-group">
+                                <label>HR Representative </label>
+                                <select class="form-control" name="hr">
+                                    {% for hr in hrs %}
+                                        <option value="{{hr.id}}">{{ hr.admin.user.first_name }} {{ hr.admin.user.last_name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+							
+							<div class="form-group">
+                                <label>Lawyer Representative </label>
+                                <select class="form-control" name="lawyer">
+                                    {% for lawyer in lawyers %}
+                                        <option value="{{lawyer.id}}">{{ lawyer.admin.user.first_name }} {{ lawyer.admin.user.last_name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+							
+							<div class="form-group">
+                                <label>Accountant Representative </label>
+                                <select class="form-control" name="acc">
+                                    {% for acc in accs %}
+                                        <option value="{{acc.id}}">{{ acc.admin.user.first_name }} {{ acc.admin.user.last_name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+							
+							<div class="form-group">
+                                <label>SWO Representative </label>
+                                <select class="form-control" name="swo">
+                                    {% for swo in swos %}
+                                        <option value="{{swo.id}}">{{ swo.admin.user.first_name }} {{ swo.admin.user.last_name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+							
+							<div class="form-group">
+                                <label>CS Representative </label>
+                                <select class="form-control" name="cs">
+                                    {% for cs in css %}
+                                        <option value="{{ cs.id }}">{{ cs.admin.user.first_name }} {{ cs.admin.user.last_name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+							
+							<div class="form-group">
+                                <label>Hotel Driver Representative </label>
+                                <select class="form-control" name="h_driver">
+                                    {% for h_driver in h_drivers %}
+                                        <option value="{{h_driver.id}}">{{ h_driver.admin.user.first_name }} {{ h_driver.admin.user.last_name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+							
+							<div class="form-group">
+                                <label>Apartment Driver Representative </label>
+                                <select class="form-control" name="driver">
+                                    {% for driver in drivers %}
+                                        <option value="{{driver.id}}">{{ driver.admin.user.first_name }} {{ driver.admin.user.last_name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+							
+							<div class="form-group">
+                                <label>Hotel Admin Representative </label>
+                                <select class="form-control" name="h_admin">
+                                    {% for h_admin in h_admins %}
+                                        <option value="{{h_admin.id}}">{{ h_admin.admin.user.first_name }} {{ h_admin.admin.user.last_name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+							
+							<div class="form-group">
+                                <label>Apartment Admin Representative </label>
+                                <select class="form-control" name="admin">
+                                    {% for admin in admins %}
+                                        <option value="{{admin.id}}">{{ admin.admin.user.first_name }} {{ admin.admin.user.last_name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+
+                        </div>
+                        <!-- /.card-body -->
+
+                        <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">Add Commitee</button>
+                        </div>
+                    </form>
+                    </div>
+                    <!-- /.card -->
+
+                </div>
+            </div>
+
+        </div><!-- /.container-fluid -->
+      </section>
+
+  {% endblock main_content %}

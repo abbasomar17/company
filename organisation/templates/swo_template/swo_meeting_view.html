@@ -1,0 +1,75 @@
+{% extends 'swo_template/base_template.html' %}
+
+{% block page_title %}
+    SWO Meeting Requests
+{% endblock page_title %}
+
+{% block main_content %}
+
+{% load static %}
+
+<section class="content">
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">SW Meeting Requests</h3>
+                        </div>
+                        <!-- /.card-header -->
+
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Tenant Name</th>
+                                    <th>Owner Name</th>
+									<th>Apartment Name</th>
+									<th>Applied By</th>
+                                    <th>Termination Reason</th>
+                                    <th>Applied On</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+
+                                {% for swo_meeting in swo_meetings %}
+                                <tbody>
+                                <tr>
+                                    <td>{{ swo_meeting.id }}</td>
+                                    <td>{{ swo_meeting.tenant_id.admin.user.first_name }} {{ swo_meeting.tenant_id.admin.user.last_name }}</td>
+                                    <td>{{ swo_meeting.owner_id.admin.user.first_name }} {{ swo_meeting.owner_id.admin.user.last_name }}</td> 
+                                    <td>{{ swo_meeting.apartment_id.title }}</td>
+                                    <td>{{ swo_meeting.applied_person }}</td>
+									<td>{{ swo_meeting.reason }}</td>
+                                    <td>{{ swo_meeting.created_at }}</td>
+                                    <td>
+										<a href="{% url 'arrange_sw_meeting_view' swo_meeting_id=swo_meeting_id %}" class="btn btn-danger">Arrange Meeting</a>                                            
+                                    </td>
+                                </tr>
+                                </tbody>
+                                {% endfor %}
+
+                            </table>
+                        </div>
+                    
+                    </div>
+                    <!-- /.card -->
+
+                </div>
+            </div>
+
+        </div><!-- /.container-fluid -->
+      </section>
+
+
+
+  {% endblock main_content %}
+
+  {% comment %} Custom JS to Identify the Reply and Post Reply {% endcomment %}
+
+  {% block custom_js %}
+
+  {% endblock custom_js %}

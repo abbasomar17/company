@@ -1,0 +1,576 @@
+{% load static %}
+
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+      <!-- Brand Logo -->
+      <a href="{% url 'admin_home' %}" class="brand-link">
+        <img src="{% static 'dist/img/AdminLTELogo.png' %}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+            style="opacity: .8">
+        <span class="brand-text font-weight-light">General System</span>
+      </a>
+
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <!-- Sidebar user panel (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+          <div class="image">
+            <img src="{% static 'dist/img/user2-160x160.jpg' %}" class="img-circle elevation-2" alt="User Image">
+          </div>
+          <div class="info">
+            <a href="{% url 'admin_profile' %}" class="d-block">{{ user.first_name }} {{ user.last_name }}</a>
+          </div>
+        </div>
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <!-- Add icons to the links using the .nav-icon class
+                with font-awesome or any other icon font library -->
+
+            <li class="nav-item">
+              {% url 'admin_home' as admin_home %}
+              <a href="{{ admin_home }}" class="nav-link {% if request.path == admin_home %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  Home
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'admin_view_ceo_attendance' as admin_view_ceo_attendance %}
+              <a href="{{ admin_view_ceo_attendance }}" class="nav-link {% if request.path == admin_view_ceo_attendance %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  My CEO Meeting Attendances
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'admin_view_hr_attendance' as admin_view_hr_attendance %}
+              <a href="{{ admin_view_hr_attendance }}" class="nav-link {% if request.path == admin_view_hr_attendance %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  My HR Meeting Attendances
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'my_view_admin_resp' as my_view_admin_resp %}
+              <a href="{{ my_view_admin_resp }}" class="nav-link {% if request.path == my_view_admin_resp %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  My Responsibility
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'admin_view_notification' as admin_view_notification %}
+              <a href="{{ admin_view_notification }}" class="nav-link {% if request.path == admin_view_notification %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  My Notification
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'admin_view_def_notification' as admin_view_def_notification %}
+              <a href="{{ admin_view_def_notification }}" class="nav-link {% if request.path == admin_view_def_notification %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  My DEF Notification
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'admin_view_acu_notification' as admin_view_acu_notification %}
+              <a href="{{ admin_view_acu_notification }}" class="nav-link {% if request.path == admin_view_acu_notification %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  My ACU Notification
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'admin_feedback' as admin_feedback %}
+              <a href="{{ admin_feedback }}" class="nav-link {% if request.path == admin_feedback %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                 Add Feedbacks
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'cs_feedback_message' as cs_feedback_message %}
+              <a href="{{ cs_feedback_message }}" class="nav-link {% if request.path == cs_feedback_message %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  Reply CS Feedbacks
+                </p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              {% url 'manage_staff' as manage_staff %}
+              {% url 'edit_staff' owner_id=id as edit_staff %}
+              <a href="{{ manage_staff }}" class="nav-link {% if request.path == manage_staff %} active {% endif %} {% if request.path == edit_staff %} active {% endif %}">
+                <i class="nav-icon fas fa-chalkboard-teacher"></i>
+                <p>
+                  Manage Owner
+                </p>
+              </a>
+            </li>
+            
+            <li class="nav-item">
+              {% url 'add_staff' as add_staff %}
+              <a href="{{ add_staff }}" class="nav-link {% if request.path == add_staff %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Add Owner
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'manage_apartment' as manage_apartment %}
+              {% url 'edit_apartment' apartment_id=id as edit_apartment %}
+              <a href="{{ manage_apartment }}" class="nav-link {% if request.path == manage_apartment %} active {% endif %} {% if request.path == edit_apartment %} active {% endif %}">
+                <i class="nav-icon fas fa-chalkboard-teacher"></i>
+                <p>
+                  Manage Apartment
+                </p>
+              </a>
+            </li>
+            
+            <li class="nav-item">
+              {% url 'add_apartment' as add_apartment %}
+              <a href="{{ add_apartment }}" class="nav-link {% if request.path == add_apartment %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Add Apartment
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'manage_user' as manage_user %}
+              {% url 'edit_user' driver_id=id as edit_user %}
+              <a href="{{ manage_user }}" class="nav-link {% if request.path == manage_user %} active {% endif %} {% if request.path == edit_user %} active {% endif %}">
+                <i class="nav-icon fas fa-chalkboard-teacher"></i>
+                <p>
+                  Manage Driver
+                </p>
+              </a>
+            </li>
+            
+            <li class="nav-item">
+              {% url 'add_user' as add_user %}
+              <a href="{{ add_user }}" class="nav-link {% if request.path == add_user %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Add Driver
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'manage_vehicle' as manage_vehicle %}
+              {% url 'edit_vehicle' vehicle_id=id as edit_vehicle %}
+              <a href="{{ manage_vehicle }}" class="nav-link {% if request.path == manage_vehicle %} active {% endif %} {% if request.path == edit_vehicle %} active {% endif %}">
+                <i class="nav-icon fas fa-chalkboard-teacher"></i>
+                <p>
+                  Manage Vehicle
+                </p>
+              </a>
+            </li>
+            
+            <li class="nav-item">
+              {% url 'add_vehicle' as add_vehicle %}
+              <a href="{{ add_vehicle }}" class="nav-link {% if request.path == add_vehicle %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Add Vehicle
+                </p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              {% url 'manage_student' as manage_student %}
+              {% url 'edit_student' tenant_id=id as edit_student %}
+              <a href="{{ manage_student }}" class="nav-link {% if request.path == manage_student %} active {% endif %} {% if request.path == edit_student %} active {% endif %}">
+                <i class="nav-icon fas fa-user-graduate"></i>
+                <p>
+                  Manage Tenant
+                </p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              {% url 'add_student' as add_student %}
+              <a href="{{ add_student }}" class="nav-link {% if request.path == add_student %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Add Tenant
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'manage_random' as manage_random %}
+              {% url 'edit_random' random_id=id as edit_random %}
+              <a href="{{ manage_random }}" class="nav-link {% if request.path == manage_random %} active {% endif %} {% if request.path == edit_random %} active {% endif %}">
+                <i class="nav-icon fas fa-user-graduate"></i>
+                <p>
+                  Manage Random User
+                </p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              {% url 'manage_course' as manage_course %}
+              {% url 'edit_course' course_id=id as edit_course %}
+              <a href="{{ manage_course }}" class="nav-link {% if request.path == manage_course %} active {% endif %} {% if request.path == edit_course %} active {% endif %}">
+                <i class="nav-icon fas fa-chalkboard"></i>
+                <p>
+                  Manage Meeting 
+                </p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+            {% url 'add_course' as add_course %}
+              <a href="{{ add_course }}" class="nav-link {% if request.path == add_course %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Add Meeting
+                </p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              {% url 'manage_subject' as manage_subject %}
+              {% url 'edit_subject' subject_id=id as edit_subject %}
+              <a href="{{ manage_subject }}" class="nav-link {% if request.path == manage_subject %} active {% endif %} {% if request.path == edit_subject %} active {% endif %}">
+                <i class="nav-icon fas fa-book"></i>
+                <p>
+                  Manage Topic
+                </p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              {% url 'add_subject' as add_subject %}
+              <a href="{{ add_subject }}" class="nav-link {% if request.path == add_subject %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Add Topic
+                </p>
+              </a>
+            </li>
+
+
+            <li class="nav-item">
+              {% url 'manage_session' as manage_session %}
+              {% url 'edit_session' session_id=id as edit_session %}
+              <a href="{{ manage_session }}" class="nav-link {% if request.path == manage_session %} active {% endif %} {% if request.path == edit_session %} active {% endif %}">
+                <i class="nav-icon fas fa-graduation-cap"></i>
+                <p>
+                  Manage Session 
+                </p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              {% url 'add_session' as add_session %}
+              <a href="{{ add_session }}" class="nav-link {% if request.path == add_session %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Add Session
+                </p>
+              </a>
+            </li>
+
+
+            <li class="nav-item">
+              {% url 'admin_view_attendance' as admin_view_attendance %}
+              <a href="{{ admin_view_attendance }}" class="nav-link {% if request.path == admin_view_attendance %} active {% endif %}">
+                <i class="nav-icon fas fa-calendar-alt"></i>
+                <p>
+                  View Meeting Attendance
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'staff_add_result' as staff_add_result %}
+              <a href="{{ staff_add_result }}" class="nav-link {% if request.path == staff_add_result %} active {% endif %}">
+                <i class="nav-icon fas fa-tasks"></i>
+                <p>
+                  Add Apartment Result
+                  {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
+                </p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              {% url 'student_feedback_message' as student_feedback_message %}
+              <a href="{{ student_feedback_message }}" class="nav-link {% if request.path == student_feedback_message %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Tenants Feedback
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'user_feedback_message' as user_feedback_message %}
+              <a href="{{ user_feedback_message }}" class="nav-link {% if request.path == user_feedback_message %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Driver Feedback
+                </p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              {% url 'staff_feedback_message' as staff_feedback_message %}
+              <a href="{{ staff_feedback_message }}" class="nav-link {% if request.path == staff_feedback_message %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Owner Feedback
+                </p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              {% url 'student_leave_view' as student_leave_view %}
+              <a href="{{ student_leave_view }}" class="nav-link {% if request.path == student_leave_view %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Tenant House Care
+                </p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              {% url 'staff_leave_view' as staff_leave_view %}
+              <a href="{{ staff_leave_view }}" class="nav-link {% if request.path == staff_leave_view %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Owner Leave
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'requested_termination_view' as requested_termination_view %}
+              <a href="{{ requested_termination_view }}" class="nav-link {% if request.path == requested_termination_view %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Contract's Termination Records
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'swo_meeting_view' as swo_meeting_view %}
+              <a href="{{ swo_meeting_view }}" class="nav-link {% if request.path == swo_meeting_view %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Requested SWO Meetings
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'manage_orders' as manage_orders %}
+              <a href="{{ manage_orders }}" class="nav-link {% if request.path == manage_orders %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Manage Orders
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'new_orders' as new_orders %}
+              <a href="{{ new_orders }}" class="nav-link {% if request.path == new_orders %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Manage Active Orders
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'manage_owners_email' as manage_owners_email %}
+              <a href="{{ manage_owners_email }}" class="nav-link {% if request.path == manage_owners_email %} active {% endif %}">
+                <i class="nav-icon fas fa-user-graduate"></i>
+                <p>
+                  Manage Owners General Emails
+                </p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              {% url 'add_owners_email' as add_owners_email %}
+              <a href="{{ add_owners_email }}" class="nav-link {% if request.path == add_owners_email %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Add Owners General Email
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'manage_tenants_email' as manage_tenants_email %}
+              <a href="{{ manage_tenants_email }}" class="nav-link {% if request.path == manage_tenants_email %} active {% endif %}">
+                <i class="nav-icon fas fa-user-graduate"></i>
+                <p>
+                  Manage Tenants General Emails
+                </p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              {% url 'add_tenants_email' as add_tenants_email %}
+              <a href="{{ add_tenants_email }}" class="nav-link {% if request.path == add_tenants_email %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Add Tenants General Email
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'manage_drivers_email' as manage_drivers_email %}
+              <a href="{{ manage_drivers_email }}" class="nav-link {% if request.path == manage_drivers_email %} active {% endif %}">
+                <i class="nav-icon fas fa-user-graduate"></i>
+                <p>
+                  Manage Drivers General Emails
+                </p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              {% url 'add_drivers_email' as add_drivers_email %}
+              <a href="{{ add_drivers_email }}" class="nav-link {% if request.path == add_drivers_email %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Add Drivers General Email
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'manage_randoms_email' as manage_randoms_email %}
+              <a href="{{ manage_randoms_email }}" class="nav-link {% if request.path == manage_randoms_email %} active {% endif %}">
+                <i class="nav-icon fas fa-user-graduate"></i>
+                <p>
+                  Manage Random Users General Emails
+                </p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              {% url 'add_randoms_email' as add_randoms_email %}
+              <a href="{{ add_randoms_email }}" class="nav-link {% if request.path == add_randoms_email %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Add Random Users General Email
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'manage_notification_driver' as manage_notification_driver %}
+              <a href="{{ manage_notification_driver }}" class="nav-link {% if request.path == manage_notification_driver %} active {% endif %}">
+                <i class="nav-icon fas fa-user-graduate"></i>
+                <p>
+                  Manage Driver Individual Emails
+                </p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              {% url 'add_notification_driver' as add_notification_driver %}
+              <a href="{{ add_notification_driver }}" class="nav-link {% if request.path == add_notification_driver %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Add Driver Individual Email
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'manage_notification_owner' as manage_notification_owner %}
+              <a href="{{ manage_notification_owner }}" class="nav-link {% if request.path == manage_notification_owner %} active {% endif %}">
+                <i class="nav-icon fas fa-user-graduate"></i>
+                <p>
+                  Manage Owner Individual Emails
+                </p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              {% url 'add_notification_owner' as add_notification_owner %}
+              <a href="{{ add_notification_owner }}" class="nav-link {% if request.path == add_notification_owner %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Add Owner Individual Email
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'manage_notification_tenant' as manage_notification_tenant %}
+              <a href="{{ manage_notification_tenant }}" class="nav-link {% if request.path == manage_notification_tenant %} active {% endif %}">
+                <i class="nav-icon fas fa-user-graduate"></i>
+                <p>
+                  Manage Tenant Individual Emails
+                </p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              {% url 'add_notification_tenant' as add_notification_tenant %}
+              <a href="{{ add_notification_tenant }}" class="nav-link {% if request.path == add_notification_tenant %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Add Tenant Individual Email
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'admin_apply_leave' as admin_apply_leave %}
+              <a href="{{ admin_apply_leave }}" class="nav-link {% if request.path == admin_apply_leave %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                 Apply Leave
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'admin_apply_permission' as admin_apply_permission %}
+              <a href="{{ admin_apply_permission }}" class="nav-link {% if request.path == admin_apply_permission %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                 Request Permission
+                </p>
+              </a>
+            </li>
+
+          </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+      </div>
+      <!-- /.sidebar -->
+    </aside>

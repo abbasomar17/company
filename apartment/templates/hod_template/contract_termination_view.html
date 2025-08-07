@@ -1,0 +1,83 @@
+{% extends 'hod_template/base_template.html' %}
+
+{% block page_title %}
+    Contract's Termination Requests
+{% endblock page_title %}
+
+{% block main_content %}
+
+{% load static %}
+
+<section class="content">
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Contract's Termination Requests</h3>
+                        </div>
+                        <!-- /.card-header -->
+
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Tenant Name</th>
+                                    <th>Owner Name</th>
+									<th>Apartment Name</th>
+									<th>Applied By</th>
+                                    <th>Termination Reason</th>
+                                    <th>Applied On</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+
+                                {% for termination in terminations %}
+                                <tbody>
+                                <tr>
+                                    <td>{{ termination.id }}</td>
+                                    <td>{{ termination.tenant_id.admin.user.first_name }} {{ termination.tenant_id.admin.user.last_name }}</td>
+                                    <td>{{ termination.owner_id.admin.user.first_name }} {{ termination.owner_id.admin.user.last_name }}</td> 
+                                    <td>{{ termination.apartment_id.title }}</td>
+                                    <td>{{ termination.applied_person }}</td>
+									<td>{{ termination.reason }}</td>
+                                    <td>{{ termination.created_at }}</td>
+                                    <td>
+                                        {% if termination.accepted == 0 %}
+                                            <a href="{% url 'requested_termination_reject' termination_id=termination.id %}" class="btn btn-danger">Reject</a>
+											<a href="{% url 'request_swo_meeting_view' termination_id=termination.id %}" class="btn btn-danger">Request SW Meeting</a>
+                                        {% elif termination.accepted == 1 %}
+                                            <button class="btn btn-warning" disabled="disabled">Approved</button>
+                                        {% else %}
+                                            <button class="btn btn-danger" disabled="disabled">Rejected</button>
+                                        {% endif %}
+                                        
+                                    </td>
+                                </tr>
+                                </tbody>
+                                {% endfor %}
+
+                            </table>
+                        </div>
+                    
+                    </div>
+                    <!-- /.card -->
+
+                </div>
+            </div>
+
+        </div><!-- /.container-fluid -->
+      </section>
+
+
+
+  {% endblock main_content %}
+
+  {% comment %} Custom JS to Identify the Reply and Post Reply {% endcomment %}
+
+  {% block custom_js %}
+
+  {% endblock custom_js %}

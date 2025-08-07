@@ -1,0 +1,134 @@
+{% load static %}
+
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+      <!-- Brand Logo -->
+      <a href="{% url 'law_home' %}" class="brand-link">
+        <img src="{% static 'dist/img/AdminLTELogo.png' %}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+            style="opacity: .8">
+        <span class="brand-text font-weight-light">General System</span>
+      </a>
+
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <!-- Sidebar user panel (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+          <div class="image">
+            <img src="{% static 'dist/img/user2-160x160.jpg' %}" class="img-circle elevation-2" alt="User Image">
+          </div>
+          <div class="info">
+            <a href="{% url 'law_profile' %}" class="d-block">{{ user.first_name }} {{ user.last_name }}</a>
+          </div>
+        </div>
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <!-- Add icons to the links using the .nav-icon class
+                with font-awesome or any other icon font library -->
+
+            <li class="nav-item">
+              {% url 'law_home' as law_home %}
+              <a href="{{ law_home }}" class="nav-link {% if request.path == law_home %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  Home
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'law_view_ceo_attendance' as law_view_ceo_attendance %}
+              <a href="{{ law_view_ceo_attendance }}" class="nav-link {% if request.path == law_view_ceo_attendance %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  My CEO Meeting Attendances
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'law_view_hr_attendance' as law_view_hr_attendance %}
+              <a href="{{ law_view_hr_attendance }}" class="nav-link {% if request.path == law_view_hr_attendance %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  My HR Meeting Attendances
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'my_view_law_resp' as my_view_law_resp %}
+              <a href="{{ my_view_law_resp }}" class="nav-link {% if request.path == my_view_law_resp %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  My Responsibility
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'law_view_notification' as law_view_notification %}
+              <a href="{{ law_view_notification }}" class="nav-link {% if request.path == law_view_notification %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  My Notification
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'law_view_def_notification' as law_view_def_notification %}
+              <a href="{{ law_view_def_notification }}" class="nav-link {% if request.path == law_view_def_notification %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  My DEF Notification
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'law_view_acu_notification' as law_view_acu_notification %}
+              <a href="{{ law_view_acu_notification }}" class="nav-link {% if request.path == law_view_acu_notification %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  My ACU Notification
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'law_feedback' as law_feedback %}
+              <a href="{{ law_feedback }}" class="nav-link {% if request.path == law_feedback %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                 Add Feedbacks
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'law_apply_leave' as law_apply_leave %}
+              <a href="{{ law_apply_leave }}" class="nav-link {% if request.path == law_apply_leave %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                 Apply Leave
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'law_apply_permission' as law_apply_permission %}
+              <a href="{{ law_apply_permission }}" class="nav-link {% if request.path == law_apply_permission %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                 Request Permission
+                </p>
+              </a>
+            </li>
+
+          </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+      </div>
+      <!-- /.sidebar -->
+    </aside>

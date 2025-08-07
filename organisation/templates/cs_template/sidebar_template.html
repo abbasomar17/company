@@ -1,0 +1,164 @@
+{% load static %}
+
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+      <!-- Brand Logo -->
+      <a href="{% url 'cs_home' %}" class="brand-link">
+        <img src="{% static 'dist/img/AdminLTELogo.png' %}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+            style="opacity: .8">
+        <span class="brand-text font-weight-light">General System</span>
+      </a>
+
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <!-- Sidebar user panel (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+          <div class="image">
+            <img src="{% static 'dist/img/user2-160x160.jpg' %}" class="img-circle elevation-2" alt="User Image">
+          </div>
+          <div class="info">
+            <a href="{% url 'cs_profile' %}" class="d-block">{{ user.first_name }} {{ user.last_name }}</a>
+          </div>
+        </div>
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <!-- Add icons to the links using the .nav-icon class
+                with font-awesome or any other icon font library -->
+
+            <li class="nav-item">
+              {% url 'cs_home' as cs_home %}
+              <a href="{{ cs_home }}" class="nav-link {% if request.path == cs_home %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  Home
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'cs_view_ceo_attendance' as cs_view_ceo_attendance %}
+              <a href="{{ cs_view_ceo_attendance }}" class="nav-link {% if request.path == cs_view_ceo_attendance %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  My CEO Meeting Attendances
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'cs_view_hr_attendance' as cs_view_hr_attendance %}
+              <a href="{{ cs_view_hr_attendance }}" class="nav-link {% if request.path == cs_view_hr_attendance %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  My HR Meeting Attendances
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'my_view_cs_resp' as my_view_cs_resp %}
+              <a href="{{ my_view_cs_resp}}" class="nav-link {% if request.path == my_view_cs_resp%} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  My Responsibility
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'cs_view_notification' as cs_view_notification %}
+              <a href="{{ cs_view_notification }}" class="nav-link {% if request.path == cs_view_notification %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  My Notification
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'cs_view_def_notification' as cs_view_def_notification %}
+              <a href="{{ cs_view_def_notification }}" class="nav-link {% if request.path == cs_view_def_notification %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  My DEF Notification
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'cs_view_acu_notification' as cs_view_acu_notification %}
+              <a href="{{ cs_view_acu_notification }}" class="nav-link {% if request.path == cs_view_acu_notification %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  My ACU Notification
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'cs_feedback' as cs_feedback %}
+              <a href="{{ cs_feedback }}" class="nav-link {% if request.path == cs_feedback %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                 Add Feedbacks
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'cs_feedback_hr' as cs_feedback_hr %}
+              <a href="{{ cs_feedback_hr }}" class="nav-link {% if request.path == cs_feedback_hr %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                 Add Feedbacks to HR
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'feedback_message' as feedback_message %}
+              <a href="{{ feedback_message }}" class="nav-link {% if request.path == feedback_message %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  Reply User Feedbacks
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'my_feedback_message' as my_feedback_message %}
+              <a href="{{ my_feedback_message }}" class="nav-link {% if request.path == my_feedback_message %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  My Replies
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'cs_apply_leave' as cs_apply_leave %}
+              <a href="{{ cs_apply_leave }}" class="nav-link {% if request.path == cs_apply_leave %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                 Apply Leave
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'cs_apply_permission' as cs_apply_permission %}
+              <a href="{{ cs_apply_permission }}" class="nav-link {% if request.path == cs_apply_permission %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                 Request Permission
+                </p>
+              </a>
+            </li>
+
+          </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+      </div>
+      <!-- /.sidebar -->
+    </aside>

@@ -1,0 +1,208 @@
+{% extends 'hr_template/base_template.html' %}
+
+{% block page_title %}
+    Add Discpline Meeting
+{% endblock page_title %}
+
+{% block main_content %}
+
+{% load static %}
+
+<section class="content">
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Add Discpline Meeting</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+						<form method="POST" action="{% url 'add_disc_meeting_save' %}">
+                        {% csrf_token %}
+
+                        
+                                {% comment %} Display Messages {% endcomment %}
+                                {% if messages %}
+                                <div class="form-group">
+                                <div class="col-12">
+                                    {% for message in messages %}
+                                    {% if message.tags == "error" %}
+                                        <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-top: 10px;">
+                                        {{ message }}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        </div>
+                                    {% elif message.tags == "success" %}
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-top: 10px;">
+                                        {{ message }}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        </div>
+                                    {% endif %}
+                                    {% endfor %}
+                                </div>
+                                </div>
+                                {% endif %}
+                            
+
+                        <div class="card-body">
+							
+							
+                            <div class="form-group">
+                                <label>Accusation </label>
+                                <textarea name="accusation" class="form-control" rows="6" placeholder="Accusation"></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Meeting Date </label>
+                                <input type="date" class="form-control" name="date">
+                            </div>
+							
+							<div class="form-group">
+								<label for="acu_category">Accusation Category</label>
+								<select id="acu_category" name="acu_category">
+									<option value="">Category</option>
+									<option value="CEO">CEO</option>
+									<option value="SWO">SWO</option>
+									<option value="Accountant">Accountant</option>
+									<option value="Lawyer">Lawyer</option>
+									<option value="Customer Service">Customer Service</option>
+									<option value="Hotel Driver">Hotel Driver</option>
+									<option value="Apartment Driver">Apartment Driver</option>
+									<option value="Hotel Admin">Hotel Admin</option>
+									<option value="Apartment Admin">Apartment Admin</option>
+								</select>
+                            </div>
+							
+							<div class="card-footer">
+								<button type="button" class="btn btn-primary" id="fetch_accusser">Fetch Accusser</button>
+							</div>
+							
+							<div class="card-footer" id="accuser_data">
+							</div>
+							
+							<div class="form-group">
+								<label for="def_category">Defendant Category</label>
+								<select id="def_category" name="def_category">
+									<option value="">Category</option>
+									<option value="CEO">CEO</option>
+									<option value="SWO">SWO</option>
+									<option value="Accountant">Accountant</option>
+									<option value="Lawyer">Lawyer</option>
+									<option value="Customer Service">Customer Service</option>
+									<option value="Hotel Driver">Hotel Driver</option>
+									<option value="Apartment Driver">Apartment Driver</option>
+									<option value="Hotel Admin">Hotel Admin</option>
+									<option value="Apartment Admin">Apartment Admin</option>
+								</select>
+                            </div>
+							
+							<div class="card-footer">
+								<button type="button" class="btn btn-primary" id="fetch_defendant">Fetch Defendant</button>
+							</div>
+							
+							<div class="card-footer" id="defendant_data">
+							</div>
+						</form>
+
+                        </div>
+                        <!-- /.card-body -->
+
+						
+                    </div>
+                    <!-- /.card -->
+
+                </div>
+            </div>
+
+        </div><!-- /.container-fluid -->
+      </section>
+
+  {% endblock main_content %}
+  
+  {% block custom_js %}
+
+<script>
+    $(document).ready(function(){
+        $("#fetch_accusser").click(function(){
+
+            // Displaying Tenants Based on Owner, Course and Session Enrolled
+
+            var acu_category=$("#acu_category").val()
+
+            $.ajax({
+                url:'{% url 'get_accussers' %}',
+                type:'POST',
+                data:{acu_category:acu_category},
+            })
+
+            
+            .done(function(response){
+                var json_data=JSON.parse(response);
+                console.log(json_data)
+                //Displaying Attendance Date Input and Students Attendance
+                var div_data="<div class='form-group'><label>Accuser List</label> <select class='accuser_list form-control' name='acu_name'>"
+
+                for(key in json_data)
+                {
+                    div_data+="<option value='"+ json_data[key]['id'] +"'>ID: "+ json_data[key]['id'] +" : "+ json_data[key]['acu_name'] +"</option>";
+
+                }
+                div_data+="</select>";
+                div_data+="</div>";
+                div_data+="<div class='form-group'><div class='row'>";
+				$("#accuser_data").html(div_data);
+				})
+            .fail(function(){
+                alert("Error in Fetching Accuser.")
+            })
+		})
+		
+		$("#fetch_defendant").click(function(){
+
+            // Displaying Tenants Based on Owner, Course and Session Enrolled
+
+            var def_category=$("#def_category").val()
+
+            $.ajax({
+                url:'{% url 'get_defendants' %}',
+                type:'POST',
+                data:{def_category:def_category},
+            })
+
+            
+            .done(function(response){
+                var json_data=JSON.parse(response);
+                console.log(json_data)
+                //Displaying Attendance Date Input and Students Attendance
+                var div_data="<div class='form-group'><label>Defendant List</label> <select class='defendant_list form-control' name='def_name'>"
+
+                for(key in json_data)
+                {
+                    div_data+="<option value='"+ json_data[key]['id'] +"'>ID: "+ json_data[key]['id'] +" : "+ json_data[key]['def_name'] +"</option>";
+
+                }
+                div_data+="</select>";
+                div_data+="</div>";
+                div_data+="<div class='form-group'><div class='row'>";
+				
+				div_data+="</div></div>";
+
+                div_data+="<div class='form-group'>";
+                div_data+="<button id='add_meeting' class='btn btn-success' type='submit'>Add Discpline Meeting</button>";
+                div_data+="</div>";
+				$("#defendant_data").html(div_data);
+				})
+            .fail(function(){
+                alert("Error in Fetching Defendant.")
+            })
+
+        })
+    })
+</script>
+{% endblock custom_js %}

@@ -1,0 +1,642 @@
+{% extends 'hod_template/base_template.html' %}
+
+{% block main_content %}
+
+{% load static %}
+
+<section class="content">
+        <div class="container-fluid">
+          <!-- Small boxes (Stat box) -->
+          <div class="row">
+			<div class="col-lg-3 col-6">
+              <!-- small box -->
+              <div class="small-box bg-info">
+                <div class="inner">
+                  <h3>{{ all_driver_count }}</h3>
+
+                  <p>Total Drivers</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-stats-bars"></i>
+                </div>
+                <a href="{% url 'manage_user' %}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              </div>
+            </div>
+            <div class="col-lg-3 col-6">
+              <!-- small box -->
+              <div class="small-box bg-info">
+                <div class="inner">
+                  <h3>{{ all_tenant_count }}</h3>
+
+                  <p>Total Tenants</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-stats-bars"></i>
+                </div>
+                <a href="{% url 'manage_student' %}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+              <!-- small box -->
+              <div class="small-box bg-danger">
+                <div class="inner">
+                  <h3>{{ owner_count }}</h3>
+
+                  <p>Total Apartment Owners</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-stats-bars"></i>
+                </div>
+                <a href="{% url 'manage_staff' %}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              </div>
+            </div>
+            <!-- ./col -->
+			
+			<div class="col-lg-3 col-6">
+              <!-- small box -->
+              <div class="small-box bg-danger">
+                <div class="inner">
+                  <h3>{{ all_random_count }}</h3>
+
+                  <p>Total Random User</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-stats-bars"></i>
+                </div>
+                <a href="{% url 'manage_random' %}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              </div>
+            </div>
+            <!-- ./col -->
+            
+            <div class="col-lg-3 col-6">
+              <!-- small box -->
+              <div class="small-box bg-warning">
+                <div class="inner">
+                  <h3>{{ course_count }}</h3>
+
+                  <p>Total Meeting</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-stats-bars"></i>
+                </div>
+                <a href="{% url 'manage_course' %}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              </div>
+            </div>
+            <!-- ./col -->
+			
+			<div class="col-lg-3 col-6">
+              <!-- small box -->
+              <div class="small-box bg-warning">
+                <div class="inner">
+                  <h3>{{ order_count }}</h3>
+
+                  <p>Total Orders</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-stats-bars"></i>
+                </div>
+                <a href="{% url 'new_orders' %}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              </div>
+            </div>
+            <!-- ./col -->
+			
+            <div class="col-lg-3 col-6">
+              <!-- small box -->
+              <div class="small-box bg-success">
+                <div class="inner">
+                  <h3>{{ subject_count }}</h3>
+
+                  <p>Total Topics</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-stats-bars"></i>
+                </div>
+                <a href="{% url 'manage_subject' %}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              </div>
+            </div>
+            <!-- ./col -->
+            
+          </div>
+          <!-- /.row -->
+          <div class="row">
+            <div class="col-lg-6">
+              <!-- PIE CHART -->
+              <div class="card card-danger">
+                <div class="card-header">
+                  <h3 class="card-title">Tenant and Owner Chart</h3>
+
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <canvas id="pieChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+            </div>
+
+            <div class="col-lg-6">
+              <!-- DONUT CHART -->
+              <div class="card card-danger">
+                <div class="card-header">
+                  <h3 class="card-title">Total Topics in Each Meeting</h3>
+
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <canvas id="donutChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+              
+            </div>
+          </div>
+
+          <div class="row">
+			
+			<div class="col-lg-6">
+              <!-- PIE CHART -->
+              <div class="card card-info">
+                <div class="card-header">
+                  <h3 class="card-title">Total Tenants in Each Meeting</h3>
+
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <canvas id="donutChart3" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                </div>
+                <!-- /.card-body -->
+                </div>
+            </div>
+			
+			<div class="col-lg-6">
+              <!-- DONUT CHART -->
+              <div class="card card-danger">
+                <div class="card-header">
+                  <h3 class="card-title">Total Apartment in Each Apartment Owner</h3>
+
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <canvas id="donutChart2" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+              
+            </div>
+		
+		
+			<div class="col-lg-6">
+              <!-- PIE CHART -->
+              <div class="card card-info">
+                <div class="card-header">
+                  <h3 class="card-title">Total Tenants in Each Apartment Owner</h3>
+
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <canvas id="pieChart4" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                </div>
+                <!-- /.card-body -->
+                </div>
+            </div>
+		</div>
+		
+		<div class="row">
+			<div class="col-lg-6">
+              <!-- PIE CHART -->
+              <div class="card card-info">
+                <div class="card-header">
+                  <h3 class="card-title">Total Vehicles in Each Driver</h3>
+
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <canvas id="pieChart3" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            </div>
+
+            <div class="col-lg-6">
+              <!-- PIE CHART -->
+              <div class="card card-info">
+                <div class="card-header">
+                  <h3 class="card-title">Total Tenants in Each Meeting's Topic</h3>
+
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <canvas id="pieChart5" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            </div>
+          </div>
+		  
+		  
+
+        <div class="row">
+          <div class="col-lg-12">
+            <!-- BAR CHART -->
+            <div class="card card-success">
+              <div class="card-header">
+                <h3 class="card-title">Owner Meeting Attendance vs Leave</h3>
+
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                  </button>
+                  <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="chart">
+                  <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                </div>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+
+
+          <div class="col-lg-6">
+            
+          </div>
+        
+        </div>
+
+        <div class="row">
+          <div class="col-lg-12">
+            <!-- BAR CHART -->
+            <div class="card card-success">
+              <div class="card-header">
+                <h3 class="card-title">Tenant Meeting Attendance vs Leave</h3>
+
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                  </button>
+                  <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="chart">
+                  <canvas id="barChart2" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                </div>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+
+
+          <div class="col-lg-6">
+            
+          </div>
+        
+        </div>
+
+        </div><!-- /.container-fluid -->
+      </section>
+
+  {% endblock main_content %}
+
+  {% block custom_js %}
+
+  <script>
+    $(document).ready(function(){
+      var donutChartCanvas = $('#pieChart').get(0).getContext('2d')
+	  var pieData        = {
+        labels: [
+            'Tenants', 
+            'Owners',
+        ],
+        datasets: [
+          {
+            data: [{{ all_tenant_count }}, {{ owner_count }}],
+            backgroundColor : ['#f56954', '#00a65a'],
+          }
+        ]
+      }
+
+      //-------------
+      //- PIE CHART -
+      //-------------
+      // Get context with jQuery - using jQuery's .get() method.
+      var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
+      var pieData        = pieData;
+      var pieOptions     = {
+        maintainAspectRatio : false,
+        responsive : true,
+      }
+      //Create pie or douhnut chart
+      // You can switch between pie and douhnut using the method below.
+      var pieChart = new Chart(pieChartCanvas, {
+        type: 'pie',
+        data: pieData,
+        options: pieOptions      
+      })
+	  
+	  var course_name_list = {{ course_name_list|safe }}
+      var subject_count_list = {{ subject_count_list }}
+      var donutChartCanvas = $('#donutChart').get(0).getContext('2d')
+      var donutData        = {
+        labels: course_name_list,
+        datasets: [
+          {
+            data: subject_count_list,
+            backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
+          }
+        ]
+      }
+      var donutOptions     = {
+        maintainAspectRatio : false,
+        responsive : true,
+      }
+      //Create pie or douhnut chart
+      // You can switch between pie and douhnut using the method below.
+      var donutChart = new Chart(donutChartCanvas, {
+        type: 'doughnut',
+        data: donutData,
+        options: donutOptions      
+      })
+	  
+	  var course_name_list = {{ course_name_list|safe }}
+      var tenant_count_list_in_course = {{ tenant_count_list_in_course }}
+      var donutChartCanvas3 = $('#donutChart3').get(0).getContext('2d')
+      var donutData3        = {
+        labels: course_name_list,
+        datasets: [
+          {
+            data: tenant_count_list_in_course,
+            backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
+          }
+        ]
+      }
+      var donutOptions3     = {
+        maintainAspectRatio : false,
+        responsive : true,
+      }
+      //Create pie or douhnut chart
+      // You can switch between pie and douhnut using the method below.
+      var donutChart3 = new Chart(donutChartCanvas3, {
+        type: 'doughnut',
+        data: donutData3,
+        options: donutOptions3      
+      })
+	  
+	  var owners_name_list = {{ owners_name_list|safe }}
+      var apartment_count_list = {{ apartment_count_list }}
+      var donutChartCanvas2 = $('#donutChart2').get(0).getContext('2d')
+      var donutData2        = {
+        labels: owners_name_list,
+        datasets: [
+          {
+            data: apartment_count_list,
+            backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
+          }
+        ]
+      }
+      var donutOptions2     = {
+        maintainAspectRatio : false,
+        responsive : true,
+      }
+      //Create pie or douhnut chart
+      // You can switch between pie and douhnut using the method below.
+      var donutChart2 = new Chart(donutChartCanvas2, {
+        type: 'doughnut',
+        data: donutData2,
+        options: donutOptions2      
+      })
+
+
+      // Total Students in Each Course
+      //var donutChartCanvas = $('#pieChart2').get(0).getContext('2d')
+	  var owners_name_list = {{ owners_name_list|safe }}
+      var tenant_count_list_in_owner = {{ tenant_count_list_in_owner }}
+      var donutChartCanvas4 = $('#pieChart4').get(0).getContext('2d')
+      var donutData4        = {
+        labels: owners_name_list,
+        datasets: [
+          {
+            data: tenant_count_list_in_owner,
+            backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
+          }
+        ]
+      }
+      var donutOptions4     = {
+        maintainAspectRatio : false,
+        responsive : true,
+      }
+      //Create pie or douhnut chart
+      // You can switch between pie and douhnut using the method below.
+      var donutChart4 = new Chart(donutChartCanvas4, {
+        type: 'doughnut',
+        data: donutData4,
+        options: donutOptions4      
+      })
+
+
+      // Get context with jQuery - using jQuery's .get() method.
+      // Total Students in Each Course
+      //var donutChartCanvas = $('#pieChart2').get(0).getContext('2d')
+	  
+	  var driver_name_list = {{ driver_name_list|safe }}
+      var vehicle_count_list_in_driver = {{ vehicle_count_list_in_driver }}
+      var donutChartCanvas5 = $('#pieChart3').get(0).getContext('2d')
+      var donutData5        = {
+        labels: driver_name_list,
+        datasets: [
+          {
+            data: vehicle_count_list_in_driver,
+            backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
+          }
+        ]
+      }
+      var donutOptions5     = {
+        maintainAspectRatio : false,
+        responsive : true,
+      }
+      //Create pie or douhnut chart
+      // You can switch between pie and douhnut using the method below.
+      var donutChart5 = new Chart(donutChartCanvas5, {
+        type: 'doughnut',
+        data: donutData5,
+        options: donutOptions5      
+      })
+	  
+	  
+	  
+	  var subject_list = {{ subject_list|safe }}
+      var tenant_count_list_in_subject = {{ tenant_count_list_in_subject }}
+      var donutChartCanvas6 = $('#pieChart5').get(0).getContext('2d')
+      var donutData6        = {
+        labels: subject_list,
+        datasets: [
+          {
+            data: tenant_count_list_in_subject,
+            backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
+          }
+        ]
+      }
+      var donutOptions6     = {
+        maintainAspectRatio : false,
+        responsive : true,
+      }
+      //Create pie or douhnut chart
+      // You can switch between pie and douhnut using the method below.
+      var donutChart6 = new Chart(donutChartCanvas6, {
+        type: 'doughnut',
+        data: donutData6,
+        options: donutOptions6      
+      })
+
+	  
+
+      //-------------
+      //- BAR CHART - Staff Attendance vs Leave
+      //-------------
+
+      var owner_attendance_present_list = {{ owner_attendance_present_list }};
+      var owner_attendance_leave_list = {{ owner_attendance_leave_list }};
+      var owner_name_list = {{ owner_name_list|safe }};
+
+      var areaChartData = {
+        labels  : owner_name_list,
+        datasets: [
+          {
+            label               : 'Leave',
+            backgroundColor     : 'rgba(60,141,188,0.9)',
+            borderColor         : 'rgba(60,141,188,0.8)',
+            pointRadius          : false,
+            pointColor          : '#3b8bba',
+            pointStrokeColor    : 'rgba(60,141,188,1)',
+            pointHighlightFill  : '#fff',
+            pointHighlightStroke: 'rgba(60,141,188,1)',
+            data                : owner_attendance_leave_list 
+          },
+          {
+            label               : 'Attendance',
+            backgroundColor     : 'rgba(210, 214, 222, 1)',
+            borderColor         : 'rgba(210, 214, 222, 1)',
+            pointRadius         : false,
+            pointColor          : 'rgba(210, 214, 222, 1)',
+            pointStrokeColor    : '#c1c7d1',
+            pointHighlightFill  : '#fff',
+            pointHighlightStroke: 'rgba(220,220,220,1)',
+            data                : owner_attendance_present_list
+          },
+        ]
+      }
+
+
+      var barChartCanvas = $('#barChart').get(0).getContext('2d')
+      var barChartData = jQuery.extend(true, {}, areaChartData)
+      var temp0 = areaChartData.datasets[0]
+      var temp1 = areaChartData.datasets[1]
+      barChartData.datasets[0] = temp1
+      barChartData.datasets[1] = temp0
+
+      var barChartOptions = {
+        responsive              : true,
+        maintainAspectRatio     : false,
+        datasetFill             : false
+      }
+
+      var barChart = new Chart(barChartCanvas, {
+        type: 'bar', 
+        data: barChartData,
+        options: barChartOptions
+      })
+
+
+        //- BAR CHART - Student Attendance vs Leave
+      //-------------
+
+      var tenant_attendance_present_list = {{ tenant_attendance_present_list }};
+      var tenant_attendance_leave_list = {{ tenant_attendance_leave_list }};
+      var tenant_name_list = {{ tenant_name_list|safe }};
+
+      var areaChartData2 = {
+        labels  : tenant_name_list,
+        datasets: [
+          {
+            label               : 'Leave',
+            backgroundColor     : 'rgba(60,141,188,0.9)',
+            borderColor         : 'rgba(60,141,188,0.8)',
+            pointRadius          : false,
+            pointColor          : '#3b8bba',
+            pointStrokeColor    : 'rgba(60,141,188,1)',
+            pointHighlightFill  : '#fff',
+            pointHighlightStroke: 'rgba(60,141,188,1)',
+            data                : tenant_attendance_leave_list 
+          },
+          {
+            label               : 'Attendance',
+            backgroundColor     : 'rgba(210, 214, 222, 1)',
+            borderColor         : 'rgba(210, 214, 222, 1)',
+            pointRadius         : false,
+            pointColor          : 'rgba(210, 214, 222, 1)',
+            pointStrokeColor    : '#c1c7d1',
+            pointHighlightFill  : '#fff',
+            pointHighlightStroke: 'rgba(220,220,220,1)',
+            data                : tenant_attendance_present_list
+          },
+        ]
+      }
+
+
+      var barChartCanvas2 = $('#barChart2').get(0).getContext('2d')
+      var barChartData2 = jQuery.extend(true, {}, areaChartData2)
+      var temp02 = areaChartData2.datasets[0]
+      var temp12 = areaChartData2.datasets[1]
+      barChartData2.datasets[0] = temp12
+      barChartData2.datasets[1] = temp02
+
+      var barChartOptions2 = {
+        responsive              : true,
+        maintainAspectRatio     : false,
+        datasetFill             : false
+      }
+
+      var barChart2 = new Chart(barChartCanvas2, {
+        type: 'bar', 
+        data: barChartData2,
+        options: barChartOptions2
+      })
+
+    })
+  </script>
+
+  {% endblock custom_js %}

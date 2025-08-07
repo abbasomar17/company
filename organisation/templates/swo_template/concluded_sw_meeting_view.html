@@ -1,0 +1,77 @@
+{% extends 'swo_template/base_template.html' %}
+
+{% block page_title %}
+    Concluded SWO Meeting
+{% endblock page_title %}
+
+{% block main_content %}
+
+{% load static %}
+
+<section class="content">
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">SW Meeting Requests</h3>
+                        </div>
+                        <!-- /.card-header -->
+
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Tenant Name</th>
+                                    <th>Owner Name</th>
+									<th>Apartment Name</th>
+									<th>Applied By</th>
+                                    <th>Termination Reason</th>
+                                    <th>Done at</th>
+                                    <th>Decision</th>
+									<th>Decision Reason</th>
+                                </tr>
+                                </thead>
+
+                                {% for swo_meeting in swo_meetings %}
+                                <tbody>
+                                <tr>
+                                    <td>{{ swo_meeting.id }}</td>
+                                    <td>{{ swo_meeting.tenant_id.admin.user.first_name }} {{ swo_meeting.tenant_id.admin.user.last_name }}</td>
+                                    <td>{{ swo_meeting.owner_id.admin.user.first_name }} {{ swo_meeting.owner_id.admin.user.last_name }}</td> 
+                                    <td>{{ swo_meeting.apartment_id.title }}</td>
+                                    <td>{{ swo_meeting.applied_person }}</td>
+									<td>{{ swo_meeting.reason }}</td>
+                                    <td>{{ swo_meeting.date }}</td>
+                                    <td>
+										{{swo_meeting.decision}}                                            
+                                    </td>
+									<td>{{ swo_meeting.dec_reason }}</td>
+                                </tr>
+                                </tbody>
+                                {% endfor %}
+
+                            </table>
+                        </div>
+                    
+                    </div>
+                    <!-- /.card -->
+
+                </div>
+            </div>
+
+        </div><!-- /.container-fluid -->
+      </section>
+
+
+
+  {% endblock main_content %}
+
+  {% comment %} Custom JS to Identify the Reply and Post Reply {% endcomment %}
+
+  {% block custom_js %}
+
+  {% endblock custom_js %}

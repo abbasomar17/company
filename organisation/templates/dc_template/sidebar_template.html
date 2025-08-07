@@ -1,0 +1,199 @@
+{% load static %}
+
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+      <!-- Brand Logo -->
+      <a href="{% url 'dc_home' %}" class="brand-link">
+        <img src="{% static 'dist/img/AdminLTELogo.png' %}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+            style="opacity: .8">
+        <span class="brand-text font-weight-light">General System</span>
+      </a>
+
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <!-- Sidebar user panel (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+          <div class="image">
+            <img src="{% static 'dist/img/user2-160x160.jpg' %}" class="img-circle elevation-2" alt="User Image">
+          </div>
+          <div class="info">
+            <a href="{% url 'dc_profile' %}" class="d-block">{{ user.first_name }} {{ user.last_name }}</a>
+          </div>
+        </div>
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <!-- Add icons to the links using the .nav-icon class
+                with font-awesome or any other icon font library -->
+
+            <li class="nav-item">
+              {% url 'dc_home' as dc_home %}
+              <a href="{{ dc_home }}" class="nav-link {% if request.path == dc_home %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  Home
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'manage_rate' as manage_rate %}
+              {% url 'edit_rate' rate_id=id as edit_rate %}
+              <a href="{{ manage_rate }}" class="nav-link {% if request.path == manage_rate %} active {% endif %} {% if request.path == edit_rate %} active {% endif %}">
+                <i class="nav-icon fas fa-chalkboard-teacher"></i>
+                <p>
+                  Manage Increment
+                </p>
+              </a>
+            </li>
+            
+            <li class="nav-item">
+              {% url 'add_rate' as add_rate %}
+              <a href="{{ add_rate }}" class="nav-link {% if request.path == add_rate %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Add Increment
+                </p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              {% url 'manage_office' as manage_office %}
+              {% url 'edit_office' office_id=id as edit_office %}
+              <a href="{{ manage_office }}" class="nav-link {% if request.path == manage_office %} active {% endif %} {% if request.path == edit_office %} active {% endif %}">
+                <i class="nav-icon fas fa-chalkboard-teacher"></i>
+                <p>
+                  Manage Office
+                </p>
+              </a>
+            </li>
+            
+            <li class="nav-item">
+              {% url 'add_office' as add_office %}
+              <a href="{{ add_office }}" class="nav-link {% if request.path == add_office %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Add Office
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'manage_ceo' as manage_ceo %}
+              {% url 'edit_ceo' ceo_id=id as edit_ceo %}
+              <a href="{{ manage_ceo }}" class="nav-link {% if request.path == manage_ceo %} active {% endif %} {% if request.path == edit_ceo %} active {% endif %}">
+                <i class="nav-icon fas fa-chalkboard-teacher"></i>
+                <p>
+                  Manage CEO
+                </p>
+              </a>
+            </li>
+            
+            <li class="nav-item">
+              {% url 'add_ceo' as add_ceo %}
+              <a href="{{ add_ceo }}" class="nav-link {% if request.path == add_ceo %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Add CEO
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'manage_resp_ceo' as manage_resp_ceo %}
+              {% url 'edit_resp_ceo' resp_ceo_id=id as edit_resp_ceo %}
+              <a href="{{ manage_resp_ceo }}" class="nav-link {% if request.path == manage_resp_ceo %} active {% endif %} {% if request.path == edit_resp_ceo %} active {% endif %}">
+                <i class="nav-icon fas fa-chalkboard-teacher"></i>
+                <p>
+                  Manage CEO Responsibility
+                </p>
+              </a>
+            </li>
+            
+            <li class="nav-item">
+              {% url 'add_resp_ceo' as add_resp_ceo %}
+              <a href="{{ add_resp_ceo }}" class="nav-link {% if request.path == add_resp_ceo %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Add CEO Responsibility
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'manage_salary_ceo' as manage_salary_ceo %}
+              {% url 'edit_salary_ceo' salary_ceo_id=id as edit_salary_ceo %}
+              <a href="{{ manage_salary_ceo }}" class="nav-link {% if request.path == manage_salary_ceo %} active {% endif %} {% if request.path == edit_salary_ceo %} active {% endif %}">
+                <i class="nav-icon fas fa-chalkboard-teacher"></i>
+                <p>
+                  Manage CEO Salary
+                </p>
+              </a>
+            </li>
+            
+            <li class="nav-item">
+              {% url 'add_salary_ceo' as add_salary_ceo %}
+              <a href="{{ add_salary_ceo }}" class="nav-link {% if request.path == add_salary_ceo %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Add CEO Salary
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'manage_notification_ceo' as manage_notification_ceo %}
+              <a href="{{ manage_notification_ceo }}" class="nav-link {% if request.path == manage_notification_ceo %} active {% endif %}">
+                <i class="nav-icon fas fa-user-graduate"></i>
+                <p>
+                  Manage CEO Notification
+                </p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              {% url 'add_notification_ceo' as add_notification_ceo %}
+              <a href="{{ add_notification_ceo }}" class="nav-link {% if request.path == add_notification_ceo %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Add CEO Notification
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'ceo_feedback_message' as ceo_feedback_message %}
+              <a href="{{ ceo_feedback_message }}" class="nav-link {% if request.path == ceo_feedback_message %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  Reply CEO Feedbacks
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'dc_ceo_leave_view' as dc_ceo_leave_view %}
+              <a href="{{ dc_ceo_leave_view }}" class="nav-link {% if request.path == dc_ceo_leave_view %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  View CEO Leaves
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'dc_ceo_permission_view' as dc_ceo_permission_view %}
+              <a href="{{ dc_ceo_permission_view }}" class="nav-link {% if request.path == dc_ceo_permission_view %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  View CEO Permissions
+                </p>
+              </a>
+            </li>
+
+          </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+      </div>
+      <!-- /.sidebar -->
+    </aside>

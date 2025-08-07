@@ -1,0 +1,81 @@
+{% extends 'hr_template/base_template.html' %}
+
+{% block page_title %}
+    Accountant Permissions
+{% endblock page_title %}
+
+{% block main_content %}
+
+{% load static %}
+
+<section class="content">
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Permissions Applied by Accountant</h3>
+                        </div>
+                        <!-- /.card-header -->
+
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Accountant ID</th>
+                                    <th>Accountant Name</th>
+                                    <th>Permission Date</th>
+                                    <th>Permission Message</th>
+                                    <th>Applied On</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+
+                                {% for permission in permissions %}
+                                <tbody>
+                                <tr>
+                                    <td>{{ permission.id }}</td>
+                                    <td>{{ permission.accountant_id.id }}</td>
+                                    <td>{{ permission.accountant_id.admin.user.first_name }} {{ permission.accountant_id.admin.user.last_name }}</td> 
+                                    <td>{{ permission.leave_date }}</td>
+                                    <td>{{ permission.leave_message }}</td>
+                                    <td>{{ permission.created_at }}</td>
+                                    <td>
+                                        {% if permission.leave_status == 0 %}
+                                            <a href="{% url 'acc_permission_approve' permission_id=permission.id %}" class="btn btn-success">Approve</a>
+                                            <a href="{% url 'acc_permission_reject' permission_id=permission.id %}" class="btn btn-danger">Reject</a>
+                                        {% elif permission.leave_status == 1 %}
+                                            <button class="btn btn-warning" disabled="disabled">Approved</button>
+                                        {% else %}
+                                            <button class="btn btn-danger" disabled="disabled">Rejected</button>
+                                        {% endif %}
+                                        
+                                    </td>
+                                </tr>
+                                </tbody>
+                                {% endfor %}
+
+                            </table>
+                        </div>
+                    
+                    </div>
+                    <!-- /.card -->
+
+                </div>
+            </div>
+
+        </div><!-- /.container-fluid -->
+      </section>
+
+      
+
+  {% endblock main_content %}
+
+  {% comment %} Custom JS to Identify the Reply and Post Reply {% endcomment %}
+
+  {% block custom_js %}
+
+  {% endblock custom_js %}

@@ -1,0 +1,416 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>
+	{% block page_title %}
+	{% endblock page_title %}
+  </title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{% static "fontawesome-free/css/all.min.css" %}">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- Tempusdominus Bbootstrap 4 -->
+  <link rel="stylesheet" href="{% static 'tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css' %}">
+  <!-- iCheck -->
+  <link rel="stylesheet" href="{% static "icheck-bootstrap/icheck-bootstrap.min.css" %}">
+  <!-- JQVMap -->
+  <link rel="stylesheet" href="{% static "jqvmap/jqvmap.min.css" %}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static 'dist/css/adminlte.min.css'  %}">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="{% static "overlayScrollbars/css/OverlayScrollbars.min.css" %}">
+  <!-- Daterange picker -->
+  <link rel="stylesheet" href="{% static "daterangepicker/daterangepicker.css" %}">
+  <!-- summernote -->
+  <link rel="stylesheet" href="{% static "summernote/summernote-bs4.css" %}">
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+	<link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/favicon_package_v0.16/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/favicon_package_v0.16/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicon_package_v0.16/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'images/favicon_package_v0.16/site.webmanifest' %}">
+    <link rel="mask-icon" href="{% static 'images/favicon_package_v0.16/safari-pinned-tab.svg' %}" color="#2fcd99">
+    <meta name="msapplication-TileColor" content="#2fcd99">
+    <meta name="theme-color" content="#2fcd99">
+  
+  <style>
+   h1{
+        color: red;
+    }
+
+    .row{
+        margin-right: 0;
+        margin-left: 0;
+    }
+
+    body, html {
+      height: 100%;
+      background-color: #f7f8f9;
+      color: #6b7c93;
+    }
+
+    *, label {
+      font-family: "Helvetica Neue", Helvetica, sans-serif;
+      font-size: 16px;
+      font-variant: normal;
+      padding: 0;
+      margin: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button {
+      border: none;
+      border-radius: 4px;
+      outline: none;
+      text-decoration: none;
+      color: #fff;
+      background: #32325d;
+      white-space: nowrap;
+      display: inline-block;
+      height: 40px;
+      line-height: 40px;
+      padding: 0 14px;
+      box-shadow: 0 4px 6px rgba(50, 50, 93, .11), 0 1px 3px rgba(0, 0, 0, .08);
+      border-radius: 4px;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.025em;
+      text-decoration: none;
+      -webkit-transition: all 150ms ease;
+      transition: all 150ms ease;
+      float: left;
+      margin-left: 12px;
+      margin-top: 31px;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 7px 14px rgba(50, 50, 93, .10), 0 3px 6px rgba(0, 0, 0, .08);
+      background-color: #43458b;
+    }
+
+    form {
+      padding: 30px;
+      height: 120px;
+    }
+
+    label {
+      font-weight: 500;
+      font-size: 14px;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    #card-errors {
+      height: 20px;
+      padding: 4px 0;
+      color: #fa755a;
+    }
+
+    .form-row {
+      width: 70%;
+      float: left;
+    }
+
+    .token {
+      color: #32325d;
+      font-family: 'Source Code Pro', monospace;
+      font-weight: 500;
+    }
+
+    .wrapper {
+      width: 90%;
+      margin: 0 auto;
+      height: 100%;
+    }
+
+    #stripe-token-handler {
+      position: absolute;
+      top: 0;
+      left: 25%;
+      right: 25%;
+      padding: 20px 30px;
+      border-radius: 0 0 4px 4px;
+      box-sizing: border-box;
+      box-shadow: 0 50px 100px rgba(50, 50, 93, 0.1),
+        0 15px 35px rgba(50, 50, 93, 0.15),
+        0 5px 15px rgba(0, 0, 0, 0.1);
+      -webkit-transition: all 500ms ease-in-out;
+      transition: all 500ms ease-in-out;
+      transform: translateY(0);
+      opacity: 1;
+      background-color: white;
+    }
+
+    #stripe-token-handler.is-hidden {
+      opacity: 0;
+      transform: translateY(-80px);
+    }
+
+    /**
+     * The CSS shown here will not be introduced in the Quickstart guide, but shows
+     * how you can use CSS to style your Element's container.
+     */
+
+
+    .StripeElement {
+      background-color: white;
+      padding: 8px 12px;
+      border-radius: 4px;
+      border: 1px solid transparent;
+      box-shadow: 0 1px 3px 0 #e6ebf1;
+      -webkit-transition: box-shadow 150ms ease;
+      transition: box-shadow 150ms ease;
+    }
+
+    .StripeElement--focus {
+      box-shadow: 0 1px 3px 0 #cfd7df;
+    }
+
+    .StripeElement--invalid {
+      border-color: #fa755a;
+    }
+
+    .StripeElement--webkit-autofill {
+      background-color: #fefde5 !important;
+    }
+
+    .ElementsApp, .ElementsApp .InputElement {
+      color: #32325d;line-height: 24px;font-family: "Helvetica Neue", Helvetica, sans-serif;font-size: 16px;height: 24px;-webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    .ElementsApp:not(.is-autofilled) .InputElement:-webkit-autofill {
+      color: #32325d;
+      -webkit-text-fill-color: #32325d;
+    }
+    .ElementsApp .InputElement + .Input-placeholder--ie {
+      opacity: 1;color: #aab7c4;
+    }
+    .ElementsApp .InputElement::-webkit-input-placeholder {
+      opacity: 1;color: #aab7c4;
+    }
+    .ElementsApp .InputElement::-moz-placeholder {
+      opacity: 1;color: #aab7c4;
+    }
+    .ElementsApp .InputElement:-ms-input-placeholder {
+      opacity: 1;color: #aab7c4;
+    }
+    .ElementsApp .InputElement::placeholder {
+      opacity: 1;color: #aab7c4;
+    }
+    .ElementsApp .InputElement.is-invalid {
+      color: #fa755a;
+    }
+    .ElementsApp:not(.is-autofilled) .InputElement.is-invalid:-webkit-autofill {
+      color: #fa755a;
+      -webkit-text-fill-color: #fa755a;
+    }
+    .ElementsApp.is-invalid .Icon-fill--invalid {
+      fill: #fa755a;
+    }
+  </style>
+  {% block css %}
+
+{% endblock %}
+
+
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+	<nav class="main-header navbar navbar-expand navbar-white navbar-light">
+      <!-- Left navbar links -->
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+      </ul>
+	  {% if request.user.is_authenticated %}
+
+      <h4 style="margin-left: 10px; margin-top: 5px;">WELCOME {{ user.username }}</h4>
+
+      <ul class="navbar-nav ml-auto">
+      
+      <!-- Notifications Dropdown Menu -->
+      <li class="nav-item dropdown">
+        <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
+          <i class="fas fa-cog"></i>
+        </a>
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="left: inherit; right: 0px;">
+          
+          <a href="{% url 'my_orders' user=request.user %}" class="dropdown-item">
+            <i class="fas fa-shopping-cart"></i> {{ orders }}Booked
+          </a>
+
+          <div class="dropdown-divider"></div>
+          <a href="{% url 'logout' %}" class="dropdown-item">
+            <i class="fas fa-power-off mr-2"></i> Logout
+          </a>
+          <div class="dropdown-divider"></div>
+        </div>
+      </li>
+    </ul>
+	
+	{% else %}
+        <h4 style="margin-left: 10px; margin-top: 5px;">WELCOME Please Login if you have accuont otherwise create account first</h4>
+
+      <ul class="navbar-nav ml-auto">
+      
+      <!-- Notifications Dropdown Menu -->
+      <li class="nav-item dropdown">
+        <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
+          <i class="fas fa-cog"></i>
+        </a>
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="left: inherit; right: 0px;">
+          
+          <a href="{% url 'login' %}" class="dropdown-item">
+            <i class="fas fa-registered"></i> Login
+          </a>
+
+          <div class="dropdown-divider"></div>
+          <a href="{% url 'signup' %}" class="dropdown-item">
+            <i class="fas fa-user-plus mr-2"></i> SignUp
+          </a>
+          <div class="dropdown-divider"></div>
+        </div>
+      </li>
+    </ul>
+     {% endif %}
+
+    </nav>
+
+
+{% block main_content %}
+
+
+{% endblock main_content %}
+<footer>
+	<div class="float-right">
+		<a href="{% url 'feedback_user' %}" class="btn btn-primary btn-block"> Send Feedback</a>
+</footer>
+
+<!-- jQuery -->
+<script src="{% static "jquery/jquery.min.js"  %}"></script>
+<!-- jQuery UI 1.11.4 -->
+<script src="{% static "jquery-ui/jquery-ui.min.js"  %}"></script>
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+  $.widget.bridge('uibutton', $.ui.button)
+</script>
+<!-- Bootstrap 4 -->
+<script src="{% static "bootstrap/js/bootstrap.bundle.min.js"  %}"></script>
+<!-- ChartJS -->
+<script src="{% static "chart.js/Chart.min.js"  %}"></script>
+<!-- Sparkline -->
+<script src="{% static "sparklines/sparkline.js"  %}"></script>
+<!-- JQVMap -->
+<script src="{% static "jqvmap/jquery.vmap.min.js"  %}"></script>
+<script src="{% static "jqvmap/maps/jquery.vmap.usa.js"  %}"></script>
+<!-- jQuery Knob Chart -->
+<script src="{% static "jquery-knob/jquery.knob.min.js"  %}"></script>
+<!-- daterangepicker -->
+<script src="{% static "moment/moment.min.js"  %}"></script>
+<script src="{% static "daterangepicker/daterangepicker.js"  %}"></script>
+<!-- Tempusdominus Bootstrap 4 -->
+<script src="{% static "tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"  %}"></script>
+<!-- Summernote -->
+<script src="{% static "summernote/summernote-bs4.min.js"  %}"></script>
+<!-- overlayScrollbars -->
+<script src="{% static "overlayScrollbars/js/jquery.overlayScrollbars.min.js"  %}"></script>
+<!-- AdminLTE App -->
+<script src="{% static 'dist/js/adminlte.js'  %}"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="{% static 'dist/js/pages/dashboard.js'  %}"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="{% static 'dist/js/demo.js'  %}"></script>
+
+<script src="//js.stripe.com/v3/"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"
+    integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js"
+    integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy"
+    crossorigin="anonymous"></script>
+  <script src="{% static 'js/base.js' %}" type="module"></script>
+
+    <script>
+
+        var stripe = Stripe('pk_test_6pRNASCoBOKtIshFeQd4XMUh');
+
+        // Create an instance of Elements
+        var elements = stripe.elements();
+
+        // Custom styling can be passed to options when creating an Element.
+        // (Note that this demo uses a wider set of styles than the guide below.)
+        var style = {
+          base: {
+            color: '#32325d',
+            lineHeight: '24px',
+            fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+            fontSmoothing: 'antialiased',
+            fontSize: '16px',
+            '::placeholder': {
+              color: '#aab7c4'
+            }
+          },
+          invalid: {
+            color: '#fa755a',
+            iconColor: '#fa755a'
+          }
+        };
+
+        // Create an instance of the card Element
+        var card = elements.create('card', {style: style});
+
+        // Add an instance of the card Element into the `card-element` <div>
+        card.mount('#card-element');
+
+        // Handle real-time validation errors from the card Element.
+        card.addEventListener('change', function(event) {
+          var displayError = document.getElementById('card-errors');
+          if (event.error) {
+            displayError.textContent = event.error.message;
+          } else {
+            displayError.textContent = '';
+          }
+        });
+
+        // Handle form submission
+        var form = document.getElementById('payment-form');
+        form.addEventListener('submit', function(event) {
+          event.preventDefault();
+
+          stripe.createToken(card).then(function(result) {
+            if (result.error) {
+              // Inform the user if there was an error
+              var errorElement = document.getElementById('card-errors');
+              errorElement.textContent = result.error.message;
+            } else {
+              // Send the token to your server
+              stripeTokenHandler(result.token);
+            }
+          });
+        });
+
+
+    </script>
+	{% block js %}
+    
+	{% endblock %}
+
+</body>
+</html>

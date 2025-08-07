@@ -1,0 +1,61 @@
+{% extends 'hr_template/base_template.html' %}
+
+{% block page_title %}
+    CEO Salaries
+{% endblock page_title %}
+
+{% block main_content %}
+
+{% load static %}
+
+<section class="content">
+        <div class="container-fluid">
+
+            
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">CEO Salaries</h3>
+                        </div>
+
+                        <div class="card-body">
+                           <div class="table-responsive">
+                                <table class="table">
+                                    <thead class="thead-light">
+                                    <tr>
+                                        <th>Office Name</th>
+                                        <th>Amount</th>
+										<th>Description</th>
+                                        <th>Created At</th>
+                                        <th>Updated At</th>
+                                    </tr>
+                                    </thead>
+                                    
+                                    {% for salary in salaries %}
+                                    <tr>
+                                        <td>{{ salary.office.title }}</td>
+                                        <td>{{ salary.amount }}</td>
+										<td>{{ salary.description }}</td>
+                                        <td>{{ salary.created_at }}</td>
+                                        <td>{{ salary.updated_at }}</td>
+                                        
+                                    </tr>
+                                    {% endfor %}
+                                </table>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /.container-fluid -->
+      </section>
+
+  {% endblock main_content %}
+
+{% block custom_js %}
+
+{% endblock custom_js %}

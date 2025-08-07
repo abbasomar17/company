@@ -1,0 +1,599 @@
+{% extends 'acc_template/base_template.html' %}
+
+{% block main_content %}
+
+{% load static %}
+
+<section class="content">
+        <div class="container-fluid">
+          <!-- Small boxes (Stat box) -->
+          <div class="row">
+			<div class="col-lg-3 col-6">
+              <!-- small box -->
+              <div class="small-box bg-info">
+                <div class="inner">
+                  <h3>{{ total_hr_attendance }}</h3>
+
+                  <p>Total Attendance</p><br/>
+				  <p>HR Meetings</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-stats-bars"></i>
+                </div>
+              </div>
+            </div>
+			<div class="col-lg-3 col-6">
+              <!-- small box -->
+              <div class="small-box bg-info">
+                <div class="inner">
+                  <h3>{{ total_ceo_attendance }}</h3>
+
+                  <p>Total Attendance</p><br/>
+				  <p>CEO Meetings</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-stats-bars"></i>
+                </div>
+              </div>
+            </div>
+			<div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-success">
+                    <div class="inner">
+                        <h3>{{ attendance_hr_absent }}</h3>
+
+                        <p>Absent HR Meetings</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-stats-bars"></i>
+                    </div>
+                   
+                    </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-warning">
+                    <div class="inner">
+                        <h3>{{ attendance_hr_present }}</h3>
+
+                        <p>Present HR Meetings</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-stats-bars"></i>
+                    </div>
+                    
+                    </div>
+                </div>
+			<div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-success">
+                    <div class="inner">
+                        <h3>{{ attendance_ceo_absent }}</h3>
+
+                        <p>Absent CEO Meetings</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-stats-bars"></i>
+                    </div>
+                    
+                    </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-warning">
+                    <div class="inner">
+                        <h3>{{ attendance_ceo_present }}</h3>
+
+                        <p>Present CEO Meetings</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-stats-bars"></i>
+                    </div>
+                    
+                    </div>
+                </div>
+            <div class="col-lg-3 col-6">
+              <!-- small box -->
+              <div class="small-box bg-info">
+                <div class="inner">
+					<p>Total Income: {{ total_income }}</p>
+					<p>Total Expenditure: {{ total_expenditure }}</p>
+					<p>Total Salaries: {{ total_salary }}</p>
+                  <p>Office Expenses: {{ overdue_cost }}</p>
+
+                  
+                </div>
+                <div class="icon">
+                  <i class="ion ion-pie-graph"></i>
+                </div>
+				</div>
+              </div>
+          </div>
+          <!-- /.row -->
+		  <div class="row">
+			<div class="col-lg-6">
+                    <!-- PIE CHART -->
+                    <div class="card card-danger">
+                    <div class="card-header">
+                        <h3 class="card-title"> {{ total_staff }} Staffs Distribution</h3>
+
+                        <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="pieChart3" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                    </div>
+                    <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+				
+				<div class="col-lg-6">
+                    <!-- PIE CHART -->
+                    <div class="card card-danger">
+                    <div class="card-header">
+                        <h3 class="card-title"> Office Income Vs Expenditure </h3>
+
+                        <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="pieChart4" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                    </div>
+                    <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+			</div>
+			<!-- /.row -->
+		  <div class="row">
+			<div class="col-lg-6">
+                    <!-- PIE CHART -->
+                    <div class="card card-danger">
+                    <div class="card-header">
+                        <h3 class="card-title"> {{ total_expenditure }} Expenditure Distribution</h3>
+
+                        <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="pieChart5" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                    </div>
+                    <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+				
+				<div class="col-lg-6">
+                    <!-- PIE CHART -->
+                    <div class="card card-danger">
+                    <div class="card-header">
+                        <h3 class="card-title"> {{ total_income}} Income Distribution</h3>
+
+                        <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="pieChart6" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                    </div>
+                    <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+				
+			</div>
+			
+			
+          <div class="row">
+			<div class="col-lg-6">
+                    <!-- PIE CHART -->
+                    <div class="card card-danger">
+                    <div class="card-header">
+                        <h3 class="card-title">Total HR Meetings Attendance Chart</h3>
+
+                        <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="pieChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                    </div>
+                    <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+				
+				<div class="col-lg-6">
+                    <!-- BAR CHART -->
+                    <div class="card card-success">
+                    <div class="card-header">
+                        <h3 class="card-title">Attendance Statistics by HR Meetings</h3>
+
+                        <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart">
+                        <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+			</div>
+			
+			<div class="row">
+				<div class="col-lg-6">
+                    <!-- PIE CHART -->
+                    <div class="card card-danger">
+                    <div class="card-header">
+                        <h3 class="card-title">Total CEO Meetings Attendance Chart</h3>
+
+                        <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="pieChart2" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                    </div>
+                    <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+				
+				<div class="col-lg-6">
+                    <!-- BAR CHART -->
+                    <div class="card card-success">
+                    <div class="card-header">
+                        <h3 class="card-title">Attendance Statistics by CEO Meetings</h3>
+
+                        <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart">
+                        <canvas id="barChart2" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+
+          </div>
+
+		
+		  
+        
+        </div>
+
+
+        
+      </section>
+
+  {% endblock main_content %}
+
+  {% block custom_js %}
+
+  <script>
+    $(document).ready(function(){
+			//Code for Pie Chart3
+            var pieData3        = {
+            labels: [
+                'CEO', 
+                'CS',
+				'H_ADMINS', 
+                'A_ADMINS',
+				'ACCOUNTANT', 
+                'LAWYER',
+				'SWO', 
+                'HR',
+            ],
+            datasets: [
+                {
+                data: [{{ all_ceo_count }}, {{ all_cs_count }}, {{ all_h_admin_count }}, {{ all_admin_count }}, {{ all_accountant_count }}, {{ all_lawyer_count }}, {{ all_swo_count }}, {{ all_hr_count }}],
+                backgroundColor : ['#ffd700', '#ff00ff', '#228b22', '#1e90ff', '#7fff00', '#ffff00', '#f56954', '#00a65a'],
+                }
+            ]
+            }
+           //Code for Pie Chart3
+            var pieChartCanvas3 = $('#pieChart3').get(0).getContext('2d')
+            var pieData3        = pieData3;
+            var pieOptions3     = {
+            maintainAspectRatio : false,
+            responsive : true,
+            }
+            //Create pie or douhnut chart
+            // You can switch between pie and douhnut using the method below.
+            var pieChart3 = new Chart(pieChartCanvas3, {
+            type: 'pie',
+            data: pieData3,
+            options: pieOptions3      
+            })
+			
+			//Code for Pie Chart4
+            var pieData4        = {
+            labels: [
+                'INCOME', 
+                'EXPENDITURE', 
+            ],
+            datasets: [
+                {
+                data: [{{ total_income }}, {{ total_expenditure }}],
+                backgroundColor : ['#f56954', '#00a65a'],
+                }
+            ]
+            }
+           //Code for Pie Chart4
+            var pieChartCanvas4 = $('#pieChart4').get(0).getContext('2d')
+            var pieData4        = pieData4;
+            var pieOptions4     = {
+            maintainAspectRatio : false,
+            responsive : true,
+            }
+            //Create pie or douhnut chart
+            // You can switch between pie and douhnut using the method below.
+            var pieChart4 = new Chart(pieChartCanvas4, {
+            type: 'pie',
+            data: pieData4,
+            options: pieOptions4      
+            })
+			
+			//Code for Pie Chart5
+            var pieData5        = {
+            labels: [
+                'CEO SALARIES', 
+                'CS SALARIES',
+				'H_ADMINS SALARIES', 
+                'A_ADMINS SALARIES',
+				'ACCOUNTANT SALARIES', 
+                'LAWYER SALARIES',
+				'SWO SALARIES', 
+                'HR SALARIES',
+				'OFFICE EXPENSES',
+            ],
+            datasets: [
+                {
+                data: [{{ ceo_sal_year }}, {{ cs_sal_year }}, {{ h_admin_sal_year }}, {{ admin_sal_year }}, {{ acc_sal_year }}, {{ office_law_sal }}, {{ swo_sal_year }}, {{ hr_sal_year }}, {{ overdue_cost }}],
+                backgroundColor : ['#ffd700', '#ff00ff', '#228b22', '#1e90ff', '#7fff00', '#ffff00', '#f56954', '#00a65a', '#2f4f4f'],
+                }
+            ]
+            }
+           //Code for Pie Chart5
+            var pieChartCanvas5 = $('#pieChart5').get(0).getContext('2d')
+            var pieData5        = pieData5;
+            var pieOptions5     = {
+            maintainAspectRatio : false,
+            responsive : true,
+            }
+            //Create pie or douhnut chart
+            // You can switch between pie and douhnut using the method below.
+            var pieChart5 = new Chart(pieChartCanvas5, {
+            type: 'pie',
+            data: pieData5,
+            options: pieOptions5      
+            })
+			
+			//Code for Pie Chart6
+            var pieData6        = {
+            labels: [
+                'HOTEL PAYMENT', 
+                'APARTMENT PAYMENT',
+				'OTHER INCOME',
+            ],
+            datasets: [
+                {
+                data: [{{ h_payment }}, {{ a_payment }}, {{ o_income }}],
+                backgroundColor : ['#f56954', '#00a65a', '#2f4f4f'],
+                }
+            ]
+            }
+           //Code for Pie Chart6
+            var pieChartCanvas6 = $('#pieChart6').get(0).getContext('2d')
+            var pieData6        = pieData6;
+            var pieOptions6     = {
+            maintainAspectRatio : false,
+            responsive : true,
+            }
+            //Create pie or douhnut chart
+            // You can switch between pie and douhnut using the method below.
+            var pieChart6 = new Chart(pieChartCanvas6, {
+            type: 'pie',
+            data: pieData6,
+            options: pieOptions6      
+            })
+			
+           //Code for Pie Chart
+            var pieData        = {
+            labels: [
+                'ABSENT', 
+                'PRESENT', 
+            ],
+            datasets: [
+                {
+                data: [{{ attendance_hr_absent }}, {{ attendance_hr_present }}],
+                backgroundColor : ['#f56954', '#00a65a'],
+                }
+            ]
+            }
+           //Code for Pie Chart
+            var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
+            var pieData        = pieData;
+            var pieOptions     = {
+            maintainAspectRatio : false,
+            responsive : true,
+            }
+            //Create pie or douhnut chart
+            // You can switch between pie and douhnut using the method below.
+            var pieChart = new Chart(pieChartCanvas, {
+            type: 'pie',
+            data: pieData,
+            options: pieOptions      
+            })
+			
+			//Code for Pie Chart2
+            var pieData2        = {
+            labels: [
+                'ABSENT', 
+                'PRESENT', 
+            ],
+            datasets: [
+                {
+                data: [{{ attendance_ceo_absent }}, {{ attendance_ceo_present }}],
+                backgroundColor : ['#f56954', '#00a65a'],
+                }
+            ]
+            }
+           //Code for Pie Chart2
+            var pieChartCanvas2 = $('#pieChart2').get(0).getContext('2d')
+            var pieData2        = pieData2;
+            var pieOptions2     = {
+            maintainAspectRatio : false,
+            responsive : true,
+            }
+            //Create pie or douhnut chart
+            // You can switch between pie and douhnut using the method below.
+            var pieChart2 = new Chart(pieChartCanvas2, {
+            type: 'pie',
+            data: pieData2,
+            options: pieOptions2      
+            })
+
+			// Code for bar chart
+			var meeting_hr_name = {{ meeting_hr_name|safe }}
+            var data_hr_present = {{ data_hr_present }}
+            var data_hr_absent = {{ data_hr_absent }}
+
+            //Dataset for Bar Chart
+            var areaChartData = {
+            labels  : meeting_hr_name,
+            datasets: [
+                {
+                label               : 'Present in Meeting',
+                backgroundColor     : 'rgba(60,141,188,0.9)',
+                borderColor         : 'rgba(60,141,188,0.8)',
+                pointRadius          : false,
+                pointColor          : '#3b8bba',
+                pointStrokeColor    : 'rgba(60,141,188,1)',
+                pointHighlightFill  : '#fff',
+                pointHighlightStroke: 'rgba(60,141,188,1)',
+                data                : data_hr_present
+                },
+                {
+                label               : 'Absent in Meeting',
+                backgroundColor     : 'rgba(210, 214, 222, 1)',
+                borderColor         : 'rgba(210, 214, 222, 1)',
+                pointRadius         : false,
+                pointColor          : 'rgba(210, 214, 222, 1)',
+                pointStrokeColor    : '#c1c7d1',
+                pointHighlightFill  : '#fff',
+                pointHighlightStroke: 'rgba(220,220,220,1)',
+                data                : data_hr_absent
+                },
+            ]
+            }
+
+
+            var barChartCanvas = $('#barChart').get(0).getContext('2d')
+            var barChartData = jQuery.extend(true, {}, areaChartData)
+            var temp1 = areaChartData.datasets[0]
+			var temp2 = areaChartData.datasets[1]
+            barChartData.datasets[0] = temp1
+			barChartData.datasets[1] = temp2
+
+            var barChartOptions = {
+            responsive              : true,
+            maintainAspectRatio     : false,
+            datasetFill             : false
+            }
+
+            var barChart = new Chart(barChartCanvas, {
+            type: 'bar', 
+            data: barChartData,
+            options: barChartOptions
+            })
+			
+			//Code for Bar Chart2
+            var meeting_ceo_name = {{ meeting_ceo_name|safe }}
+            var data_ceo_present = {{ data_ceo_present }}
+            var data_ceo_absent = {{ data_ceo_absent }}
+
+            //Dataset for Bar Chart
+            var areaChartData2 = {
+            labels  : meeting_ceo_name,
+            datasets: [
+                {
+                label               : 'Present in Meeting',
+                backgroundColor     : 'rgba(60,141,188,0.9)',
+                borderColor         : 'rgba(60,141,188,0.8)',
+                pointRadius          : false,
+                pointColor          : '#3b8bba',
+                pointStrokeColor    : 'rgba(60,141,188,1)',
+                pointHighlightFill  : '#fff',
+                pointHighlightStroke: 'rgba(60,141,188,1)',
+                data                : data_ceo_present
+                },
+                {
+                label               : 'Absent in Meeting',
+                backgroundColor     : 'rgba(210, 214, 222, 1)',
+                borderColor         : 'rgba(210, 214, 222, 1)',
+                pointRadius         : false,
+                pointColor          : 'rgba(210, 214, 222, 1)',
+                pointStrokeColor    : '#c1c7d1',
+                pointHighlightFill  : '#fff',
+                pointHighlightStroke: 'rgba(220,220,220,1)',
+                data                : data_ceo_absent
+                },
+            ]
+            }
+
+
+            var barChartCanvas2 = $('#barChart').get(0).getContext('2d')
+            var barChartData2 = jQuery.extend(true, {}, areaChartData2)
+            var temp3 = areaChartData2.datasets[0]
+			var temp4 = areaChartData2.datasets[1]
+            barChartData2.datasets[0] = temp3
+			barChartData2.datasets[1] = temp4
+
+            var barChartOptions2 = {
+            responsive              : true,
+            maintainAspectRatio     : false,
+            datasetFill             : false
+            }
+
+            var barChart2 = new Chart(barChartCanvas2, {
+            type: 'bar', 
+            data: barChartData2,
+            options: barChartOptions2
+            })
+
+
+       })
+  </script>
+
+  {% endblock custom_js %}

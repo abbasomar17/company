@@ -1,0 +1,487 @@
+{% extends 'ceo_template/base_template.html' %}
+
+{% block page_title %}
+    CEO Meeting Attendance
+{% endblock page_title %}
+
+{% block main_content %}
+
+{% load static %}
+
+<section class="content">
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Attendance</h3>
+                        </div>
+                        <!-- /.card-header -->
+
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th> Name </th>
+									<th> Status </th>
+                                    <th>Taken at</th>
+									<th>Updated at</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+
+                                {% for attendance in attendances %}
+                                <tbody>
+                                <tr>
+                                    <td>{{ attendance.id }}</td>
+                                    <td>{{ attendance.attendant_id.user.first_name }} {{ attendance.attendant_id.user.last_name }}</td>
+									<td>
+                                            {% if attendance.status == 1 %}
+                                                <span class="alert alert-success">Present</span>
+                                            {% elif attendance.status == 2 %}
+                                                <span class="alert alert-danger">Absent</span>
+                                            {% else %}
+                                                <span class="alert alert-warning">Not Involved</span>
+                                            {% endif %}
+                                        </td>
+                                    <td>{{ attendance.created_at }}</td>
+									<td>{{ attendance.updated_at }}</td>
+                                    <td>
+                                        {% if attendance.status == 1 %}
+                                            <a href="{% url 'ceo_meeting_attendance_reject' attendance_id=attendance.id %}" class="btn btn-danger">Absent</a>
+                                        {% elif leave.leave_status == 2 %}
+                                            <a href="{% url 'ceo_meeting_attendance_approve' attendance_id=attendance.id %}" class="btn btn-success">Present</a>
+                                        {% else %}
+                                            <a href="{% url 'ceo_meeting_attendance_approve' attendance_id=attendance.id %}" class="btn btn-success">Present</a>
+                                            <a href="{% url 'ceo_meeting_attendance_reject' attendance_id=attendance.id %}" class="btn btn-danger">Absent</a>
+                                        {% endif %}
+                                        
+                                    </td>
+                                </tr>
+                                </tbody>
+                                {% endfor %}
+
+                            </table>
+                        </div>
+                    
+                    </div>
+                    <!-- /.card -->
+
+                </div>
+            </div>
+			
+			<div class="row">
+
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">CEO</h3>
+
+                            <div class="card-tools">
+                            <div class="input-group input-group-sm" style="width: 150px;">
+                                <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+
+                                <div class="input-group-append">
+                                <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body table-responsive p-0">
+                            <table class="table table-hover text-nowrap">
+                            <thead>
+                                <tr>
+                                <th>ID</th>
+                                <th> Name </th>
+                                <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for ceo in ceos %}
+                                <tr>
+                                <td>{{ ceo.id }}</td>
+                                <td>{{ ceo.admin.user.first_name }}  {{ ceo.admin.user.last_name }}</td>
+                                <td>
+                                    <a href="{% url 'ceo_attend_ceo_save' ceo.id %}" class="btn btn-success">Present</a> 
+                                    <a href="{% url 'ceo_not_attend_ceo_save' ceo.id %}" class="btn btn-danger">Absent</a>
+                                </td>
+                                </tr>
+                                {% endfor %}
+                                
+                            </tbody>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                        </div>
+                    <!-- /.card -->
+
+                </div>
+            </div>
+			
+			<div class="row">
+
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">HR</h3>
+
+                            <div class="card-tools">
+                            <div class="input-group input-group-sm" style="width: 150px;">
+                                <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+
+                                <div class="input-group-append">
+                                <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body table-responsive p-0">
+                            <table class="table table-hover text-nowrap">
+                            <thead>
+                                <tr>
+                                <th>ID</th>
+                                <th> Name </th>
+                                <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for hr in hrs %}
+                                <tr>
+                                <td>{{ hr.id }}</td>
+                                <td>{{ hr.admin.user.first_name }}  {{ hr.admin.user.last_name }}</td>
+                                <td>
+                                    <a href="{% url 'hr_attend_ceo_save' hr.id %}" class="btn btn-success">Present</a> 
+                                    <a href="{% url 'hr_not_attend_ceo_save' hr.id %}" class="btn btn-danger">Absent</a>
+                                </td>
+                                </tr>
+                                {% endfor %}
+                                
+                            </tbody>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                        </div>
+                    <!-- /.card -->
+
+                </div>
+            </div>
+			
+			<div class="row">
+
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Social Welfare Officers</h3>
+
+                            <div class="card-tools">
+                            <div class="input-group input-group-sm" style="width: 150px;">
+                                <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+
+                                <div class="input-group-append">
+                                <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body table-responsive p-0">
+                            <table class="table table-hover text-nowrap">
+                            <thead>
+                                <tr>
+                                <th>ID</th>
+                                <th> Name </th>
+                                <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for swo in swos %}
+                                <tr>
+                                <td>{{ swo.id }}</td>
+                                <td>{{ swo.admin.user.first_name }}  {{ swo.admin.user.last_name }}</td>
+                                <td>
+                                    <a href="{% url 'swo_attend_ceo_save' swo.id %}" class="btn btn-success">Present</a> 
+                                    <a href="{% url 'swo_not_attend_ceo_save' swo.id %}" class="btn btn-danger">Absent</a>
+                                </td>
+                                </tr>
+                                {% endfor %}
+                                
+                            </tbody>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                        </div>
+                    <!-- /.card -->
+
+                </div>
+            </div>
+			
+			<div class="row">
+
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Lawyers</h3>
+
+                            <div class="card-tools">
+                            <div class="input-group input-group-sm" style="width: 150px;">
+                                <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+
+                                <div class="input-group-append">
+                                <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body table-responsive p-0">
+                            <table class="table table-hover text-nowrap">
+                            <thead>
+                                <tr>
+                                <th>ID</th>
+                                <th> Name </th>
+                                <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for law in lawyers %}
+                                <tr>
+                                <td>{{ law.id }}</td>
+                                <td>{{ law.admin.user.first_name }}  {{ law.admin.user.last_name }}</td>
+                                <td>
+                                    <a href="{% url 'law_attend_ceo_save' law.id %}" class="btn btn-success">Present</a> 
+                                    <a href="{% url 'law_not_attend_ceo_save' law.id %}" class="btn btn-danger">Absent</a>
+                                </td>
+                                </tr>
+                                {% endfor %}
+                                
+                            </tbody>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                        </div>
+                    <!-- /.card -->
+
+                </div>
+            </div>
+			
+			<div class="row">
+
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Customer Service</h3>
+
+                            <div class="card-tools">
+                            <div class="input-group input-group-sm" style="width: 150px;">
+                                <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+
+                                <div class="input-group-append">
+                                <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body table-responsive p-0">
+                            <table class="table table-hover text-nowrap">
+                            <thead>
+                                <tr>
+                                <th>ID</th>
+                                <th> Name </th>
+                                <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for cs in css %}
+                                <tr>
+                                <td>{{ cs.id }}</td>
+                                <td>{{ cs.admin.user.first_name }}  {{ cs.admin.user.last_name }}</td>
+                                <td>
+                                    <a href="{% url 'cs_attend_ceo_save' cs.id %}" class="btn btn-success">Present</a> 
+                                    <a href="{% url 'cs_not_attend_ceo_save' cs.id %}" class="btn btn-danger">Absent</a>
+                                </td>
+                                </tr>
+                                {% endfor %}
+                                
+                            </tbody>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                        </div>
+                    <!-- /.card -->
+
+                </div>
+            </div>
+			
+			<div class="row">
+
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Accountants</h3>
+
+                            <div class="card-tools">
+                            <div class="input-group input-group-sm" style="width: 150px;">
+                                <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+
+                                <div class="input-group-append">
+                                <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body table-responsive p-0">
+                            <table class="table table-hover text-nowrap">
+                            <thead>
+                                <tr>
+                                <th>ID</th>
+                                <th> Name </th>
+                                <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for acc in accs %}
+                                <tr>
+                                <td>{{ acc.id }}</td>
+                                <td>{{ acc.admin.user.first_name }}  {{ acc.admin.user.last_name }}</td>
+                                <td>
+                                    <a href="{% url 'acc_attend_ceo_save' acc.id %}" class="btn btn-success">Present</a> 
+                                    <a href="{% url 'acc_not_attend_ceo_save' acc.id %}" class="btn btn-danger">Absent</a>
+                                </td>
+                                </tr>
+                                {% endfor %}
+                                
+                            </tbody>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                        </div>
+                    <!-- /.card -->
+
+                </div>
+            </div>
+			
+			<div class="row">
+
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Hotel Admins</h3>
+
+                            <div class="card-tools">
+                            <div class="input-group input-group-sm" style="width: 150px;">
+                                <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+
+                                <div class="input-group-append">
+                                <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body table-responsive p-0">
+                            <table class="table table-hover text-nowrap">
+                            <thead>
+                                <tr>
+                                <th>ID</th>
+                                <th> Name </th>
+                                <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for h_admin in h_admins %}
+                                <tr>
+                                <td>{{ h_admin.id }}</td>
+                                <td>{{ h_admin.admin.user.first_name }}  {{ h_admin.admin.user.last_name }}</td>
+                                <td>
+                                    <a href="{% url 'h_admin_attend_ceo_save' h_admin.id %}" class="btn btn-success">Present</a> 
+                                    <a href="{% url 'h_admin_not_attend_ceo_save' h_admin.id %}" class="btn btn-danger">Absent</a>
+                                </td>
+                                </tr>
+                                {% endfor %}
+                                
+                            </tbody>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                        </div>
+                    <!-- /.card -->
+
+                </div>
+            </div>
+			
+			<div class="row">
+
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Apartment Admins</h3>
+
+                            <div class="card-tools">
+                            <div class="input-group input-group-sm" style="width: 150px;">
+                                <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+
+                                <div class="input-group-append">
+                                <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body table-responsive p-0">
+                            <table class="table table-hover text-nowrap">
+                            <thead>
+                                <tr>
+                                <th>ID</th>
+                                <th> Name </th>
+                                <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for admin in admins %}
+                                <tr>
+                                <td>{{ admin.id }}</td>
+                                <td>{{ admin.admin.user.first_name }}  {{ admin.admin.user.last_name }}</td>
+                                <td>
+                                    <a href="{% url 'admin_attend_ceo_save' admin.id %}" class="btn btn-success">Present</a> 
+                                    <a href="{% url 'admin_not_attend_ceo_save' admin.id %}" class="btn btn-danger">Absent</a>
+                                </td>
+                                </tr>
+                                {% endfor %}
+                                
+                            </tbody>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                        </div>
+                    <!-- /.card -->
+
+                </div>
+            </div>
+
+        </div><!-- /.container-fluid -->
+      </section>
+
+      
+
+  {% endblock main_content %}
+
+  {% comment %} Custom JS to Identify the Reply and Post Reply {% endcomment %}
+
+  {% block custom_js %}
+
+  {% endblock custom_js %}

@@ -1,0 +1,1560 @@
+{% extends 'dc_template/base_template.html' %}
+
+{% block main_content %}
+
+{% load static %}
+
+<section class="content">
+        <div class="container-fluid">
+          <!-- Small boxes (Stat box) -->
+          <div class="row">
+			<div class="col-lg-3 col-6">
+              <!-- small box -->
+              <div class="small-box bg-info">
+                <div class="inner">
+                  <h3>{{ rate }}</h3>
+
+                  <p>Increment Rate</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-stats-bars"></i>
+                </div>
+              </div>
+            </div>
+			<div class="col-lg-3 col-6">
+              <!-- small box -->
+              <div class="small-box bg-info">
+                <div class="inner">
+                  <h3>{{ total_staff }}</h3>
+
+                  <p>Total Employee</p><br/>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-stats-bars"></i>
+                </div>
+              </div>
+            </div>
+			<div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-success">
+                    <div class="inner">
+                        <p>Total HR Meetings:{{ no_hr_meetings }}</p>
+
+                        <p>Total CEO Meetings:{{ no_ceo_meetings }}</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-stats-bars"></i>
+                    </div>
+                   
+                    </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-warning">
+                    <div class="inner">
+                        <p>Total Disc Cases:{{ no_dis_case }}</p>
+
+                        <p>Total Disc Meetings: {{ no_dis_meeting }}</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-stats-bars"></i>
+                    </div>
+                    
+                    </div>
+                </div>
+            <div class="col-lg-3 col-6">
+              <!-- small box -->
+              <div class="small-box bg-info">
+                <div class="inner">
+					<p>Total CEO Meetings: {{ no_ceo_meetings }}</p>
+					<p>Total HR Meetings: {{ no_hr_meetings }}</p>
+
+                  
+                </div>
+                <div class="icon">
+                  <i class="ion ion-pie-graph"></i>
+                </div>
+				</div>
+              </div>
+			  
+			  <div class="col-lg-3 col-6">
+              <!-- small box -->
+              <div class="small-box bg-info">
+                <div class="inner">
+					<p>Total Income: {{ total_income_list_in_all }}</p>
+					<p>Total Expenditure: {{ total_expenditure_list_in_all }}</p>
+					<p>Total Salaries: {{ total_salaries_list_in_all }}</p>
+                  <p>Total Expenses: {{ overdue_list_in_all }} of {{ overdue_count_list_in_all }}</p>
+
+                  
+                </div>
+                <div class="icon">
+                  <i class="ion ion-pie-graph"></i>
+                </div>
+				</div>
+              </div>
+          </div>
+          <!-- /.row -->
+		  <div class="row">
+			<div class="col-lg-6">
+                    <!-- PIE CHART -->
+                    <div class="card card-danger">
+                    <div class="card-header">
+                        <h3 class="card-title"> {{ total_staff }} Employees Distribution</h3>
+
+                        <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="pieChart3" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                    </div>
+                    <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+				
+				<div class="col-lg-6">
+                    <!-- BAR CHART -->
+                    <div class="card card-success">
+                    <div class="card-header">
+                        <h3 class="card-title">Employees Distribution in Each Office</h3>
+
+                        <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart">
+                        <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+			</div>
+			
+			<div class="row">
+				
+				<div class="col-lg-6">
+                    <!-- PIE CHART -->
+                    <div class="card card-danger">
+                    <div class="card-header">
+                        <h3 class="card-title"> Income Vs Expenditure </h3>
+
+                        <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="pieChart4" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                    </div>
+                    <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+				
+				<div class="col-lg-6">
+              <!-- DONUT CHART -->
+              <div class="card card-danger">
+                <div class="card-header">
+                  <h3 class="card-title">Income Vs Expenditure Fraction in Each Office</h3>
+
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <canvas id="donutChart3" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+              
+            </div>
+		</div>
+			<!-- /.row -->
+		  <div class="row">
+			<div class="col-lg-6">
+                    <!-- PIE CHART -->
+                    <div class="card card-danger">
+                    <div class="card-header">
+                        <h3 class="card-title"> {{ total_expenditure_list_in_all }} Expenditure Distribution</h3>
+
+                        <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="pieChart5" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                    </div>
+                    <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+				
+				<div class="col-lg-6">
+                    <!-- BAR CHART -->
+                    <div class="card card-success">
+                    <div class="card-header">
+                        <h3 class="card-title">Expenditure Distribution in Each Office</h3>
+
+                        <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart">
+                        <canvas id="barChart2" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+				
+				<div class="col-lg-6">
+              <!-- DONUT CHART -->
+              <div class="card card-danger">
+                <div class="card-header">
+                  <h3 class="card-title">Total Expenditure in Each Office</h3>
+
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <canvas id="donutChart2" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+              
+            </div>
+		</div>
+			<div class="row">
+				<div class="col-lg-6">
+                    <!-- PIE CHART -->
+                    <div class="card card-danger">
+                    <div class="card-header">
+                        <h3 class="card-title"> {{ total_income_list_in_all }} Income Distribution</h3>
+
+                        <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="pieChart6" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                    </div>
+                    <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+				
+				<div class="col-lg-6">
+                    <!-- BAR CHART -->
+                    <div class="card card-success">
+                    <div class="card-header">
+                        <h3 class="card-title">Incomes Distribution in Each Office</h3>
+
+                        <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart">
+                        <canvas id="barChart3" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+				
+				<div class="col-lg-6">
+              <!-- DONUT CHART -->
+              <div class="card card-danger">
+                <div class="card-header">
+                  <h3 class="card-title">Total Income in Each Office</h3>
+
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <canvas id="donutChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+              
+            </div>
+		</div>
+			<div class="row">
+				
+				<div class="col-lg-6">
+                    <!-- PIE CHART -->
+                    <div class="card card-danger">
+                    <div class="card-header">
+                        <h3 class="card-title">{{ income_expenditure_list_in_all}} Income/Expenditure Numbers Distribution</h3>
+
+                        <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="pieChart9" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                    </div>
+                    <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+				
+				<div class="col-lg-6">
+                    <!-- BAR CHART -->
+                    <div class="card card-success">
+                    <div class="card-header">
+                        <h3 class="card-title">Income/Expenditure Numbers in Each Office</h3>
+
+                        <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart">
+                        <canvas id="barChart4" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+				
+			</div>
+			
+		<div class="row">
+			<div class="col-lg-6">
+                    <!-- PIE CHART -->
+                    <div class="card card-danger">
+                    <div class="card-header">
+                        <h3 class="card-title"> CEO Leaves Distribution</h3>
+
+                        <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="pieChart7" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                    </div>
+                    <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+				
+				<div class="col-lg-6">
+                    <!-- BAR CHART -->
+                    <div class="card card-success">
+                    <div class="card-header">
+                        <h3 class="card-title">Leaves Distribution in Each Office</h3>
+
+                        <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart">
+                        <canvas id="barChart5" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+			</div>
+			
+			<div class="row">	
+				<div class="col-lg-6">
+                    <!-- PIE CHART -->
+                    <div class="card card-danger">
+                    <div class="card-header">
+                        <h3 class="card-title"> CEO Permissions Distribution</h3>
+
+                        <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="pieChart8" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                    </div>
+                    <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+				
+				<div class="col-lg-6">
+                    <!-- BAR CHART -->
+                    <div class="card card-success">
+                    <div class="card-header">
+                        <h3 class="card-title">Permissions Distribution in Each Office</h3>
+
+                        <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart">
+                        <canvas id="barChart6" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+				
+			</div>
+				
+			
+		  <div class="row">
+			<div class="col-lg-6">
+                    <!-- BAR CHART -->
+                    <div class="card card-success">
+                    <div class="card-header">
+                        <h3 class="card-title">Discpline Distribution in Each Office</h3>
+
+                        <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart">
+                        <canvas id="barChart7" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+				
+			<div class="col-lg-6">
+              <!-- DONUT CHART -->
+              <div class="card card-danger">
+                <div class="card-header">
+                  <h3 class="card-title">Discpline Ratio in Each Office</h3>
+
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <canvas id="donutChart4" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+              
+            </div>
+		</div>
+		
+		<div class="row">	
+			<div class="col-lg-6">
+                    <!-- BAR CHART -->
+                    <div class="card card-success">
+                    <div class="card-header">
+                        <h3 class="card-title">Meetings Distribution in Each Office</h3>
+
+                        <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart">
+                        <canvas id="barChart8" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+		  </div>
+    </div>
+
+
+        
+  </section>
+
+  {% endblock main_content %}
+
+  {% block custom_js %}
+
+  <script>
+    $(document).ready(function(){
+			//Code for Pie Chart3
+            var pieData3        = {
+            labels: [
+                'CEO', 
+                'CS',
+				'H_ADMINS', 
+                'A_ADMINS',
+				'ACCOUNTANT', 
+                'LAWYER',
+				'SWO', 
+                'HR',
+            ],
+            datasets: [
+                {
+                data: [{{ all_ceo_count }}, {{ all_cs_count }}, {{ all_h_admin_count }}, {{ all_admin_count }}, {{ all_accountant_count }}, {{ all_lawyer_count }}, {{ all_swo_count }}, {{ all_hr_count }}],
+                backgroundColor : ['#ffd700', '#ff00ff', '#228b22', '#1e90ff', '#7fff00', '#ffff00', '#f56954', '#00a65a'],
+                }
+            ]
+            }
+           //Code for Pie Chart3
+            var pieChartCanvas3 = $('#pieChart3').get(0).getContext('2d')
+            var pieData3        = pieData3;
+            var pieOptions3     = {
+            maintainAspectRatio : false,
+            responsive : true,
+            }
+            //Create pie or douhnut chart
+            // You can switch between pie and douhnut using the method below.
+            var pieChart3 = new Chart(pieChartCanvas3, {
+            type: 'pie',
+            data: pieData3,
+            options: pieOptions3      
+            })
+			
+			//Code for Pie Chart4
+            var pieData4        = {
+            labels: [
+                'INCOME', 
+                'EXPENDITURE', 
+            ],
+            datasets: [
+                {
+                data: [{{ total_income_list_in_all }}, {{ total_expenditure_list_in_all }}],
+                backgroundColor : ['#f56954', '#00a65a'],
+                }
+            ]
+            }
+           //Code for Pie Chart4
+            var pieChartCanvas4 = $('#pieChart4').get(0).getContext('2d')
+            var pieData4        = pieData4;
+            var pieOptions4     = {
+            maintainAspectRatio : false,
+            responsive : true,
+            }
+            //Create pie or douhnut chart
+            // You can switch between pie and douhnut using the method below.
+            var pieChart4 = new Chart(pieChartCanvas4, {
+            type: 'pie',
+            data: pieData4,
+            options: pieOptions4      
+            })
+			
+			//Code for Pie Chart5
+            var pieData5        = {
+            labels: [
+                'CEO SALARIES', 
+                'CS SALARIES',
+				'H_ADMINS SALARIES', 
+                'A_ADMINS SALARIES',
+				'ACCOUNTANT SALARIES', 
+                'LAWYER SALARIES',
+				'SWO SALARIES', 
+                'HR SALARIES',
+				'OFFICE EXPENSES',
+            ],
+            datasets: [
+                {
+                data: [{{ ceo_salaries_list_in_all }}, {{ cs_salaries_list_in_all }}, {{ h_admin_salaries_list_in_all }}, {{ admin_salaries_list_in_all }}, {{ accountant_salaries_list_in_all }}, {{ law_sal_year }}, {{ swo_salaries_list_in_all }}, {{hr_salaries_list_in_all }}, {{ overdue_list_in_all }}],
+                backgroundColor : ['#ffd700', '#ff00ff', '#228b22', '#1e90ff', '#7fff00', '#ffff00', '#f56954', '#00a65a', '#2f4f4f'],
+                }
+            ]
+            }
+           //Code for Pie Chart5
+            var pieChartCanvas5 = $('#pieChart5').get(0).getContext('2d')
+            var pieData5        = pieData5;
+            var pieOptions5     = {
+            maintainAspectRatio : false,
+            responsive : true,
+            }
+            //Create pie or douhnut chart
+            // You can switch between pie and douhnut using the method below.
+            var pieChart5 = new Chart(pieChartCanvas5, {
+            type: 'pie',
+            data: pieData5,
+            options: pieOptions5      
+            })
+			
+			//Code for Pie Chart6
+            var pieData6        = {
+            labels: [
+                'HOTEL PAYMENT', 
+                'APARTMENT PAYMENT',
+				'OTHER INCOME',
+            ],
+            datasets: [
+                {
+                data: [{{ h_payment_list_in_all }}, {{ a_payment_list_in_all }}, {{ income_list_in_all }}],
+                backgroundColor : ['#f56954', '#00a65a', '#2f4f4f'],
+                }
+            ]
+            }
+           //Code for Pie Chart6
+            var pieChartCanvas6 = $('#pieChart6').get(0).getContext('2d')
+            var pieData6        = pieData6;
+            var pieOptions6     = {
+            maintainAspectRatio : false,
+            responsive : true,
+            }
+            //Create pie or douhnut chart
+            // You can switch between pie and douhnut using the method below.
+            var pieChart6 = new Chart(pieChartCanvas6, {
+            type: 'pie',
+            data: pieData6,
+            options: pieOptions6      
+            })
+			
+			//Code for Pie Chart7
+            var pieData7        = {
+            labels: [
+                'PENDING', 
+                'REJECTED',
+				'ACCEPTED', 
+            ],
+            datasets: [
+                {
+                data: [{{ all_ceo_pending_leave_count }}, {{ all_ceo_reject_leave_count }}, {{ all_ceo_accept_leave_count }}],
+                backgroundColor : ['#ffd700', '#ff00ff', '#228b22'],
+                }
+            ]
+            }
+           //Code for Pie Chart7
+            var pieChartCanvas7 = $('#pieChart7').get(0).getContext('2d')
+            var pieData7        = pieData7;
+            var pieOptions7     = {
+            maintainAspectRatio : false,
+            responsive : true,
+            }
+            //Create pie or douhnut chart
+            // You can switch between pie and douhnut using the method below.
+            var pieChart7 = new Chart(pieChartCanvas7, {
+            type: 'pie',
+            data: pieData7,
+            options: pieOptions7      
+            })
+			
+			//Code for Pie Chart8
+            var pieData8        = {
+            labels: [
+                'PENDING', 
+                'REJECTED',
+				'ACCEPTED', 
+            ],
+            datasets: [
+                {
+                data: [{{ all_ceo_pending_perm_count }}, {{ all_ceo_reject_perm_count }}, {{ all_ceo_accept_perm_count }}],
+                backgroundColor : ['#ffd700', '#ff00ff', '#228b22'],
+                }
+            ]
+            }
+           //Code for Pie Chart8
+            var pieChartCanvas8 = $('#pieChart8').get(0).getContext('2d')
+            var pieData8        = pieData8;
+            var pieOptions8     = {
+            maintainAspectRatio : false,
+            responsive : true,
+            }
+            //Create pie or douhnut chart
+            // You can switch between pie and douhnut using the method below.
+            var pieChart8 = new Chart(pieChartCanvas8, {
+            type: 'pie',
+            data: pieData8,
+            options: pieOptions8      
+            })
+			
+			//Code for Pie Chart9
+            var pieData9        = {
+            labels: [
+                'NO H_PAYMENT', 
+                'NO A_PAYMENT',
+				'NO O_INCOME', 
+				'NO EXPENSES',
+            ],
+            datasets: [
+                {
+                data: [{{ h_payment_count_list_in_all }}, {{ a_payment_count_list_in_all }}, {{ income_count_list_in_all }}, {{ overdue_count_list_in_all }}],
+                backgroundColor : ['#ffd700', '#ff00ff', '#228b22', '#1e90ff'],
+                }
+            ]
+            }
+           //Code for Pie Chart9
+            var pieChartCanvas9 = $('#pieChart9').get(0).getContext('2d')
+            var pieData9        = pieData9;
+            var pieOptions9     = {
+            maintainAspectRatio : false,
+            responsive : true,
+            }
+            //Create pie or douhnut chart
+            // You can switch between pie and douhnut using the method below.
+            var pieChart9 = new Chart(pieChartCanvas9, {
+            type: 'pie',
+            data: pieData9,
+            options: pieOptions9      
+            })
+			
+			
+			var office_names_list = {{ office_names_list|safe }}
+			var total_income_list_in_office = {{ total_income_list_in_office }}
+			var donutChartCanvas = $('#donutChart').get(0).getContext('2d')
+			var donutData        = {
+				labels: office_names_list,
+				datasets: [
+				{
+					data: total_income_list_in_office,
+					backgroundColor : ['#ffd700', '#ff00ff', '#228b22', '#1e90ff', '#7fff00', '#ffff00', '#f56954', '#00a65a', '#2f4f4f'],
+				}
+				]
+			}
+			var donutOptions     = {
+				maintainAspectRatio : false,
+				responsive : true,
+			}
+      //Create pie or douhnut chart
+      // You can switch between pie and douhnut using the method below.
+			var donutChart = new Chart(donutChartCanvas, {
+				type: 'doughnut',
+				data: donutData,
+				options: donutOptions      
+			})
+			
+			var office_names_list = {{ office_names_list|safe }}
+			var total_expenditure_list_in_office = {{ total_expenditure_list_in_office }}
+			var donutChartCanvas2 = $('#donutChart2').get(0).getContext('2d')
+			var donutData2        = {
+				labels: office_names_list,
+				datasets: [
+				{
+					data: total_expenditure_list_in_office,
+					backgroundColor : ['#ffd700', '#ff00ff', '#228b22', '#1e90ff', '#7fff00', '#ffff00', '#f56954', '#00a65a', '#2f4f4f'],
+				}
+				]
+			}
+			var donutOptions2     = {
+				maintainAspectRatio : false,
+				responsive : true,
+			}
+      //Create pie or douhnut chart
+      // You can switch between pie and douhnut using the method below.
+			var donutChart2 = new Chart(donutChartCanvas2, {
+				type: 'doughnut',
+				data: donutData2,
+				options: donutOptions2      
+			})
+			
+			var office_names_list = {{ office_names_list|safe }}
+			var income_expenditure_list_in_office = {{ income_expenditure_list_in_office }}
+			var donutChartCanvas3 = $('#donutChart3').get(0).getContext('2d')
+			var donutData3        = {
+				labels: office_names_list,
+				datasets: [
+				{
+					data: income_expenditure_list_in_office,
+					backgroundColor : ['#ffd700', '#ff00ff', '#228b22', '#1e90ff', '#7fff00', '#ffff00', '#f56954', '#00a65a', '#2f4f4f'],
+				}
+				]
+			}
+			var donutOptions3     = {
+				maintainAspectRatio : false,
+				responsive : true,
+			}
+      //Create pie or douhnut chart
+      // You can switch between pie and douhnut using the method below.
+			var donutChart3 = new Chart(donutChartCanvas3, {
+				type: 'doughnut',
+				data: donutData3,
+				options: donutOptions3      
+			})
+			
+			//
+			var office_names_list = {{ office_names_list|safe }}
+			var dis_ratio_list_in_office = {{ dis_ratio_list_in_office }}
+			var donutChartCanvas4 = $('#donutChart4').get(0).getContext('2d')
+			var donutData4        = {
+				labels: office_names_list,
+				datasets: [
+				{
+					data: dis_ratio_list_in_office,
+					backgroundColor : ['#ffd700', '#ff00ff', '#228b22', '#1e90ff', '#7fff00', '#ffff00', '#f56954', '#00a65a', '#2f4f4f'],
+				}
+				]
+			}
+			var donutOptions4     = {
+				maintainAspectRatio : false,
+				responsive : true,
+			}
+      //Create pie or douhnut chart
+      // You can switch between pie and douhnut using the method below.
+			var donutChart4 = new Chart(donutChartCanvas4, {
+				type: 'doughnut',
+				data: donutData4,
+				options: donutOptions4      
+			})
+			
+
+            //Code for Bar Chart
+            var office_names_list = {{ office_names_list|safe }}
+            var hr_count_list_in_office = {{ hr_count_list_in_office }}
+            var ceo_count_list_in_office = {{ ceo_count_list_in_office }}
+			var swo_count_list_in_office = {{ swo_count_list_in_office }}
+            var accountant_count_list_in_office = {{ accountant_count_list_in_office }}
+			var cs_count_list_in_office = {{ cs_count_list_in_office }}
+            var admin_count_list_in_office = {{ admin_count_list_in_office }}
+			var h_admin_count_list_in_office = {{ h_admin_count_list_in_office }}
+
+            //Dataset for Bar Chart
+            var areaChartData = {
+            labels  : office_names_list,
+            datasets: [
+                {
+                label               : 'HR',
+                backgroundColor     : 'rgba(255,0,0,0.9)',
+                borderColor         : 'rgba(255,0,0,0.8)',
+                pointRadius          : false,
+                pointColor          : '#3b8bba',
+                pointStrokeColor    : 'rgba(255,0,0,1)',
+                pointHighlightFill  : '#fff',
+                pointHighlightStroke: 'rgba(255,0,0,1)',
+                data                : hr_count_list_in_office
+                },
+                {
+                label               : 'CEO',
+                backgroundColor     : 'rgba(0, 0, 255, 0.9)',
+                borderColor         : 'rgba(0, 0, 255, 0.8)',
+                pointRadius         : false,
+                pointColor          : 'rgba(0, 0, 255, 1)',
+                pointStrokeColor    : '#c1c7d1',
+                pointHighlightFill  : '#fff',
+                pointHighlightStroke: 'rgba(0, 0, 255,1)',
+                data                : ceo_count_list_in_office
+                },
+				{
+                label               : 'SWO',
+                backgroundColor     : 'rgba(60,179,113,0.9)',
+                borderColor         : 'rgba(60,179,113,0.8)',
+                pointRadius          : false,
+                pointColor          : '#3b8bba',
+                pointStrokeColor    : 'rgba(60,179,113,1)',
+                pointHighlightFill  : '#fff',
+                pointHighlightStroke: 'rgba(60,179,113,1)',
+                data                : swo_count_list_in_office
+                },
+                {
+                label               : 'Accountants',
+                backgroundColor     : 'rgba(238, 130, 238, 0.9)',
+                borderColor         : 'rgba(238, 130, 238, 0.8)',
+                pointRadius         : false,
+                pointColor          : 'rgba(238, 130, 238, 1)',
+                pointStrokeColor    : '#c1c7d1',
+                pointHighlightFill  : '#fff',
+                pointHighlightStroke: 'rgba(238, 130, 238,1)',
+                data                : accountant_count_list_in_office
+                },
+				{
+                label               : 'Customer Service',
+                backgroundColor     : 'rgba(255,165,0,0.9)',
+                borderColor         : 'rgba(255,165,0,0.8)',
+                pointRadius          : false,
+                pointColor          : '#3b8bba',
+                pointStrokeColor    : 'rgba(255,165,0,1)',
+                pointHighlightFill  : '#fff',
+                pointHighlightStroke: 'rgba(255,165,0,1)',
+                data                : cs_count_list_in_office
+                },
+                {
+                label               : 'Apartmennt Admins',
+                backgroundColor     : 'rgba(106, 90, 205, 0.9)',
+                borderColor         : 'rgba(106, 90, 205, 0.8)',
+                pointRadius         : false,
+                pointColor          : 'rgba(106, 90, 205, 1)',
+                pointStrokeColor    : '#c1c7d1',
+                pointHighlightFill  : '#fff',
+                pointHighlightStroke: 'rgba(106, 90, 205,1)',
+                data                : admin_count_list_in_office
+                },
+				{
+                label               : 'Hotel Admins',
+                backgroundColor     : 'rgba(60, 60, 60, 0.9)',
+                borderColor         : 'rgba(60, 60, 60, 0.8)',
+                pointRadius         : false,
+                pointColor          : 'rgba(60, 60, 60, 1)',
+                pointStrokeColor    : '#c1c7d1',
+                pointHighlightFill  : '#fff',
+                pointHighlightStroke: 'rgba(60, 60, 60,1)',
+                data                : h_admin_count_list_in_office
+                },
+            ]
+            }
+
+
+            var barChartCanvas = $('#barChart').get(0).getContext('2d')
+            var barChartData = jQuery.extend(true, {}, areaChartData)
+            var temp11 = areaChartData.datasets[0]
+			var temp12 = areaChartData.datasets[1]
+			var temp13 = areaChartData.datasets[2]
+			var temp14 = areaChartData.datasets[3]
+			var temp15 = areaChartData.datasets[4]
+			var temp16 = areaChartData.datasets[5]
+			var temp17 = areaChartData.datasets[6]
+            barChartData.datasets[0] = temp11
+			barChartData.datasets[1] = temp12
+			barChartData.datasets[2] = temp13
+			barChartData.datasets[3] = temp14
+			barChartData.datasets[4] = temp15
+			barChartData.datasets[5] = temp16
+			barChartData.datasets[6] = temp17
+
+            var barChartOptions = {
+            responsive              : true,
+            maintainAspectRatio     : false,
+            datasetFill             : false
+            }
+
+            var barChart = new Chart(barChartCanvas, {
+            type: 'bar', 
+            data: barChartData,
+            options: barChartOptions
+            })
+			
+			//Code for Bar Chart2
+            var office_names_list = {{ office_names_list|safe }}
+            var hr_salaries_list_in_office = {{ hr_salaries_list_in_office }}
+            var ceo_salaries_list_in_office = {{ ceo_salaries_list_in_office }}
+			var swo_salaries_list_in_office = {{ swo_salaries_list_in_office }}
+            var accountant_salaries_list_in_office = {{ accountant_salaries_list_in_office }}
+			var cs_salaries_list_in_office = {{ cs_salaries_list_in_office }}
+            var admin_salaries_list_in_office = {{ admin_salaries_list_in_office }}
+			var h_admin_salaries_list_in_office = {{ h_admin_salaries_list_in_office }}
+			var office_law_sal = {{ office_law_sal }}
+			var overdue_list_in_office = {{ overdue_list_in_office }}
+			var total_salaries_list_in_office = {{ total_salaries_list_in_office }}
+
+            //Dataset for Bar Chart
+            var areaChartData2 = {
+            labels  : office_names_list,
+            datasets: [
+                {
+                label               : 'HR',
+                backgroundColor     : 'rgba(255,0,0,0.9)',
+                borderColor         : 'rgba(255,0,0,0.8)',
+                pointRadius          : false,
+                pointColor          : '#3b8bba',
+                pointStrokeColor    : 'rgba(255,0,0,1)',
+                pointHighlightFill  : '#fff',
+                pointHighlightStroke: 'rgba(255,0,0,1)',
+                data                : hr_salaries_list_in_office
+                },
+                {
+                label               : 'CEO',
+                backgroundColor     : 'rgba(0, 0, 255, 0.9)',
+                borderColor         : 'rgba(0, 0, 255, 0.8)',
+                pointRadius         : false,
+                pointColor          : 'rgba(0, 0, 255, 1)',
+                pointStrokeColor    : '#c1c7d1',
+                pointHighlightFill  : '#fff',
+                pointHighlightStroke: 'rgba(0, 0, 255,1)',
+                data                : ceo_salaries_list_in_office
+                },
+				{
+                label               : 'SWO',
+                backgroundColor     : 'rgba(60,179,113,0.9)',
+                borderColor         : 'rgba(60,179,113,0.8)',
+                pointRadius          : false,
+                pointColor          : '#3b8bba',
+                pointStrokeColor    : 'rgba(60,179,113,1)',
+                pointHighlightFill  : '#fff',
+                pointHighlightStroke: 'rgba(60,179,113,1)',
+                data                : swo_salaries_list_in_office
+                },
+                {
+                label               : 'Accountants',
+                backgroundColor     : 'rgba(238, 130, 238, 0.9)',
+                borderColor         : 'rgba(238, 130, 238, 0.8)',
+                pointRadius         : false,
+                pointColor          : 'rgba(238, 130, 238, 1)',
+                pointStrokeColor    : '#c1c7d1',
+                pointHighlightFill  : '#fff',
+                pointHighlightStroke: 'rgba(238, 130, 238,1)',
+                data                : accountant_salaries_list_in_office
+                },
+				{
+                label               : 'CS',
+                backgroundColor     : 'rgba(255,165,0,0.9)',
+                borderColor         : 'rgba(255,165,0,0.8)',
+                pointRadius          : false,
+                pointColor          : '#3b8bba',
+                pointStrokeColor    : 'rgba(255,165,0,1)',
+                pointHighlightFill  : '#fff',
+                pointHighlightStroke: 'rgba(255,165,0,1)',
+                data                : cs_salaries_list_in_office
+                },
+                {
+                label               : 'Apartmennt Admins',
+                backgroundColor     : 'rgba(106, 90, 205, 0.9)',
+                borderColor         : 'rgba(106, 90, 205, 0.8)',
+                pointRadius         : false,
+                pointColor          : 'rgba(106, 90, 205, 1)',
+                pointStrokeColor    : '#c1c7d1',
+                pointHighlightFill  : '#fff',
+                pointHighlightStroke: 'rgba(106, 90, 205,1)',
+                data                : admin_salaries_list_in_office
+                },
+				{
+                label               : 'Hotel Admins',
+                backgroundColor     : 'rgba(60, 60, 60, 0.9)',
+                borderColor         : 'rgba(60, 60, 60, 0.8)',
+                pointRadius         : false,
+                pointColor          : 'rgba(60, 60, 60, 1)',
+                pointStrokeColor    : '#c1c7d1',
+                pointHighlightFill  : '#fff',
+                pointHighlightStroke: 'rgba(60, 60, 60,1)',
+                data                : h_admin_salaries_list_in_office
+                },
+				{
+                label               : 'Lawyer',
+                backgroundColor     : 'rgba(210, 214, 222, 1)',
+                borderColor         : 'rgba(210, 214, 222, 1)',
+                pointRadius         : false,
+                pointColor          : 'rgba(210, 214, 222, 1)',
+                pointStrokeColor    : '#c1c7d1',
+                pointHighlightFill  : '#fff',
+                pointHighlightStroke: 'rgba(220,220,220,1)',
+                data                : office_law_sal
+                },
+				 {
+                label               : 'Total Expenses',
+                backgroundColor     : 'rgba(60,141,188,0.9)',
+                borderColor         : 'rgba(60,141,188,0.8)',
+                pointRadius          : false,
+                pointColor          : '#3b8bba',
+                pointStrokeColor    : 'rgba(60,141,188,1)',
+                pointHighlightFill  : '#fff',
+                pointHighlightStroke: 'rgba(60,141,188,1)',
+                data                : overdue_list_in_office
+                },
+				 {
+                label               : 'Total Salaries',
+                backgroundColor     : 'rgba(255,99,71,0.9)',
+                borderColor         : 'rgba(255,99,71,0.8)',
+                pointRadius          : false,
+                pointColor          : '#3b8bba',
+                pointStrokeColor    : 'rgba(255,99,71,1)',
+                pointHighlightFill  : '#fff',
+                pointHighlightStroke: 'rgba(255,99,71,1)',
+                data                : total_salaries_list_in_office
+                },
+            ]
+            }
+
+
+            var barChartCanvas2 = $('#barChart2').get(0).getContext('2d')
+            var barChartData2 = jQuery.extend(true, {}, areaChartData2)
+            var temp21 = areaChartData2.datasets[0]
+			var temp22 = areaChartData2.datasets[1]
+			var temp23 = areaChartData2.datasets[2]
+			var temp24 = areaChartData2.datasets[3]
+			var temp25 = areaChartData2.datasets[4]
+			var temp26 = areaChartData2.datasets[5]
+			var temp27 = areaChartData2.datasets[6]
+			var temp28 = areaChartData2.datasets[7]
+			var temp29 = areaChartData2.datasets[8]
+			var temp210 = areaChartData2.datasets[9]
+            barChartData2.datasets[0] = temp21
+			barChartData2.datasets[1] = temp22
+			barChartData2.datasets[2] = temp23
+			barChartData2.datasets[3] = temp24
+			barChartData2.datasets[4] = temp25
+			barChartData2.datasets[5] = temp26
+			barChartData2.datasets[6] = temp27
+			barChartData2.datasets[7] = temp28
+			barChartData2.datasets[8] = temp29
+			barChartData2.datasets[9] = temp210
+
+            var barChartOptions2 = {
+            responsive              : true,
+            maintainAspectRatio     : false,
+            datasetFill             : false
+            }
+
+            var barChart2 = new Chart(barChartCanvas2, {
+            type: 'bar', 
+            data: barChartData2,
+            options: barChartOptions2
+            })
+			
+			//Code for Bar Chart3
+            var office_names_list = {{ office_names_list|safe }}
+            var h_payment_list_in_office = {{ h_payment_list_in_office }}
+            var a_payment_list_in_office = {{ a_payment_list_in_office }}
+			var income_list_in_office = {{ income_list_in_office }}
+            var total_income_list_in_office = {{ total_income_list_in_office }}
+
+            //Dataset for Bar Chart
+            var areaChartData3 = {
+            labels  : office_names_list,
+            datasets: [
+                {
+                label               : 'Hotel Payment',
+                backgroundColor     : 'rgba(255,0,0,0.9)',
+                borderColor         : 'rgba(255,0,0,0.8)',
+                pointRadius          : false,
+                pointColor          : '#3b8bba',
+                pointStrokeColor    : 'rgba(255,0,0,1)',
+                pointHighlightFill  : '#fff',
+                pointHighlightStroke: 'rgba(255,0,0,1)',
+                data                : h_payment_list_in_office
+                },
+                {
+                label               : 'Apartmennt Payment',
+                backgroundColor     : 'rgba(0, 0, 255, 0.9)',
+                borderColor         : 'rgba(0, 0, 255, 0.8)',
+                pointRadius         : false,
+                pointColor          : 'rgba(0, 0, 255, 1)',
+                pointStrokeColor    : '#c1c7d1',
+                pointHighlightFill  : '#fff',
+                pointHighlightStroke: 'rgba(0, 0, 255,1)',
+                data                : a_payment_list_in_office
+                },
+				{
+                label               : 'Other Income',
+                backgroundColor     : 'rgba(60,179,113,0.9)',
+                borderColor         : 'rgba(60,179,113,0.8)',
+                pointRadius          : false,
+                pointColor          : '#3b8bba',
+                pointStrokeColor    : 'rgba(60,179,113,1)',
+                pointHighlightFill  : '#fff',
+                pointHighlightStroke: 'rgba(60,179,113,1)',
+                data                : income_list_in_office
+                },
+                {
+                label               : 'Total Income',
+                backgroundColor     : 'rgba(238, 130, 238, 0.9)',
+                borderColor         : 'rgba(238, 130, 238, 0.8)',
+                pointRadius         : false,
+                pointColor          : 'rgba(238, 130, 238, 1)',
+                pointStrokeColor    : '#c1c7d1',
+                pointHighlightFill  : '#fff',
+                pointHighlightStroke: 'rgba(238, 130, 238,1)',
+                data                : total_income_list_in_office
+                },
+            ]
+            }
+
+
+            var barChartCanvas3 = $('#barChart3').get(0).getContext('2d')
+            var barChartData3 = jQuery.extend(true, {}, areaChartData3)
+            var temp31 = areaChartData3.datasets[0]
+			var temp32 = areaChartData3.datasets[1]
+			var temp33 = areaChartData3.datasets[2]
+			var temp34 = areaChartData3.datasets[3]
+            barChartData3.datasets[0] = temp31
+			barChartData3.datasets[1] = temp32
+			barChartData3.datasets[2] = temp33
+			barChartData3.datasets[3] = temp34
+
+            var barChartOptions3 = {
+            responsive              : true,
+            maintainAspectRatio     : false,
+            datasetFill             : false
+            }
+
+            var barChart3 = new Chart(barChartCanvas3, {
+            type: 'bar', 
+            data: barChartData3,
+            options: barChartOptions3
+            })
+			
+			//Code for Bar Chart4
+            var office_names_list = {{ office_names_list|safe }}
+            var h_payment_count_list_in_office = {{ h_payment_count_list_in_office }}
+            var a_payment_count_list_in_office = {{ a_payment_count_list_in_office }}
+			var income_count_list_in_office = {{ income_count_list_in_office }}
+            var overdue_count_list_in_office = {{ overdue_count_list_in_office }}
+
+            //Dataset for Bar Chart
+            var areaChartData4 = {
+            labels  : office_names_list,
+            datasets: [
+                {
+                label               : 'No Hotel Payment',
+                backgroundColor     : 'rgba(255,0,0,0.9)',
+                borderColor         : 'rgba(255,0,0,0.8)',
+                pointRadius          : false,
+                pointColor          : '#3b8bba',
+                pointStrokeColor    : 'rgba(255,0,0,1)',
+                pointHighlightFill  : '#fff',
+                pointHighlightStroke: 'rgba(255,0,0,1)',
+                data                : h_payment_count_list_in_office
+                },
+                {
+                label               : 'No Apartmennt Payment',
+                backgroundColor     : 'rgba(0, 0, 255, 0.9)',
+                borderColor         : 'rgba(0, 0, 255, 0.8)',
+                pointRadius         : false,
+                pointColor          : 'rgba(0, 0, 255, 1)',
+                pointStrokeColor    : '#c1c7d1',
+                pointHighlightFill  : '#fff',
+                pointHighlightStroke: 'rgba(0, 0, 255,1)',
+                data                : a_payment_count_list_in_office
+                },
+				{
+                label               : 'No Other Income',
+                backgroundColor     : 'rgba(60,179,113,0.9)',
+                borderColor         : 'rgba(60,179,113,0.8)',
+                pointRadius          : false,
+                pointColor          : '#3b8bba',
+                pointStrokeColor    : 'rgba(60,179,113,1)',
+                pointHighlightFill  : '#fff',
+                pointHighlightStroke: 'rgba(60,179,113,1)',
+                data                : income_count_list_in_office
+                },
+                {
+                label               : 'No Expenses',
+                backgroundColor     : 'rgba(238, 130, 238, 0.9)',
+                borderColor         : 'rgba(238, 130, 238, 0.8)',
+                pointRadius         : false,
+                pointColor          : 'rgba(238, 130, 238, 1)',
+                pointStrokeColor    : '#c1c7d1',
+                pointHighlightFill  : '#fff',
+                pointHighlightStroke: 'rgba(238, 130, 238,1)',
+                data                : overdue_count_list_in_office
+                },
+            ]
+            }
+
+
+            var barChartCanvas4 = $('#barChart4').get(0).getContext('2d')
+            var barChartData4 = jQuery.extend(true, {}, areaChartData4)
+            var temp41 = areaChartData4.datasets[0]
+			var temp42 = areaChartData4.datasets[1]
+			var temp43 = areaChartData4.datasets[2]
+			var temp44 = areaChartData4.datasets[3]
+            barChartData4.datasets[0] = temp41
+			barChartData4.datasets[1] = temp42
+			barChartData4.datasets[2] = temp43
+			barChartData4.datasets[3] = temp44
+
+            var barChartOptions4 = {
+            responsive              : true,
+            maintainAspectRatio     : false,
+            datasetFill             : false
+            }
+
+            var barChart4 = new Chart(barChartCanvas4, {
+            type: 'bar', 
+            data: barChartData4,
+            options: barChartOptions4
+            })
+			
+			//Code for Bar Chart5
+            var office_names_list = {{ office_names_list|safe }}
+            var ceo_pending_leaves_list_in_office = {{ ceo_pending_leaves_list_in_office }}
+            var ceo_reject_leaves_list_in_office = {{ ceo_reject_leaves_list_in_office }}
+			var ceo_accept_leaves_list_in_office = {{ ceo_accept_leaves_list_in_office }}
+
+            //Dataset for Bar Chart
+            var areaChartData5 = {
+            labels  : office_names_list,
+            datasets: [
+                {
+                label               : 'Pending',
+                backgroundColor     : 'rgba(255,0,0,0.9)',
+                borderColor         : 'rgba(255,0,0,0.8)',
+                pointRadius          : false,
+                pointColor          : '#3b8bba',
+                pointStrokeColor    : 'rgba(255,0,0,1)',
+                pointHighlightFill  : '#fff',
+                pointHighlightStroke: 'rgba(255,0,0,1)',
+                data                : ceo_pending_leaves_list_in_office
+                },
+                {
+                label               : 'Rejected',
+                backgroundColor     : 'rgba(0, 0, 255, 0.9)',
+                borderColor         : 'rgba(0, 0, 255, 0.8)',
+                pointRadius         : false,
+                pointColor          : 'rgba(0, 0, 255, 1)',
+                pointStrokeColor    : '#c1c7d1',
+                pointHighlightFill  : '#fff',
+                pointHighlightStroke: 'rgba(0, 0, 255,1)',
+                data                : ceo_reject_leaves_list_in_office
+                },
+				{
+                label               : 'Accepted',
+                backgroundColor     : 'rgba(60,179,113,0.9)',
+                borderColor         : 'rgba(60,179,113,0.8)',
+                pointRadius          : false,
+                pointColor          : '#3b8bba',
+                pointStrokeColor    : 'rgba(60,179,113,1)',
+                pointHighlightFill  : '#fff',
+                pointHighlightStroke: 'rgba(60,179,113,1)',
+                data                : ceo_accept_leaves_list_in_office
+                },
+            ]
+            }
+
+
+            var barChartCanvas5 = $('#barChart5').get(0).getContext('2d')
+            var barChartData5 = jQuery.extend(true, {}, areaChartData5)
+            var temp51 = areaChartData5.datasets[0]
+			var temp52 = areaChartData5.datasets[1]
+			var temp53 = areaChartData5.datasets[2]
+            barChartData5.datasets[0] = temp51
+			barChartData5.datasets[1] = temp52
+			barChartData5.datasets[2] = temp53
+
+            var barChartOptions5 = {
+            responsive              : true,
+            maintainAspectRatio     : false,
+            datasetFill             : false
+            }
+
+            var barChart5 = new Chart(barChartCanvas5, {
+            type: 'bar', 
+            data: barChartData5,
+            options: barChartOptions5
+            })
+			
+			//Code for Bar Chart6
+            var office_names_list = {{ office_names_list|safe }}
+            var ceo_pending_perms_list_in_office = {{ ceo_pending_perms_list_in_office }}
+            var ceo_reject_perms_list_in_office = {{ ceo_reject_perms_list_in_office }}
+			var ceo_accept_perms_list_in_office = {{ ceo_accept_perms_list_in_office }}
+
+            //Dataset for Bar Chart
+            var areaChartData6 = {
+            labels  : office_names_list,
+            datasets: [
+                {
+                label               : 'Pending',
+                backgroundColor     : 'rgba(255,0,0,0.9)',
+                borderColor         : 'rgba(255,0,0,0.8)',
+                pointRadius          : false,
+                pointColor          : '#3b8bba',
+                pointStrokeColor    : 'rgba(255,0,0,1)',
+                pointHighlightFill  : '#fff',
+                pointHighlightStroke: 'rgba(255,0,0,1)',
+                data                : ceo_pending_perms_list_in_office
+                },
+                {
+                label               : 'Rejected',
+                backgroundColor     : 'rgba(0, 0, 255, 0.9)',
+                borderColor         : 'rgba(0, 0, 255, 0.8)',
+                pointRadius         : false,
+                pointColor          : 'rgba(0, 0, 255, 1)',
+                pointStrokeColor    : '#c1c7d1',
+                pointHighlightFill  : '#fff',
+                pointHighlightStroke: 'rgba(0, 0, 255,1)',
+                data                : ceo_reject_perms_list_in_office
+                },
+				{
+                label               : 'Accepted',
+                backgroundColor     : 'rgba(60,179,113,0.9)',
+                borderColor         : 'rgba(60,179,113,0.8)',
+                pointRadius          : false,
+                pointColor          : '#3b8bba',
+                pointStrokeColor    : 'rgba(60,179,113,1)',
+                pointHighlightFill  : '#fff',
+                pointHighlightStroke: 'rgba(60,179,113,1)',
+                data                : ceo_accept_perms_list_in_office
+                },
+            ]
+            }
+
+
+            var barChartCanvas6 = $('#barChart6').get(0).getContext('2d')
+            var barChartData6 = jQuery.extend(true, {}, areaChartData6)
+            var temp61 = areaChartData6.datasets[0]
+			var temp62 = areaChartData6.datasets[1]
+			var temp63 = areaChartData6.datasets[2]
+            barChartData6.datasets[0] = temp61
+			barChartData6.datasets[1] = temp62
+			barChartData6.datasets[2] = temp63
+
+            var barChartOptions6 = {
+            responsive              : true,
+            maintainAspectRatio     : false,
+            datasetFill             : false
+            }
+
+            var barChart6 = new Chart(barChartCanvas6, {
+            type: 'bar', 
+            data: barChartData6,
+            options: barChartOptions6
+            })
+			
+			//Code for Bar Chart7
+            var office_names_list = {{ office_names_list|safe }}
+            var dis_case_list_in_office = {{ dis_case_list_in_office }}
+            var dis_meeting_list_in_office = {{ dis_meeting_list_in_office }}
+
+            //Dataset for Bar Chart
+            var areaChartData7 = {
+            labels  : office_names_list,
+            datasets: [
+                {
+                label               : 'Cases',
+                backgroundColor     : 'rgba(255,0,0,0.9)',
+                borderColor         : 'rgba(255,0,0,0.8)',
+                pointRadius          : false,
+                pointColor          : '#3b8bba',
+                pointStrokeColor    : 'rgba(255,0,0,1)',
+                pointHighlightFill  : '#fff',
+                pointHighlightStroke: 'rgba(255,0,0,1)',
+                data                : dis_case_list_in_office
+                },
+                {
+                label               : 'Meetings',
+                backgroundColor     : 'rgba(0, 0, 255, 0.9)',
+                borderColor         : 'rgba(0, 0, 255, 0.8)',
+                pointRadius         : false,
+                pointColor          : 'rgba(0, 0, 255, 1)',
+                pointStrokeColor    : '#c1c7d1',
+                pointHighlightFill  : '#fff',
+                pointHighlightStroke: 'rgba(0, 0, 255,1)',
+                data                : dis_meeting_list_in_office
+                },
+            ]
+            }
+
+
+            var barChartCanvas7 = $('#barChart7').get(0).getContext('2d')
+            var barChartData7 = jQuery.extend(true, {}, areaChartData7)
+            var temp71 = areaChartData7.datasets[0]
+			var temp72 = areaChartData7.datasets[1]
+            barChartData7.datasets[0] = temp71
+			barChartData7.datasets[1] = temp72
+
+            var barChartOptions7 = {
+            responsive              : true,
+            maintainAspectRatio     : false,
+            datasetFill             : false
+            }
+
+            var barChart7 = new Chart(barChartCanvas7, {
+            type: 'bar', 
+            data: barChartData7,
+            options: barChartOptions7
+            })
+			
+			//Code for Bar Chart8
+            var office_names_list = {{ office_names_list|safe }}
+            var ceo_meeting_list_in_office = {{ ceo_meeting_list_in_office }}
+            var hr_meeting_list_in_office = {{ hr_meeting_list_in_office }}
+			var total_meeting_list_in_office = {{ total_meeting_list_in_office }}
+
+            //Dataset for Bar Chart
+            var areaChartData8 = {
+            labels  : office_names_list,
+            datasets: [
+                {
+                label               : 'CEO Meetings',
+                backgroundColor     : 'rgba(255,0,0,0.9)',
+                borderColor         : 'rgba(255,0,0,0.8)',
+                pointRadius          : false,
+                pointColor          : '#3b8bba',
+                pointStrokeColor    : 'rgba(255,0,0,1)',
+                pointHighlightFill  : '#fff',
+                pointHighlightStroke: 'rgba(255,0,0,1)',
+                data                : ceo_meeting_list_in_office
+                },
+                {
+                label               : 'HR Meetings',
+                backgroundColor     : 'rgba(0, 0, 255, 0.9)',
+                borderColor         : 'rgba(0, 0, 255, 0.8)',
+                pointRadius         : false,
+                pointColor          : 'rgba(0, 0, 255, 1)',
+                pointStrokeColor    : '#c1c7d1',
+                pointHighlightFill  : '#fff',
+                pointHighlightStroke: 'rgba(0, 0, 255,1)',
+                data                : hr_meeting_list_in_office
+                },
+				{
+                label               : 'Total Meetings',
+                backgroundColor     : 'rgba(60,179,113,0.9)',
+                borderColor         : 'rgba(60,179,113,0.8)',
+                pointRadius          : false,
+                pointColor          : '#3b8bba',
+                pointStrokeColor    : 'rgba(60,179,113,1)',
+                pointHighlightFill  : '#fff',
+                pointHighlightStroke: 'rgba(60,179,113,1)',
+                data                : total_meeting_list_in_office
+                },
+            ]
+            }
+
+
+            var barChartCanvas8 = $('#barChart8').get(0).getContext('2d')
+            var barChartData8 = jQuery.extend(true, {}, areaChartData8)
+            var temp81 = areaChartData8.datasets[0]
+			var temp82 = areaChartData8.datasets[1]
+			var temp83 = areaChartData8.datasets[2]
+            barChartData8.datasets[0] = temp81
+			barChartData8.datasets[1] = temp82
+			barChartData8.datasets[2] = temp83
+
+            var barChartOptions8 = {
+            responsive              : true,
+            maintainAspectRatio     : false,
+            datasetFill             : false
+            }
+
+            var barChart8 = new Chart(barChartCanvas8, {
+            type: 'bar', 
+            data: barChartData8,
+            options: barChartOptions8
+            })
+
+
+       })
+  </script>
+
+  {% endblock custom_js %}

@@ -1,0 +1,226 @@
+{% extends 'home_template/base_template.html' %}
+
+{% block custom_css %}
+	<style>
+	.dashboard__main a {
+      top: 0;
+    }
+    .btn_go--back {
+      font-size: 0.7rem;
+      top: -0.3rem !important;
+      left: -0.4rem !important;
+    }
+    .content__container {
+      justify-content: start !important;
+      align-items: flex-start !important;
+    }
+
+    .btn i {
+      margin-right: 0 !important;
+    }
+
+    .search__navbar {
+      background-color: transparent !important;
+    }
+
+    .search__input {
+      padding-left:0.5em;
+    }
+
+    .search__select {
+      padding-right:0.5em;
+    }
+	.fa {
+      margin-left: 0.3em !important;
+    }
+  </style>
+{% endblock custom_css %}
+
+{% block page_title %}
+    My Booking Details
+{% endblock page_title %}
+
+{% block main_content %}
+
+{% load static %}
+
+  <div class="profile">
+    {% comment %} User's order details {% endcomment %}
+    {% if request.user.is_authenticated %}
+	<div class="data__main--order" id="order-id" data-id="{{ order.id }}">
+        <div class="dashboard__main">
+          <a href="{% url 'my_orders' user=request.user %}" aria-label="Back to my bookings"
+              class="btn btn__redirect btn_go--back">
+            <i class="fas fa-arrow-circle-left"></i>
+            Back to my Bookings
+          </a>
+        </div>
+		<div class="card-body">
+		<div class="table-responsive">
+			<table class="table">
+				<thead class="thead-light">
+					<tr>
+						<th>#ID</th>
+						<th>Reference Code</th>
+						<th>Booking Date</th>
+						<th>Total Amount</th>
+						<th>Attended</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tr>
+					<td>{{ order.id }}</td>
+					<td>{{ order.ref_code|truncatechars:15 }}</td>
+					<td>{{ order.ordered_date|date:"d.m.Y" }}</td>
+					<td>{{ order.total_paid }}</td>
+					<td>
+						<strong>
+							<div>
+								  {% if order.ordered %}
+									<p>Yes</p>
+								  {% else %}
+									<p>No</p>
+								  {% endif %}
+							</div>
+						</strong>
+					</td>
+					<td><a href="{% url 'my_delete_orders' user=request.user order_id=order.id %}" aria-label="Delete order" class="btn btn__delete">
+              <i class="fas fa-trash-alt"></i>
+              Delete
+            </a></td>
+				</tr>
+			</table>
+		</div>
+      </div>
+    
+        <div class="order__details">
+          <strong>Booking Details:</strong>
+          <div class="order__details--units">
+            {% for item in order_items %}
+              <div id="{{ item.id }}" class="order__item">
+                <div class="order__item--details">
+                                
+                  <div>
+                    <strong>Apartment Name:</strong> {{ item.item.title }}
+                  </div>
+				  <div>
+                    <strong>Number of Months:</strong> <a href="{% url 'add-item-to-cart' item.item.slug %}" class="small-box-footer"><i class="fa solid fa-plus"></i></a> {{ item.quantity }}  <a href="{% url 'remove_item_from_cart' item.item.slug %}" class="small-box-footer"><i class="fa solid fa-minus"></i></a>
+                  </div>
+				  <div>
+                    <strong>Original Price:</strong> {{ item.item.price }}
+                  </div>
+                  <div>
+                    <strong>Price:</strong> {{ item.item.real_price }}
+                  </div>
+                  <div>
+                    <strong>Total:</strong>
+                    <div class="quantity" data-quantity="{{ item.quantity }}">{{ item.quantity }}</div>
+                    x <div class="price" data-price="{{ item.item.real_price }}">{{ item.item.real_price }}</div>
+                    = <span class="items-total"></span>
+                  </div>
+				  <div>
+                    <strong>Saved Amount:</strong> {{ item.get_amount_saved }}
+                  </div>
+				  
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+ 
+          </div>
+        
+      
+    {% else %}
+      <div class="profile">
+        <h1>Please, login to see your order</h1>
+      </div>
+    {% endif %}
+	<div class="float-right">
+	<a href="{% url 'gallery' %}" class="btn btn-primary">Continue Booking <i class="fas fa-arrow-circle-right"></i></a>
+	</div>
+  </div>
+{% endblock main_content %}
+
+{% block custom_js %}
+  <script>
+    $(document).ready(function() {
+      $('.order__item').each(function() {
+        let quantity = $(this).find('.quantity');
+        // get data-quantity from quantity div
+        let quantity_value = quantity.data('quantity');
+        let price = $(this).find('.price');
+        // get data-price from price div
+        let price_value = price.data('price');
+        let items_total = $(this).find('.items-total');
+        // multiply data-quantity and data-price and put it in items-total span
+        items_total.text(quantity_value * price_value);
+      });
+	  // edit order status
+      let orderEditStatus = $('#order-edit-status');
+      let orderStatusSelect = $('.order__status--select');
+      let saveBtn = $('#order-save-status');
+      // function to run on edit button click
+      const editStatusPreset = function() {
+        let orderStatus = $(this).parent().find('.order__status');
+        let orderStatusValue = orderStatus.data('status');
+        orderStatus.addClass('hidden');
+        orderStatusSelect.removeClass('hidden');
+        orderEditStatus.addClass('hidden');
+        saveBtn.removeClass('hidden');
+      };
+      // if clicked, replace with select box
+      orderEditStatus.on('click', editStatusPreset);
+      let orderStatus;
+      // if select box changed, change data-status
+      orderStatusSelect.change(function() {
+        orderStatusValue = $(this).val();
+        orderStatus = $(this).parent().parent().find('.order__status');
+        orderStatus.data('status', orderStatusValue);
+        orderStatus.text(orderStatusValue);
+      });
+      // if save button clicked, create an ajax request to update order status
+      $('#order-save-status').click(function() {
+        // get order id
+        //replace icon with fas fa-spinner
+        $(this).find('i').replaceWith('<i class="fas fa-spinner fa-spin"></i>');
+        let orderId = $('#order-id').data('id');
+        $.ajax({
+          url: "{% url 'update_order_status' %}",
+          type: 'POST',
+          data: {
+            'order_id': orderId,
+            'order_status': orderStatusValue,
+            'csrfmiddlewaretoken': '{{ csrf_token }}'
+          },
+          success: function(data) {
+            $('.fa-spinner').remove();
+            // replace this button with edit button
+            orderStatus.removeClass('hidden');
+            orderStatus.css(
+              'background-color',
+              'red'
+            );
+            orderStatusSelect.addClass('hidden');
+            orderEditStatus.removeClass('hidden');
+            saveBtn.addClass('hidden');
+            orderEditStatus.on('click', editStatusPreset);
+          },
+          error: function(data) {
+            $('.fa-spinner').remove();
+            $('#messages-notes').remove();
+            $('.bag').before('<div class="message-container" id="messages-notes">' +
+              '<div class="message-container__message">' +
+              '<p class="message-container__message--text">Something went wrong</p>' +
+              '</div>' +
+              '</div>');
+            // remove the message block after 3 seconds
+            setTimeout(() => {
+              $('#messages-notes').remove();
+            }, 3000);
+          }
+        });
+      });
+    });
+  </script>
+{% endblock custom_js %}

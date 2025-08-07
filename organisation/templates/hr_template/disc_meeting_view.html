@@ -1,0 +1,100 @@
+{% extends 'hr_template/base_template.html' %}
+
+{% block page_title %}
+   Arranged Discpline Meeting
+{% endblock page_title %}
+
+{% block main_content %}
+
+{% load static %}
+
+<section class="content">
+        <div class="container-fluid">
+			
+			<a class="btn btn-primary" href="{% url 'add_disc_meeting' %}" role="button">+ Add Meeting</a> <br/>&nbsp;
+            
+            {% if messages %}
+                                <div class="form-group">
+                                <div class="col-12">
+                                    {% for message in messages %}
+                                    {% if message.tags == "error" %}
+                                        <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-top: 10px;">
+                                        {{ message }}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        </div>
+                                    {% elif message.tags == "success" %}
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-top: 10px;">
+                                        {{ message }}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        </div>
+                                    {% endif %}
+                                    {% endfor %}
+                                </div>
+                                </div>
+                                {% endif %}
+
+            <div class="row">
+
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Details</h3>
+
+                            <div class="card-tools">
+                            <div class="input-group input-group-sm" style="width: 150px;">
+                                <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+
+                                <div class="input-group-append">
+                                <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body table-responsive p-0">
+                            <table class="table table-hover text-nowrap">
+                            <thead>
+                                <tr>
+                                <th>Accuser Name</th>
+                                <th>Defendant Name</th>
+								<th>Accusation</th>
+								<th>Meeting Date</th>
+                                <th>Created At</th>
+								<th>Updated At</th>
+                                <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for disc_meeting in disc_meetings %}
+                                <tr>
+                                <td>{{ disc_meeting.accuser_name.user.first_name }}  {{ disc_meeting.accuser_name.user.last_name }}</td>
+                                <td>{{ disc_meeting.defendant_name.user.first_name }}  {{ disc_meeting.defendant_name.user.last_name }}</td>
+								<td>{{ disc_meeting.accusation }}</td>
+								<td>{{ disc_meeting.date }}</td>
+                                <td>{{ disc_meeting.created_at }}</td>
+                                <td>{{ disc_meeting.updated_at }}</td>
+                                <td>
+                                    <a href="{% url 'conclude_disc_meeting_view' disc_meeting.id %}" class="btn btn-success">Conclude Meeting</a> 
+                                </td>
+                                </tr>
+                                {% endfor %}
+                                
+                            </tbody>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                        </div>
+                    <!-- /.card -->
+
+                </div>
+            </div>
+
+        </div><!-- /.container-fluid -->
+      </section>
+
+  {% endblock main_content %}

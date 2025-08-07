@@ -1,0 +1,114 @@
+{% extends 'home_template/base_template.html' %}
+
+{% block page_title %}
+    Feedback Page
+{% endblock page_title %}
+{% block css %}
+ <style>
+    .content__container {
+      justify-content: start !important;
+      align-items: flex-start !important;
+    }
+
+    .btn i {
+      margin-right: 0 !important;
+    }
+
+    .search__navbar {
+      background-color: transparent !important;
+    }
+
+    .search__input {
+      padding-left:0.5em;
+    }
+
+    .search__select {
+      padding-right:0.5em;
+    }
+  </style>
+
+{% endblock %}
+
+{% block main_content %}
+
+<section class="content">
+        <div class="container-fluid">
+
+<div class="row">
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Leave a Feedback Message</h3>
+                    </div>
+                    <!-- /.card-header -->
+
+                                {% comment %} Display Messages {% endcomment %}
+                                {% if messages %}
+                                <div class="form-group">
+                                <div class="col-12">
+                                    {% for message in messages %}
+                                    {% if message.tags == "error" %}
+                                        <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-top: 10px;">
+                                        {{ message }}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        </div>
+                                    {% elif message.tags == "success" %}
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-top: 10px;">
+                                        {{ message }}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        </div>
+                                    {% endif %}
+                                    {% endfor %}
+                                </div>
+                                </div>
+                                {% endif %}
+                            
+                    <form method="POST" action="{% url 'feedback_user_save' %}">
+                        {% csrf_token %}
+                        <div class="card-body">
+						
+							<div class="form-group">
+                                <label>Mobile Number/ Email </label>
+                                <input type="text" class="form-control" name="communication" placeholder="Communication">
+                            </div>
+							
+							<div class="form-group">
+                                <label>Office </label>
+                                <select class="form-control" name="office">
+                                    {% for office in offices %}
+                                        <option value="{{ office.id }}">{{ office.title }} {{ office.spec_location }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                           
+                            <div class="form-group">
+                                <label>Feedback Message </label>
+                                <textarea name="feedback_message" class="form-control" rows="6" placeholder="Feedback Message"></textarea>
+                            </div>
+
+
+                        </div>
+                        <!-- /.card-body -->
+
+                        <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">Leave a Feedback</button>
+                        </div>
+
+                    </form>
+
+                    </div>
+                    <!-- /.card -->
+
+
+
+                </div>
+            </div>
+		</div>
+	</section>
+
+{% endblock main_content %}

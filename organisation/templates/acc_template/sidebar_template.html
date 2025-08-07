@@ -1,0 +1,218 @@
+{% load static %}
+
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+      <!-- Brand Logo -->
+      <a href="{% url 'acc_home' %}" class="brand-link">
+        <img src="{% static 'dist/img/AdminLTELogo.png' %}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+            style="opacity: .8">
+        <span class="brand-text font-weight-light">General System</span>
+      </a>
+
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <!-- Sidebar user panel (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+          <div class="image">
+            <img src="{% static 'dist/img/user2-160x160.jpg' %}" class="img-circle elevation-2" alt="User Image">
+          </div>
+          <div class="info">
+            <a href="{% url 'acc_profile' %}" class="d-block">{{ user.first_name }} {{ user.last_name }}</a>
+          </div>
+        </div>
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <!-- Add icons to the links using the .nav-icon class
+                with font-awesome or any other icon font library -->
+
+            <li class="nav-item">
+              {% url 'acc_home' as acc_home %}
+              <a href="{{ acc_home }}" class="nav-link {% if request.path == acc_home %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  Home
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'acc_view_ceo_attendance' as acc_view_ceo_attendance %}
+              <a href="{{ acc_view_ceo_attendance }}" class="nav-link {% if request.path == acc_view_ceo_attendance %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  My CEO Meeting Attendances
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'acc_view_hr_attendance' as acc_view_hr_attendance %}
+              <a href="{{ acc_view_hr_attendance }}" class="nav-link {% if request.path == acc_view_hr_attendance %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  My HR Meeting Attendances
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'my_view_acc_resp' as my_view_acc_resp %}
+              <a href="{{ my_view_acc_resp }}" class="nav-link {% if request.path == my_view_acc_resp %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  My Responsibility
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'acc_view_notification' as acc_view_notification %}
+              <a href="{{ acc_view_notification }}" class="nav-link {% if request.path == acc_view_notification %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  My Notification
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'acc_view_def_notification' as acc_view_def_notification %}
+              <a href="{{ acc_view_def_notification }}" class="nav-link {% if request.path == acc_view_def_notification %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  My DEF Notification
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'acc_view_acu_notification' as acc_view_acu_notification %}
+              <a href="{{ acc_view_acu_notification }}" class="nav-link {% if request.path == acc_view_acu_notification %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  My ACU Notification
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'acc_feedback' as acc_feedback %}
+              <a href="{{ acc_feedback }}" class="nav-link {% if request.path == acc_feedback %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                 Add Feedbacks
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'manage_h_payment' as manage_h_payment %}
+              {% url 'edit_h_payment' h_payment_id=id as edit_h_payment %}
+              <a href="{{ manage_h_payment }}" class="nav-link {% if request.path == manage_h_payment %} active {% endif %} {% if request.path == edit_h_payment %} active {% endif %}">
+                <i class="nav-icon fas fa-chalkboard-teacher"></i>
+                <p>
+                  Manage Hotel Payment
+                </p>
+              </a>
+            </li>
+            
+            <li class="nav-item">
+              {% url 'add_h_payment' as add_h_payment %}
+              <a href="{{ add_h_payment }}" class="nav-link {% if request.path == add_h_payment %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Add Hotel Payment
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'manage_a_payment' as manage_a_payment %}
+              {% url 'edit_a_payment' a_payment_id=id as edit_a_payment %}
+              <a href="{{ manage_a_payment }}" class="nav-link {% if request.path == manage_a_payment %} active {% endif %} {% if request.path == edit_a_payment %} active {% endif %}">
+                <i class="nav-icon fas fa-chalkboard-teacher"></i>
+                <p>
+                  Manage Apartment Payment
+                </p>
+              </a>
+            </li>
+            
+            <li class="nav-item">
+              {% url 'add_a_payment' as add_a_payment %}
+              <a href="{{ add_a_payment }}" class="nav-link {% if request.path == add_a_payment %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Add Apartment Payment
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'manage_income' as manage_income %}
+              {% url 'edit_income' income_id=id as edit_income %}
+              <a href="{{ manage_income }}" class="nav-link {% if request.path == manage_income %} active {% endif %} {% if request.path == edit_income %} active {% endif %}">
+                <i class="nav-icon fas fa-chalkboard-teacher"></i>
+                <p>
+                  Manage Income
+                </p>
+              </a>
+            </li>
+            
+            <li class="nav-item">
+              {% url 'add_income' as add_income %}
+              <a href="{{ add_income }}" class="nav-link {% if request.path == add_income %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Add Income
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'manage_overdue' as manage_overdue %}
+              {% url 'edit_overdue' overdue_id=id as edit_overdue %}
+              <a href="{{ manage_overdue }}" class="nav-link {% if request.path == manage_overdue %} active {% endif %} {% if request.path == edit_overdue %} active {% endif %}">
+                <i class="nav-icon fas fa-chalkboard-teacher"></i>
+                <p>
+                  Manage Expenses
+                </p>
+              </a>
+            </li>
+            
+            <li class="nav-item">
+              {% url 'add_overdue' as add_overdue %}
+              <a href="{{ add_overdue }}" class="nav-link {% if request.path == add_overdue %} active {% endif %}">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Add Expenses
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'acc_apply_leave' as acc_apply_leave %}
+              <a href="{{ acc_apply_leave }}" class="nav-link {% if request.path == acc_apply_leave %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                 Apply Leave
+                </p>
+              </a>
+            </li>
+			
+			<li class="nav-item">
+              {% url 'acc_apply_permission' as acc_apply_permission %}
+              <a href="{{ acc_apply_permission }}" class="nav-link {% if request.path == acc_apply_permission %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                 Request Permission
+                </p>
+              </a>
+            </li>
+
+          </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+      </div>
+      <!-- /.sidebar -->
+    </aside>

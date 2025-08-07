@@ -1,0 +1,140 @@
+{% extends 'home_template/base_template.html' %}
+
+{% block page_title %}
+    Home Page
+{% endblock page_title %}
+{% block css %}
+ <style>
+    .content__container {
+      justify-content: start !important;
+      align-items: flex-start !important;
+    }
+
+    .btn i {
+      margin-right: 0 !important;
+    }
+
+    .search__navbar {
+      background-color: transparent !important;
+    }
+
+    .search__input {
+      padding-left:0.5em;
+    }
+
+    .search__select {
+      padding-right:0.5em;
+    }
+  </style>
+
+{% endblock %}
+
+{% block main_content %}
+
+{% load static %}
+
+	
+	
+	{% if albums %}
+	<div class="dashboard">
+	 <div class="search__navbar">
+          <div class="search__container">
+	    <div class="row">
+            <form class="search__input" id="search-all">
+	     
+            {% csrf_token %}
+            <input type="text" name="search_query" placeholder="Search..." id="sort-selector">
+            <button type="submit" id="search-btn" aria-label="Search" class="btn btn__search">
+              <i class="fas fa-search"></i>
+            </button>
+	   
+          </form>
+          {% comment %} create form to click on category {% endcomment %}
+          <form  class="search__select" id="search-category">
+	   
+            {% csrf_token %}
+            {% comment %} <div class="form-group"> {% endcomment %}
+              <label for="category"></label>
+              <select id="category" name="search_query">
+                <option value="">Apartment Category</option>
+                <option value="Normal Room">Normal Room</option>
+                <option value="Self Room">Self Room</option>
+                <option value="Room with living Room">Room with living Room</option>
+                <option value="Full House">Full House</option>
+                <option value="Guest House">Guest House</option>
+		<option value="Lodge">Lodge</option>
+		<option value="Hotel">Hotel</option>
+              </select>
+            {% comment %} </div> {% endcomment %}
+            <button type="submit" id="category-btn" aria-label="Search" class="btn btn__search">
+              <i class="fas fa-search"></i>
+            </button>
+	   
+          </form>
+	</div>
+        </div>
+      </div>
+     </div>
+	<div class="container">
+		<div class="row">
+			
+
+			<div class="col">
+				<div class="card dpg-album-card">
+					{% for album in albums %}
+					<div class="card-image">
+						<img src="{{ album.thumb }}" alt="{{ album.title }}" class="dpg-album-card-image" height = 450 width = 500 />
+					</div>
+					
+						<h4>{{ album.title }}<h4><br/>
+						<p>{{ album.quantity }} Available</p><br/>
+						<p>{{ album.description|truncatechars:120 }}</p>
+					
+					<div class="card-action">
+						<a href="{% url 'album' album.slug %}">
+							More Images
+						</a>
+					<div>
+					
+					{% endfor %}
+				</div>
+			</div>
+
+			
+
+		</div>
+	</div>
+	{% else %}
+	<h2> Nothing Available </h2>
+	<div class="slider">
+		<ul class="slides">
+			<li>
+				<img src="{% static 'images/mountain.jpg' %}" alt="Django Photo Gallery" class="opaque">
+				<div class="caption center-align">
+					
+					
+				</div>
+			</li>
+			<li>
+				<img src="{% static 'images/lake.jpg' %}" alt="Django Photo Gallery" class="opaque">
+				<div class="caption left-align">
+					
+				</div>
+			</li>
+		</ul>
+	</div>
+	{% endif %}
+
+	<div class="pagination center">
+		<span class="step-links">
+			{% if albums.has_previous %}
+			<a href="?page={{ albums.previous_page_number }}" class="waves-effect waves-light btn btn-large">Previous</a>
+			{% endif %}
+
+			{% if albums.has_next %}
+			<a href="?page={{ albums.next_page_number }}" class="waves-effect waves-light btn btn-large">Next</a>
+			{% endif %}
+		</span>
+	</div>
+
+{% endblock main_content %}

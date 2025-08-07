@@ -1,0 +1,69 @@
+{% extends 'user_template/base_template.html' %}
+
+{% block page_title %}
+    Vehicle Report and Update Vehicles
+{% endblock page_title %}
+
+{% block main_content %}
+
+{% load static %}
+
+<section class="content">
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Add Vehicles</h3>
+                    </div>
+                    <!-- /.card-header -->
+
+                        {% url 'user_plate_number_update' as action_path %}
+						{% include 'hod_template/form_template.html' with messages=messages form=form action_path=action_path button_text="Add Vehicle" %}
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card card-success">
+                        <div class="card-header">
+                            <h3 class="card-title">Registered Vehicles</h3>
+                        </div>
+
+                        <div class="card-body">
+                           <div class="table-responsive">
+                                <table class="table">
+                                    <thead class="thead-light">
+                                    <tr>
+                                        <th>#ID</th>
+                                        <th>Plate Number</th>
+                                        <th>Driver's License Number</th>
+                                    </tr>
+                                    </thead>
+                                    
+                                    {% for vehicle in vehicle_number %}
+                                    <tr>
+                                        <td>{{ vehicle.id }}</td>
+                                        <td>{{ vehicle.pnumber }}</td>
+                                        <td>{{ vehicle.driver_id.lnumber }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </table>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /.container-fluid -->
+      </section>
+
+  {% endblock main_content %}
+
+{% block custom_js %}
+
+{% endblock custom_js %}

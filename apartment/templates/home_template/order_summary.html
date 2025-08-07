@@ -1,0 +1,91 @@
+{% extends 'home_template/base_template.html' %}
+
+{% block page_title %}
+    Order Summary
+{% endblock page_title %}
+
+{% block main_content %}
+
+{% load static %}
+
+
+<section class="content">
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Order Summary</h3>
+                    </div>
+					</div>
+                    <!-- /.card -->
+
+
+
+                </div>
+            </div>
+			
+		<div class="row">
+                <div class="col-md-12">
+                    <div class="card card-success">
+                        <div class="card-header">
+                            <h3 class="card-title">Booking Summary History</h3>
+                        </div>
+
+                        <div class="card-body">
+                           <div class="table-responsive">
+                                <table class="table">
+                                    <thead class="thead-light">
+                                    <tr>
+                                        <th>#ID</th>
+                                        <th>Apartment Name</th>
+										<th>Booking Date</th>
+                                        <th>Number of Months</th>
+										<th>Price Per Month</th>
+										<th>To be Paid Price</th>
+										<th>         </th>
+                                    </tr>
+                                    </thead>
+                                    
+                                    {% for order in orders %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>{{ order.items.item.title }}</td>
+                                        <td>{{ order.ordered_date }}</td>
+										<td><a href="{% url 'add-item-to-cart' %}" class="small-box-footer"><i class="fa solid fa-plus"></i></a>{{ order.items.quantity }}<a href="{% url 'remove-item-from-cart' %}" class="small-box-footer"><i class="fa solid fa-minus"></i></a></td>
+										<td>
+											{% if order.items.item.discount_price %}
+											{{order.items.item.discount_price}}
+											{% else %}
+											{{order.items.item.price}}
+											{% endif %}
+										</td>
+										<td>{{ order.items.get_final_price }} Saved {{ order.items.get_amount_saved }}</td>
+										<td> <a href="{% url 'remove-from-cart2' %}" class="small-box-footer"><i class="fa solid fa-trash"></i></a>
+                                    </tr>
+                                    {% endfor %}
+									<tr>
+									<td></td>
+									<td><b> Total Amount </b></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td>{{order.get_total}}</td>
+									</tr>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+					</div>
+                    
+                    </div>
+					<a href="{% url 'home_view' %}" class="btn btn-primary">Continue Booking <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+
+        <!-- /.container-fluid -->
+      </section>
+
+{% endblock main_content %}	  

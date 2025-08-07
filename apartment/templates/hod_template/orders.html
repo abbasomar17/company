@@ -1,0 +1,199 @@
+{% extends 'hod_template/base_template.html' %}
+
+{% block custom_css %}
+	<style>
+	.dashboard__main a {
+      top: 0;
+    }
+    .btn_go--back {
+      font-size: 0.7rem;
+      top: -0.3rem !important;
+      left: -0.4rem !important;
+    }
+    .content__container {
+      justify-content: start !important;
+      align-items: flex-start !important;
+    }
+
+    .btn i {
+      margin-right: 0 !important;
+    }
+
+    .search__navbar {
+      background-color: transparent !important;
+    }
+
+    .search__input {
+      padding-left:0.5em;
+    }
+
+    .search__select {
+      padding-right:0.5em;
+    }
+  </style>
+{% endblock custom_css %}
+
+{% block page_title %}
+    Booking Summary
+{% endblock page_title %}
+
+{% block main_content %}
+
+{% load static %}
+
+
+<section class="content">
+  <div class="dashboard">
+    {% comment %} Limit access for customers {% endcomment %}
+    {% if request.user.is_authenticated %}
+      <div class="dashboard__main">
+        <h1 class="dashboard__main--name">All Bookings</h1>
+      </div>
+      <div class="search__navbar">
+        <div class="search__container">
+          <form class="search__input" id="search-all">
+            {% csrf_token %}
+            <input type="text" name="search_query" placeholder="Search..." id="sort-selector">
+            <button type="submit" id="search-btn" aria-label="Search" class="btn btn__search">
+              <i class="fas fa-search"></i>
+            </button>
+          </form>
+          
+        </div>
+      </div>
+	
+	
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Booking Summary</h3>
+                    </div>
+					</div>
+                    <!-- /.card -->
+
+
+
+                </div>
+            </div>
+			
+		<div class="row">
+                <div class="col-md-12">
+                    <div class="card card-success">
+                        <div class="card-header">
+                            <h3 class="card-title">Booking Summary History</h3>
+                        </div>
+      {% comment %} All orders {% endcomment %}
+      <div class="card-body">
+		<div class="table-responsive">
+			<table class="table">
+				<thead class="thead-light">
+					<tr>
+						<th>#ID</th>
+						<th>Reference Code</th>
+						<th>Created Date</th>
+						<th>Booking Date</th>
+						<th>Total Amount</th>
+						<th>View Details</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+        {% if orders %}
+          {% for order in orders %}
+				<tr>
+					<td>{{ order.id }}</td>
+					<td>{{ order.ref_code|truncatechars:15 }}</td>
+					<td>{{ order.start_date|date:"d.m.Y" }}</td>
+					<td>{{ order.ordered_date|date:"d.m.Y" }}</td>
+					<td>{{ order.total_paid }}</td>
+					<td><strong><a href="{% url 'order_details' order_id=order.id %}" class="data__main--order list">View</a></strong></td>
+					<td><strong><a href="{% url 'change_order_status' order_id=order.id %}" class="btn btn-success">Tenant Attended</a></strong></td>
+				</tr>
+			{% endfor %}
+			</table>
+		</div>
+      </div>
+	  </div>
+					</div>
+                    
+                    </div>
+					<div class= "float-right">
+					<a href="{% url 'admin_home' %}" class="btn btn-primary">Back <i class="fas fa-arrow-circle-left"></i></a>
+                </div>
+            </div>
+
+        <!-- /.container-fluid -->
+      
+		
+          
+          {% comment %} Control Pagination {% endcomment %}
+          {% if orders.paginator.num_pages %}
+            {% if not orders.paginator.num_pages == 1 %}
+              <div class="pagination">
+                <div class="pagination__navigation">
+                  {% if orders.has_previous and not orders.has_next %}
+                    <a href="?page={{ orders.previous_page_number }}" class="pagination__navigation--btn"
+                      aria-label="Go to previous page results">
+                      <i class="fas fa-chevron-left"></i>
+                    </a>
+                    <div class="pagination__navigation--fake">
+                      <i class="fas fa-chevron-right"></i>
+                    </div>
+                  {% elif orders.has_next and not orders.has_previous %}
+                    <div class="pagination__navigation--fake">
+                      <i class="fas fa-chevron-left"></i>
+                    </div>
+                    <a href="?page={{ orders.next_page_number }}" class="pagination__navigation--btn"
+                      aria-label="Go to next page results">
+                      <i class="fas fa-chevron-right"></i>
+                    </a>
+                  {% elif orders.has_next and orders.has_previous %}
+                    <a href="?page={{ orders.previous_page_number }}" class="pagination__navigation--btn"
+                      aria-label="Go to previous page results">
+                      <i class="fas fa-chevron-left"></i>
+                    </a>
+                    <a href="?page={{ orders.next_page_number }}" class="pagination__navigation--btn"
+                      aria-label="Go to next page results">
+                      <i class="fas fa-chevron-right"></i>
+                    </a>
+                  {% else %}
+                    <div class="pagination__navigation--fake">
+                      <i class="fas fa-chevron-left"></i>
+                    </div>
+                    <div class="pagination__navigation--fake">
+                      <i class="fas fa-chevron-right"></i>
+                    </div>
+                  {% endif %}
+                </div>
+                <div class="pagination__location">
+                  Page <span>{{ orders.number }}</span> of {{ orders.paginator.num_pages }}
+                </div>
+              </div>
+            {% endif %}
+          {% endif %}
+        {% else %}
+          <p>No Bookings found.</p>
+        {% endif %}
+      
+    {% else %}
+      <div class="dashboard__main">
+        <h1>You are not authorized to access this page</h1>
+      </div>
+    {% endif %}
+  </div>
+ </section>
+{% endblock main_content %}
+
+{% block custom_js %}
+  <script>
+    $(document).ready(function () {
+      if (performance.navigation.type == performance.navigation.TYPE_RELOAD) {
+        console. info( "This page is reloaded" );
+        window.location.replace(window.location.origin + "/new_orders/");
+      }
+    });
+  </script>
+{% endblock custom_js %}

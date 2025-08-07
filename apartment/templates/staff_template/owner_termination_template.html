@@ -1,0 +1,185 @@
+{% extends 'staff_template/base_template.html' %}
+
+{% block page_title %}
+    Add Contract's Termination Request
+{% endblock page_title %}
+
+{% block main_content %}
+
+{% load static %}
+
+<section class="content">
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <form method="POST" action="{% url 'owner_request_termination_save' %}">
+                    {% csrf_token %}
+                    <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Add Contract's Termination Request</h3>
+                    </div>
+                    <!-- /.card-header -->
+
+                                {% comment %} Display Messages {% endcomment %}
+                                {% if messages %}
+                                <div class="form-group">
+                                <div class="col-12">
+                                    {% for message in messages %}
+                                    {% if message.tags == "error" %}
+                                        <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-top: 10px;">
+                                        {{ message }}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        </div>
+                                    {% elif message.tags == "success" %}
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-top: 10px;">
+                                        {{ message }}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        </div>
+                                    {% endif %}
+                                    {% endfor %}
+                                </div>
+                                </div>
+                                {% endif %}
+                            
+
+                        <div class="card-body">
+                           
+                            <div class="form-group">
+                                <label>Apartment </label>
+                                <select class="form-control" name="apartment" id="apartment">
+                                    {% for apartment in apartments %}
+                                        <option value="{{ apartment.id }}">{{ apartment.title }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+
+
+                        </div>
+                        <!-- /.card-body -->
+						
+						
+						
+						<div class="card-footer">
+                        <button type="button" class="btn btn-primary" id="fetch_tenant">Fetch Tenants</button>
+                        </div>
+
+                        {% comment %} Displaying Students Here {% endcomment %}
+
+                        <div class="card-footer" id="tenant_data">
+                        </div> 
+
+                    </div>
+                    </form>
+                    <!-- /.card -->
+
+                </div>
+            </div>
+			
+			<div class="row">
+                <div class="col-md-12">
+                    <div class="card card-success">
+                        <div class="card-header">
+                            <h3 class="card-title">Contract's Termination Request History</h3>
+                        </div>
+
+                        <div class="card-body">
+                           <div class="table-responsive">
+                                <table class="table">
+                                    <thead class="thead-light">
+                                    <tr>
+                                        <th>#ID</th>
+										<th>Tenant Name</th>
+                                        <th>Termination Message</th>
+                                        <th>Termination Status</th>
+                                    </tr>
+                                    </thead>
+                                    
+                                    {% for row in termination_data %}
+                                    <tr>
+                                        <td>{{ row.id }}</td>
+										<td>{{ row.tenant_id.admin.user.first_name }}  {{ row.tenant_id.admin.user.last_namename }}</td>
+                                        <td>{{ row.reason }}</td>
+                                        <td>
+                                            {% if row.accepted == 1 %}
+                                                <span class="alert alert-success">Approved</span>
+                                            {% elif row.accepted == 2 %}
+                                                <span class="alert alert-danger">Rejected</span>
+                                            {% else %}
+                                                <span class="alert alert-warning">Pending</span>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </table>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /.container-fluid -->
+      </section>
+
+  {% endblock main_content %}
+
+{% block custom_js %}
+
+<script>
+    $(document).ready(function(){
+		$("#fetch_tenant").click(function(){
+
+            // Displaying Students Based on Staff, Course and Session Enrolled
+
+            var apartment=$("#apartment").val()
+
+            $.ajax({
+                url:'{% url 'get_tenants2' %}',
+                type:'POST',
+                data:{apartment:apartment},
+            })
+
+            
+            .done(function(response){
+                var json_data=JSON.parse(response);
+                console.log(json_data)
+                //Displaying Attendance Date Input and Students Attendance
+                var div_data="<div class='form-group'><label>Tenants List</label> <select class='tenant_list form-control' name='tenant'>"
+
+                for(key in json_data)
+                {
+                    div_data+="<option value='"+ json_data[key]['id'] +"'>ID: "+ json_data[key]['id'] +" : "+ json_data[key]['name'] +"</option>";
+
+                }
+                div_data+="</select>";
+                div_data+="</div>";
+                div_data+="<div class='form-group'><div class='row'>";
+				
+				div_data+="<div class='col-lg-6'>";
+                div_data+="<label>Contract's Termination Reason : </label><textarea name='reason' class='form-control' rows='6' placeholder='reason' > </textarea>";
+                div_data+="</div>";
+
+
+                div_data+="</div></div>";
+
+                div_data+="<div class='form-group'>";
+                div_data+="<button id='save_attendance' class='btn btn-success' type='submit'>Submit Request</button>";
+                div_data+="</div>";
+                $("#tenant_data").html(div_data);
+				
+				})
+            .fail(function(){
+                alert("Error in Fetching Tenants.")
+            })
+		})
+
+    })
+</script>
+{% endblock custom_js %}
