@@ -12,7 +12,10 @@ import json
 from django.contrib.auth.models import User
 import os
 import uuid
-import zipfile
+if sys.version_info >= (3, 6):
+    import zipfile
+else:
+    import zipfile36 as zipfile
 import company.settings
 from datetime import datetime
 from zipfile import ZipFile
