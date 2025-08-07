@@ -1,5 +1,5 @@
 asgiref==3.2.10
-Django==3.0.7
+Django
 django-extensions==3.0.2
 graphviz==0.14
 mysql-connector-python==8.0.20
@@ -10,7 +10,7 @@ pytz==2020.1
 six==1.15.0
 sqlparse==0.3.1
 django-material == 1.4.3
-Pillow == 5.00
+Pillow
 django-imagekit == 4.0.2
 opencv-contrib-python
 zipfile
