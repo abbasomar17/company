@@ -1,4 +1,4 @@
---upgrade pip
+--U pip
 asgiref
 Django
 django-extensions
