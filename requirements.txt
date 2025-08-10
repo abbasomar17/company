@@ -1,5 +1,6 @@
 pip==25.1.1
 python-dotenv
+setuptools
 numpy==1.13.3
 asgiref
 Django
