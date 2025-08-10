@@ -1,4 +1,4 @@
---U pip
+pip==25.1.1
 asgiref
 Django
 django-extensions
