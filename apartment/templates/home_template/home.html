@@ -25,6 +25,20 @@
     .search__select {
       padding-right:0.5em;
     }
+	
+	.column {
+	  float: left;
+	  width: 20%;
+	  padding: 2px;
+		}
+
+	/* Clear floats after image containers */
+	.row::after {
+	  content: "";
+	  clear: both;
+	  display: flex;
+		}
+
   </style>
 
 {% endblock %}
@@ -81,9 +95,11 @@
 
 			<div class="col">
 				<div class="card dpg-album-card">
+				  <div class="column">
 					{% for album in albums %}
+					
 					<div class="card-image">
-						<img src="{{ album.thumb }}" alt="{{ album.title }}" class="dpg-album-card-image" height = 450 width = 500 />
+						<img src="{{ album.thumb }}" alt="{{ album.title }}" class="dpg-album-card-image" height = 200 width = 200 />
 					</div>
 					
 						<h4>{{ album.title }}<h4><br/>
@@ -101,7 +117,7 @@
 			</div>
 
 			
-
+		</div>
 		</div>
 	</div>
 	{% else %}
