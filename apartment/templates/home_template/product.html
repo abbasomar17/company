@@ -5,6 +5,20 @@
 {% endblock page_title %}
 
 {% block css %}
+<style>
+	.column {
+  float: left;
+  width: 33.33%;
+  padding: 2px;
+	}
+
+/* Clear floats after image containers */
+.row::after {
+  content: "";
+  clear: both;
+  display: flex;
+	}
+</style>
 {% load static %}
     <link rel="stylesheet" href="{% static 'external/photoswipe/photoswipe.css' %}"> 
     <link rel="stylesheet" href="{% static 'external/photoswipe/default-skin/default-skin.css' %}"> 
@@ -36,9 +50,11 @@
                 <div class="container">
                     <div class="row">
                         {% for item in images %}
+						<div class="column">
                         <a class="class="col s12 m3" href="javascript:pswpInit({{ forloop.counter0 }});">
-                            <img src="{{ item.thumb.url }}" class="responsive-img dpg-album-image" height = 200 width = 200 alt="{{ item.alt }}" />
+                            <img src="{{ item.thumb.url }}" class="responsive-img dpg-album-image" height = 400 width = 400 alt="{{ item.alt }}" />
                         </a>
+						</div>
                         {% endfor %}
                     </div>
                 </div>
@@ -54,10 +70,10 @@
 					<a href="{{ album.get_remove_from_cart_url}}" class="btn btn-primary float-right">Remove from Booking <i class="fas fa-trash-can ml-1"></i></a>
 				</div>
 				</div>
-			</section>
-            <footer class="float-left">
+			</section><br/>
+            <div class="float-left">
                 Created on <time datetime="{{ album.created|date:"Y-m-d" }}">{{ album.created|date:"d M Y" }}</time>
-            </footer>
+            </div>
 		</div>	
 		</article>
 
