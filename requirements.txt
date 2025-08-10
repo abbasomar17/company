@@ -13,7 +13,7 @@ sqlparse
 django-material
 Pillow
 django-imagekit
-opencv-contrib-python
+opencv-contrib-python==4.3.0
 os
 uuid
 string
