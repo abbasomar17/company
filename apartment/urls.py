@@ -6,8 +6,6 @@ from .import HodViews, OwnersViews, TenantsViews, HomeView, DriversViews
 
 urlpatterns = [
     path('login/', views.loginPage, name="login"),
-    path('addFace/', views.addFace, name="addFace"),
-    path('faceAdd/', views.faceAdd, name="faceAdd"),
     path('cart_item_counter/', views.cart_item_counter, name="cart_item_counter"),
     path('accounts/', include('allauth.urls')),
     # path('accounts/', include('django.contrib.auth.urls')),
