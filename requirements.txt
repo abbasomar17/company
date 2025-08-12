@@ -2,12 +2,15 @@ asgiref
 Django
 django-extensions
 graphviz
+mysql-connector-python
 protobuf
 pydot
 pyparsing
 pytz
 six
 sqlparse
+django-material
+Pillow==5.0.0
 os
 uuid
 string
@@ -15,4 +18,3 @@ django_heroku
 django-allauth
 stripe
 django-environ
-Pillow==7.2.0
