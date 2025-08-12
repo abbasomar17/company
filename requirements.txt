@@ -11,7 +11,7 @@ six
 sqlparse
 django-material
 Pillow
-django-imagekit==1.0
+django-imagekit==0.3
 os
 uuid
 string
