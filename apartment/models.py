@@ -6,8 +6,6 @@ from django.core.mail import EmailMultiAlternatives
 import uuid
 from django.shortcuts import reverse
 from django.db import models
-from imagekit.models import ProcessedImageField
-from imagekit.processors import ResizeToFit
 
 
 class ApartmentBooking(models.Model):
@@ -159,7 +157,7 @@ class Album(models.Model):
     labels = models.CharField(max_length=20)
     booking_id = models.CharField(max_length=30, blank=True, null=True)
     description = models.TextField()
-    thumb = ProcessedImageField(upload_to='albums', processors=[ResizeToFit(300)], format='JPEG', options={'quality': 90})
+    thumb = models.ImageField(upload_to='albums')
     owner_id = models.ForeignKey(Apartment_owners, on_delete=models.CASCADE)
     is_visible = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
@@ -201,8 +199,8 @@ class Album(models.Model):
 
 
 class AlbumImage(models.Model):
-    image = ProcessedImageField(upload_to='albums', processors=[ResizeToFit(1280)], format='JPEG', options={'quality': 70})
-    thumb = ProcessedImageField(upload_to='albums', processors=[ResizeToFit(300)], format='JPEG', options={'quality': 80})
+    image = models.ImageField(upload_to='albums')
+    thumb = models.ImageField(upload_to='albums')
     album = models.ForeignKey('album', on_delete=models.PROTECT)
     alt = models.CharField(max_length=255, default=uuid.uuid4)
     created = models.DateTimeField(auto_now_add=True)
