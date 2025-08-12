@@ -11,7 +11,6 @@ six
 sqlparse
 django-material
 wheel
-Pillow==7.2.0
 os
 uuid
 string
@@ -19,3 +18,4 @@ django_heroku
 django-allauth
 stripe
 django-environ
+Pillow==7.2.0
