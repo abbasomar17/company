@@ -10,7 +10,6 @@ pytz
 six
 sqlparse
 django-material
-wheel
 os
 uuid
 string
