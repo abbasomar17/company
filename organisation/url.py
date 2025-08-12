@@ -143,6 +143,7 @@ urlpatterns = [
     path('user_login/', DCView.user_login, name="user_login"),
     path('user_add_save/', DCView.user_add_save, name="user_add_save"),
     path('user_add/', DCView.user_add, name="user_add"),
+    path('verify_user/', DCView.verify_user, name="verify_user"),
     path('user_logout/', DCView.user_logout, name="user_logout"),
     path('user_do_login/', DCView.user_do_login, name="user_do_login"),
     path('dc_profile/', DCView.dc_profile, name="dc_profile"),
