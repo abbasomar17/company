@@ -10,7 +10,7 @@ pytz
 six
 sqlparse
 django-material
-Pillow
+Pillow==9.0.1
 os
 uuid
 string
