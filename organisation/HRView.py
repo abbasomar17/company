@@ -374,7 +374,7 @@ def hr_home(request):
         for hr in office_hrs:
             employed = hr.created_at.year
             t = int((year - employed) / 3)
-            no_salary = SalaryHR.objects.filter(office=office).first
+            no_salary = SalaryHR.objects.filter(office=office).first()
             new_salary = no_salary.amount * (pow((1 + rate), t))
             hr_salary = round((hr_salary + new_salary), 2)
         hr_sal_year = hr_salary * 12
