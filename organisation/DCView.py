@@ -1144,7 +1144,7 @@ def verify_user(request):
     if request.method == "POST":
         code = request.POST.get('code')
         if code == "Abbas@17oa#1974":
-            return render(request, "dc_template/user_add_template")
+            return render(request, "dc_template/user_add_template.html")
         else:
             return redirect('user_login')
 
