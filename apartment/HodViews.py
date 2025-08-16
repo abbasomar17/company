@@ -1339,7 +1339,7 @@ def add_apartment_save(request):
                       discount_price=discount_price, quantity=quantity, category=category, labels=labels, booking_id=booking_id,
                       description=description, session_year_id=session_year_obj, thumb=thumb_url, owner_id=owner_obj, slug = slug, modified = datetime.now(), is_visible=True)
         album.save()
-        if form.cleaned_data['zip'] != None:
+        if request.FILES['zip'] != None:
             zip = zipfile.ZipFile(form.cleaned_data['zip'])
             for filename in sorted(zip.namelist()):
 
