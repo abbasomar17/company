@@ -316,7 +316,6 @@ def dc_home(request):
         total_income_list_in_office.append(total_income)
         overdue_count_list_in_office.append(office_overdue_count)
         income_count_list_in_office.append(office_income_count)
-        h_payment_count_list_in_office.append(office_h_p_count)
         a_payment_count_list_in_office.append(office_a_p_count)
         income_expenditure_list_in_office.append(ratio_income_expenditure)
         ceo_accept_leaves_list_in_office.append(office_ceo_accept_leave_count)
