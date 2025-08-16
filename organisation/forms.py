@@ -76,20 +76,6 @@ class AddHRForm(forms.Form):
     nida_number = forms.CharField(label="Nida Number", max_length=30, widget=forms.TextInput(attrs={"class": "form-control"}))
     address = forms.CharField(label="Address", max_length=50, widget=forms.TextInput(attrs={"class": "form-control"}))
 
-    # For Displaying Courses
-    try:
-        offices = Office.objects.all()
-        office_list = []
-        for office in offices:
-            single_office = (office.id, office.title)
-            office_list.append(single_office)
-    except:
-        office_list = []
-
-
-    office = forms.ChoiceField(label="Office Name", choices=office_list,
-                                  widget=forms.Select(attrs={"class": "form-control"}))
-
 
 class EditHRForm(forms.Form):
     email = forms.EmailField(label="Email", max_length=50, widget=forms.EmailInput(attrs={"class": "form-control"}))
@@ -140,20 +126,6 @@ class AddCSForm(forms.Form):
     nida_number = forms.CharField(label="Nida Number", max_length=30, widget=forms.TextInput(attrs={"class": "form-control"}))
     address = forms.CharField(label="Address", max_length=50, widget=forms.TextInput(attrs={"class": "form-control"}))
 
-    # For Displaying Courses
-    try:
-        offices = Office.objects.all()
-        office_list = []
-        for office in offices:
-            single_office = (office.id, office.title)
-            office_list.append(single_office)
-    except:
-        office_list = []
-
-
-    office = forms.ChoiceField(label="Office Name", choices=office_list,
-                                  widget=forms.Select(attrs={"class": "form-control"}))
-
 
 class EditCSForm(forms.Form):
     email = forms.EmailField(label="Email", max_length=50, widget=forms.EmailInput(attrs={"class": "form-control"}))
@@ -179,20 +151,6 @@ class AddAccountantForm(forms.Form):
     nida_number = forms.CharField(label="Nida Number", max_length=30, widget=forms.TextInput(attrs={"class": "form-control"}))
     address = forms.CharField(label="Address", max_length=50, widget=forms.TextInput(attrs={"class": "form-control"}))
 
-    # For Displaying Courses
-    try:
-        offices = Office.objects.all()
-        office_list = []
-        for office in offices:
-            single_office = (office.id, office.title)
-            office_list.append(single_office)
-    except:
-        office_list = []
-
-
-    office = forms.ChoiceField(label="Office Name", choices=office_list,
-                                  widget=forms.Select(attrs={"class": "form-control"}))
-
 
 class EditAccountantForm(forms.Form):
     email = forms.EmailField(label="Email", max_length=50, widget=forms.EmailInput(attrs={"class": "form-control"}))
@@ -217,20 +175,6 @@ class AddSWOForm(forms.Form):
     username = forms.CharField(label="Username", max_length=50, widget=forms.TextInput(attrs={"class": "form-control"}))
     nida_number = forms.CharField(label="Nida Number", max_length=30, widget=forms.TextInput(attrs={"class": "form-control"}))
     address = forms.CharField(label="Address", max_length=50, widget=forms.TextInput(attrs={"class": "form-control"}))
-
-    # For Displaying Courses
-    try:
-        offices = Office.objects.all()
-        office_list = []
-        for office in offices:
-            single_office = (office.id, office.title)
-            office_list.append(single_office)
-    except:
-        office_list = []
-
-
-    office = forms.ChoiceField(label="Office Name", choices=office_list,
-                                  widget=forms.Select(attrs={"class": "form-control"}))
 
 
 class EditSWOForm(forms.Form):

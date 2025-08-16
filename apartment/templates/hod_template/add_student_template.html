@@ -18,10 +18,124 @@
                     <div class="card-header">
                         <h3 class="card-title">Add Tenant</h3>
                     </div>
-                    <!-- /.card-header -->
-                    <!-- form start -->
-                    {% url 'add_student_save' as action_path %}
-                    {% include 'hod_template/form_template.html' with messages=messages form=form action_path=action_path button_text="Add Tenant" %}
+
+                    <form role="form" method="POST" action="{% url 'add_student_save' %}">
+                        {% csrf_token %}
+
+                        
+                                {% comment %} Display Messages {% endcomment %}
+                                {% if messages %}
+                                <div class="form-group">
+                                <div class="col-12">
+                                    {% for message in messages %}
+                                    {% if message.tags == "error" %}
+                                        <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-top: 10px;">
+                                        {{ message }}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        </div>
+                                    {% elif message.tags == "success" %}
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-top: 10px;">
+                                        {{ message }}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        </div>
+                                    {% endif %}
+                                    {% endfor %}
+                                </div>
+                                </div>
+                                {% endif %}
+                            
+
+                        <div class="card-body">
+							<div class="form-group">
+                                <label>Apartment Name </label>
+                                <select class="form-control" name="apartment_id">
+                                    {% for apartment in apartments %}
+                                        <option value="{{ apartment.id }}">{{apartment.title}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+							
+							<div class="form-group">
+                                <label>Owner </label>
+                                <select class="form-control" name="owner_id">
+                                    {% for owner in owners %}
+                                        <option value="{{ owner.id }}">{{owner.admin.user.first_name}} {{owner.admin.user.last_name}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+							
+							<div class="form-group">
+                                <label>Meeting Attended </label>
+                                <select class="form-control" name="course_id">
+                                    {% for course in courses %}
+                                        <option value="{{ course.id }}">{{course.name}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+							
+							<div class="form-group">
+                                <label>Session </label>
+                                <select class="form-control" name="session_year_id">
+                                    {% for session in sessions %}
+                                        <option value="{{ session.id }}">{{session.session_start_year}} to {{session.session_end_year}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+							
+                            <div class="form-group">
+                                <label>Username </label>
+                                <input type="text" class="form-control" name="username" placeholder="Username">
+                            </div>
+							
+							<div class="form-group">
+                                <label>First Name </label>
+                                <input type="text" class="form-control" name="first_name" placeholder="First Name">
+                            </div>
+							
+							<div class="form-group">
+                                <label>Last Name </label>
+                                <input type="text" class="form-control" name="last_name" placeholder="Last Name">
+                            </div>
+							
+							<div class="form-group">
+                                <label>Password </label>
+                                <input type="password" class="form-control" name="password" placeholder="Password">
+                            </div>
+							
+							<div class="form-group">
+                                <label>Gender </label>
+                                <select class="form-control" name="gender">
+                                    <option value="Male">Male</option>
+									<option value="Female">Female</option>
+                                </select>
+                            </div>
+							
+							<div class="form-group">
+                                <label>Nida Number </label>
+                                <input type="text" class="form-control" name="nida_number" placeholder="Nida Number">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Address </label>
+                                <textarea name="address" class="form-control" rows="6" placeholder="Address"></textarea>
+                            </div>
+							
+							<div class="form-group">
+                                <label>Profile Picture </label>
+                                <input type="file" class="form-control" name="profile_pic" placeholder="Profile Picture">
+                            </div>
+
+                        </div>
+                        <!-- /.card-body -->
+
+                        <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">Add Tenant</button>
+                        </div>
+                    </form>
 
                     </div>
                     <!-- /.card -->

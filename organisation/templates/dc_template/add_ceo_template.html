@@ -18,10 +18,83 @@
                     <div class="card-header">
                         <h3 class="card-title">Add CEO</h3>
                     </div>
-                    <!-- /.card-header -->
-                    <!-- form start -->
-                    {% url 'add_ceo_save' as action_path %}
-                    {% include 'dc_template/form_template.html' with messages=messages form=form action_path=action_path button_text="Add CEO" %}
+                    <form role="form" method="POST" action="{% url 'add_ceo_save' %}">
+                        {% csrf_token %}
+
+                        
+                                {% comment %} Display Messages {% endcomment %}
+                                {% if messages %}
+                                <div class="form-group">
+                                <div class="col-12">
+                                    {% for message in messages %}
+                                    {% if message.tags == "error" %}
+                                        <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-top: 10px;">
+                                        {{ message }}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        </div>
+                                    {% elif message.tags == "success" %}
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-top: 10px;">
+                                        {{ message }}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        </div>
+                                    {% endif %}
+                                    {% endfor %}
+                                </div>
+                                </div>
+                                {% endif %}
+                            
+
+                        <div class="card-body">
+							<div class="form-group">
+                                <label>Office </label>
+                                <select class="form-control" name="office">
+                                    {% for office in offices %}
+                                        <option value="{{ office.id }}">{{office.title}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+							
+                            <div class="form-group">
+                                <label>Username </label>
+                                <input type="text" class="form-control" name="username" placeholder="Username">
+                            </div>
+							
+							<div class="form-group">
+                                <label>First Name </label>
+                                <input type="text" class="form-control" name="first_name" placeholder="First Name">
+                            </div>
+							
+							<div class="form-group">
+                                <label>Last Name </label>
+                                <input type="text" class="form-control" name="last_name" placeholder="Last Name">
+                            </div>
+							
+							<div class="form-group">
+                                <label>Password </label>
+                                <input type="password" class="form-control" name="password" placeholder="Password">
+                            </div>
+							
+							<div class="form-group">
+                                <label>Nida Number </label>
+                                <input type="text" class="form-control" name="nida_number" placeholder="Nida Number">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Address </label>
+                                <textarea name="address" class="form-control" rows="6" placeholder="Address"></textarea>
+                            </div>
+
+                        </div>
+                        <!-- /.card-body -->
+
+                        <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">Add CEO</button>
+                        </div>
+                    </form>
 
                     </div>
                     <!-- /.card -->

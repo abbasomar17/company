@@ -486,22 +486,8 @@ class EditVehicleForm(forms.Form):
         ('Car', 'Car')
     )
 
-
-    try:
-        drivers = Drivers.objects.all()
-        driver_list = []
-        for driver in drivers:
-            single_driver = (
-            driver.id, str(driver.admin.user.first_name) + " " + str(driver.admin.user.last_name))
-            driver_list.append(single_driver)
-
-    except:
-        driver_list = []
-
     vehicle_type = forms.ChoiceField(label="Vehicle Type", choices=vehicle_list,
                                widget=forms.Select(attrs={"class": "form-control"}))
-    driver_id = forms.ChoiceField(label="Driver", choices=driver_list,
-                                        widget=forms.Select(attrs={"class": "form-control"}))
 
 
 class CheckForm(forms.Form):

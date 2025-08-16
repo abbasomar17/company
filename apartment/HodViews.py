@@ -1001,9 +1001,15 @@ def delete_session(request, session_id):
 
 @login_required(login_url='user_login')
 def add_student(request):
-    form = AddTenantForm()
+    courses = Courses.objects.all()
+    apartments = Album.objects.all()
+    owners = Apartment_owners.objects.all()
+    session_years = SessionYearModel.objects.all()
     context = {
-        "form": form
+        "courses":courses,
+        "apartments":apartments,
+        "owners":owners,
+        "sessions":session_years
     }
     return render(request, 'hod_template/add_student_template.html', context)
 
@@ -1011,56 +1017,48 @@ def add_student(request):
 @login_required(login_url='user_login')
 def add_student_save(request):
     if request.method == "POST":
-        customer_form = AddCustomerForm(request.POST)
-        tenant_form = AddTenantForm(request.POST, request.FILES)
-        if customer_form.is_valid() and tenant_form.is_valid():
-            first_name = customer_form.cleaned_data['first_name']
-            last_name = customer_form.cleaned_data['last_name']
-            username = customer_form.cleaned_data['username']
-            email = customer_form.cleaned_data['email']
-            password = customer_form.cleaned_data['password']
-            address = tenant_form.cleaned_data['address']
-            nida_number = tenant_form.cleaned_data['nida_number']
-            session_year_id = tenant_form.cleaned_data['session_year_id']
-            course_id = tenant_form.cleaned_data['course_id']
-            apartment_id = tenant_form.cleaned_data['apartment_id']
-            owner_id = tenant_form.cleaned_data['owner_id']
-            gender = tenant_form.cleaned_data['gender']
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        address = request.POST.get('address')
+        nida_number = request.POST.get('nida_number')
+        session_year_id = request.POST.get('session_year_id')
+        course_id = request.POST.get('course_id')
+        apartment_id = request.POST.get('apartment_id')
+        owner_id = request.POST.get('owner_id')
+        gender = request.POST.get('gender')
 
-            # Getting Profile Pic first
-            # First Check whether the file is selected or not
-            # Upload only if file is selected
-            if len(request.FILES) != 0:
-                profile_pic = request.FILES['profile_pic']
-                fs = FileSystemStorage()
-                filename = fs.save(profile_pic.name, profile_pic)
-                profile_pic_url = fs.url(filename)
-            else:
-                profile_pic_url = None
+        # Getting Profile Pic first
+        # First Check whether the file is selected or not
+        # Upload only if file is selected
+        if len(request.FILES) != 0:
+            profile_pic = request.FILES['profile_pic']
+            fs = FileSystemStorage()
+            filename = fs.save(profile_pic.name, profile_pic)
+            profile_pic_url = fs.url(filename)
+        else:
+            profile_pic_url = None
 
-            user = User(email=email, username=username, password=password, first_name=first_name, last_name=last_name)
-            user.save()
-            customer = CustomUser(user=user, user_type = 3)
-            customer.save()
-            course_obj = Courses.objects.get(id=course_id)
+        user = User(email=email, username=username, password=password, first_name=first_name, last_name=last_name)
+        user.save()
+        customer = CustomUser(user=user, user_type = 3)
+        customer.save()
+        course_obj = Courses.objects.get(id=course_id)
 
-            apartment_obj = Album.objects.get(id=apartment_id)
+        apartment_obj = Album.objects.get(id=apartment_id)
 
-            owner_obj = Apartment_owners.objects.get(id=owner_id)
+        owner_obj = Apartment_owners.objects.get(id=owner_id)
 
-            session_year_obj = SessionYearModel.objects.get(id=session_year_id)
+        session_year_obj = SessionYearModel.objects.get(id=session_year_id)
 
-            tenant = Tenants(admin=customer, owner_id=owner_obj, apartment_id=apartment_obj, address=address, nida_number=nida_number, gender=gender, course_id=course_obj, session_year_id=session_year_obj, profile_pic=profile_pic_url)
-            tenant.save()
-            messages.success(request, "Tenant Added Successfully!")
-            return redirect('add_student')
+        tenant = Tenants(admin=customer, owner_id=owner_obj, apartment_id=apartment_obj, address=address, nida_number=nida_number, gender=gender, course_id=course_obj, session_year_id=session_year_obj, profile_pic=profile_pic_url)
+        tenant.save()
+        messages.success(request, "Tenant Added Successfully!")
+        return redirect('add_student')
     else:
-        customer_form = AddCustomerForm()
-        tenant_form = AddTenantForm()
-        context = {
-            'customer_form': customer_form,
-            'tenant_form': tenant_form
-        }
+        messages.success(request, "Failed to Add Tenant!")
         return render(request, 'hod_template/add_student_template.html', context)
 
 
@@ -1079,22 +1077,19 @@ def edit_student(request, tenant_id):
     request.session['tenant_id'] = tenant_id
 
     tenant = Tenants.objects.get(admin=tenant_id)
-    form = EditTenantForm()
-    # Filling the form with Data from Database
-    form.fields['email'].initial = tenant.admin.user.email
-    form.fields['username'].initial = tenant.admin.user.username
-    form.fields['first_name'].initial = tenant.admin.user.first_name
-    form.fields['last_name'].initial = tenant.admin.user.last_name
-    form.fields['address'].initial = tenant.address
-    form.fields['nida_number'].initial = tenant.nida_number
-    form.fields['course_id'].initial = tenant.course_id.id
-    form.fields['gender'].initial = tenant.gender
-    form.fields['session_year_id'].initial = tenant.session_year_id.id
+    courses = Courses.objects.all()
+    apartments = Album.objects.all()
+    owners = Apartment_owners.objects.all()
+    session_years = SessionYearModel.objects.all()
+
 
     context = {
         "id": tenant_id,
         "username": tenant.admin.user.username,
-        "form": form
+        "courses":courses,
+        "apartments":apartments,
+        "owners":owners,
+        "sessions":session_years
     }
     return render(request, "hod_template/edit_student_template.html", context)
 
@@ -1108,62 +1103,62 @@ def edit_student_save(request):
         if tenant_id == None:
             return redirect('/manage_student')
 
-        form = EditTenantForm(request.POST, request.FILES)
-        if form.is_valid():
-            email = form.cleaned_data['email']
-            username = form.cleaned_data['username']
-            first_name = form.cleaned_data['first_name']
-            last_name = form.cleaned_data['last_name']
-            address = form.cleaned_data['address']
-            nida_number = form.cleaned_data['nida_number']
-            course_id = form.cleaned_data['course_id']
-            gender = form.cleaned_data['gender']
-            session_year_id = form.cleaned_data['session_year_id']
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        address = request.POST.get('address')
+        nida_number = request.POST.get('nida_number')
+        session_year_id = request.POST.get('session_year_id')
+        course_id = request.POST.get('course_id')
+        apartment_id = request.POST.get('apartment_id')
+        owner_id = request.POST.get('owner_id')
+        gender = request.POST.get('gender')
 
-            # Getting Profile Pic first
-            # First Check whether the file is selected or not
-            # Upload only if file is selected
-            if len(request.FILES) != 0:
-                profile_pic = request.FILES['profile_pic']
-                fs = FileSystemStorage()
-                filename = fs.save(profile_pic.name, profile_pic)
-                profile_pic_url = fs.url(filename)
-            else:
-                profile_pic_url = None
-
-            try:
-                # First Update into Custom User Model
-                user = Tenants.objects.get(id=tenant_id)
-                user.admin.user.first_name = first_name
-                user.admin.user.last_name = last_name
-                user.admin.user.email = email
-                user.admin.user.username = username
-
-
-                # Then Update Students Table
-
-                user.address = address
-
-                course = Courses.objects.get(id=course_id)
-                user.course_id = course
-
-                session_year_obj = SessionYearModel.objects.get(id=session_year_id)
-                user.session_year_id = session_year_obj
-
-                user.nida_number = nida_number
-                user.gender = gender
-                if profile_pic_url != None:
-                    user.profile_pic = profile_pic_url
-                user.save()
-                # Delete student_id SESSION after the data is updated
-                del request.session['student_id']
-
-                messages.success(request, "Student Updated Successfully!")
-                return redirect('/edit_student/'+tenant_id)
-            except:
-                messages.success(request, "Failed to Uupdate Student.")
-                return redirect('/edit_student/'+tenant_id)
+        # Getting Profile Pic first
+        # First Check whether the file is selected or not
+        # Upload only if file is selected
+        if len(request.FILES) != 0:
+            profile_pic = request.FILES['profile_pic']
+            fs = FileSystemStorage()
+            filename = fs.save(profile_pic.name, profile_pic)
+            profile_pic_url = fs.url(filename)
         else:
+            profile_pic_url = None
+
+        try:
+            # First Update into Custom User Model
+            user = Tenants.objects.get(id=tenant_id)
+            user.admin.user.first_name = first_name
+            user.admin.user.last_name = last_name
+            user.admin.user.email = email
+            user.admin.user.username = username
+            user.admin.user.password = password
+
+
+            # Then Update Students Table
+
+            user.address = address
+
+            course = Courses.objects.get(id=course_id)
+            user.course_id = course
+
+            session_year_obj = SessionYearModel.objects.get(id=session_year_id)
+            user.session_year_id = session_year_obj
+
+            user.nida_number = nida_number
+            user.gender = gender
+            if profile_pic_url != None:
+                user.profile_pic = profile_pic_url
+            user.save()
+            # Delete student_id SESSION after the data is updated
+            del request.session['student_id']
+
+            messages.success(request, "Student Updated Successfully!")
+            return redirect('/edit_student/'+tenant_id)
+        except:
+            messages.success(request, "Failed to Uupdate Student.")
             return redirect('/edit_student/'+tenant_id)
 
 
@@ -1191,15 +1186,13 @@ def add_vehicle(request):
 @login_required(login_url='user_login')
 def add_vehicle_save(request):
     if request.method == "POST":
-        form = AddVehicleForm(request.POST)
-        if form.is_valid():
-            pnumber = form.cleaned_data['pnumber']
-            current_address = form.cleaned_data['current_address']
-            familiar_address = form.cleaned_data['familiar_address']
-            working_address = form.cleaned_data['working_address']
-            mobile_number = form.cleaned_data['mobile_number']
-            driver_id = form.cleaned_data['driver_id']
-            vehicle_type = form.cleaned_data['vehicle_type']
+            pnumber = request.POST.get('pnumber')
+            current_address = request.POST.get('current_address')
+            familiar_address = request.POST.get('familiar_address')
+            working_address = request.POST.get('working_address')
+            mobile_number = request.POST.get('mobile_number')
+            driver_id = request.POST.get('driver_id')
+            vehicle_type = request.POST.get('vehicle_type')
 
             driver_obj = Drivers.objects.get(id=driver_id)
 
@@ -1209,10 +1202,7 @@ def add_vehicle_save(request):
             messages.success(request, "Vehicle Added Successfully!")
             return redirect('add_vehicle')
     else:
-        form = AddVehicleForm()
-        context = {
-            'form': form
-        }
+        messages.success(request, "Failed to Add Vehicle!")
         return render(request, 'hod_template/add_vehicle_template.html', context)
 
 
@@ -1239,7 +1229,6 @@ def edit_vehicle(request, vehicle_id):
     form.fields['working_address'].initial = vehicle.working_address
     form.fields['familiar_address'].initial = vehicle.familiar_address
     form.fields['vehicle_type'].initial = vehicle.vehicle_type
-    form.fields['driver_id'].initial = vehicle.driver_id.id
 
     context = {
         "id": vehicle_id,
@@ -1266,7 +1255,6 @@ def edit_vehicle_save(request):
             familiar_address = form.cleaned_data['familiar_address']
             working_address = form.cleaned_data['working_address']
             vehicle_type = form.cleaned_data['vehicle_type']
-            driver_id = form.cleaned_data['driver_id']
 
 
             try:
@@ -1280,9 +1268,6 @@ def edit_vehicle_save(request):
                 vehicle_model.working_address = working_address
                 vehicle_model.vehicle_type = vehicle_type
 
-
-                driver_obj = Drivers.objects.get(id=driver_id)
-                vehicle_model.driver_id = driver_obj
 
                 vehicle_model.save()
                 # Delete student_id SESSION after the data is updated

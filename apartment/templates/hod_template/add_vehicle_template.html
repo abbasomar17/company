@@ -20,8 +20,90 @@
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    {% url 'add_vehicle_save' as action_path %}
-                    {% include 'hod_template/form_template.html' with messages=messages form=form action_path=action_path button_text="Add Vehicle" %}
+
+					<form role="form" method="POST" action="{% url 'add_vehicle_save' %}">
+                        {% csrf_token %}
+
+                        
+                                {% comment %} Display Messages {% endcomment %}
+                                {% if messages %}
+                                <div class="form-group">
+                                <div class="col-12">
+                                    {% for message in messages %}
+                                    {% if message.tags == "error" %}
+                                        <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-top: 10px;">
+                                        {{ message }}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        </div>
+                                    {% elif message.tags == "success" %}
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-top: 10px;">
+                                        {{ message }}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        </div>
+                                    {% endif %}
+                                    {% endfor %}
+                                </div>
+                                </div>
+                                {% endif %}
+                            
+
+                        <div class="card-body">
+							<div class="form-group">
+                                <label>Driver Name </label>
+                                <select class="form-control" name="driver_id">
+                                    {% for driver in drivers %}
+                                        <option value="{{ driver.id }}">{{driver.adminn.user.first_name}} {{driver.adminn.user.last_name}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+							
+							<div class="form-group">
+                                <label>Mobile Number </label>
+                                <input type="text" class="form-control" name="mobile_number" placeholder="Mobile Number">
+                            </div>
+							
+							<div class="form-group">
+                                <label>Vehicle Type </label>
+                                <select class="form-control" name="vehicle_type">
+                                    <option value="Motorcycle">Motorcycle</option>
+									<option value="Guta">Guta</option>
+									<option value="Bajaji">Bajaji</option>
+									<option value="Car">Car</option>
+                                </select>
+                            </div>
+							
+							<div class="form-group">
+                                <label>Licensed Plate Number </label>
+                                <input type="text" class="form-control" name="pnumber" placeholder="Plate Number">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Current Address </label>
+                                <textarea name="current_address" class="form-control" rows="6" placeholder="Current Address"></textarea>
+                            </div>
+							
+							<div class="form-group">
+                                <label>Familiar Addresses </label>
+                                <textarea name="familiar_address" class="form-control" rows="6" placeholder="Familiar Address"></textarea>
+                            </div>
+							
+							<div class="form-group">
+                                <label>Working Addresses </label>
+                                <textarea name="working_address" class="form-control" rows="6" placeholder="Working Address"></textarea>
+                            </div>
+							
+							</div>
+                        <!-- /.card-body -->
+
+                        <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">Add Vehicle</button>
+                        </div>
+                    </form>
+       
 
                     </div>
                     <!-- /.card -->

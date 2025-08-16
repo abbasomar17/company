@@ -673,49 +673,44 @@ def delete_office(request, office_id):
 
 @login_required(login_url='user_login')
 def add_ceo(request):
-    form = AddCEOForm()
-    context = {
-        "form": form
+    offices = Office.objects.all()
+    contexts = {
+        "offices": offices
     }
-    return render(request, 'dc_template/add_ceo_template.html', context)
+    return render(request, 'dc_template/add_ceo_template.html', contexts)
 
 
 @login_required(login_url='user_login')
 def add_ceo_save(request):
-    if request.method == "POST":
-        customer_form = AddCustomerForm(request.POST)
-        ceo_form = AddCEOForm(request.POST)
-        if customer_form.is_valid() and ceo_form.is_valid():
-            first_name = customer_form.cleaned_data['first_name']
-            last_name = customer_form.cleaned_data['last_name']
-            username = customer_form.cleaned_data['username']
-            email = customer_form.cleaned_data['email']
-            password = customer_form.cleaned_data['password']
-            address = ceo_form.cleaned_data['address']
-            nida_number = ceo_form.cleaned_data['nida_number']
-            office_id = ceo_form.cleaned_data['office']
+    if request.method != "POST":
+        messages.error(request, "Invalid Method!")
+        return redirect('add_salary_ceo')
+    else:
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        email = request.POST.get('email')
+        address = request.POST.get('address')
+        nida_number = request.POST.get('nida_number')
+
+        office_id = request.POST.get('office')
+        try:
 
             office_obj = Office.objects.get(id=office_id)
-
 
             user = User(email=email, username=username, password=password, first_name=first_name, last_name=last_name)
             user.save()
             customer = S_CustomUser(user=user, user_type = 1)
             customer.save()
 
-
             ceo = CEO(admin=customer, office=office_obj, address=address, nida_number=nida_number)
             ceo.save()
             messages.success(request, "CEO Added Successfully!")
             return redirect('add_ceo')
-    else:
-        customer_form = AddCustomerForm()
-        ceo_form = AddCEOForm()
-        context = {
-            'customer_form': customer_form,
-            'ceo_form': ceo_form
-        }
-        return render(request, 'dc_template/add_ceo_template.html', context)
+        except:
+            messages.success(request, "Failed to add CEO!")
+            return render(request, 'dc_template/add_ceo_template.html')
 
 
 @login_required(login_url='user_login')
@@ -731,21 +726,13 @@ def manage_ceo(request):
 def edit_ceo(request, ceo_id):
     # Adding Student ID into Session Variable
 
+    request.session['salary_ceo_id'] = ceo_id
+    offices = Office.objects.all()
     ceo = CEO.objects.get(id=ceo_id)
-    form = EditCEOForm()
-    # Filling the form with Data from Database
-    form.fields['email'].initial = ceo.admin.user.email
-    form.fields['username'].initial = ceo.admin.user.username
-    form.fields['first_name'].initial = ceo.admin.user.first_name
-    form.fields['last_name'].initial = ceo.admin.user.last_name
-    form.fields['address'].initial = ceo.address
-    form.fields['office'].initial = ceo.office.id
-
-
     context = {
-        "id": ceo_id,
-        "username": ceo.admin.user.username,
-        "form": form
+        "offices": offices,
+        "ceo": ceo,
+        "id": ceo_id
     }
     return render(request, "dc_template/edit_ceo_template.html", context)
 
@@ -759,43 +746,42 @@ def edit_ceo_save(request):
         if ceo_id == None:
             return redirect('manage_ceo')
 
-        form = EditCEOForm(request.POST)
-        if form.is_valid():
-            email = form.cleaned_data['email']
-            username = form.cleaned_data['username']
-            first_name = form.cleaned_data['first_name']
-            last_name = form.cleaned_data['last_name']
-            address = form.cleaned_data['address']
-            office = form.cleaned_data['office']
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        email = request.POST.get('email')
+        address = request.POST.get('address')
+
+        office = request.POST.get('office')
+
+        try:
+            # First Update into Custom User Model
+            user = CEO.objects.get(id=ceo_id)
+            user.admin.user.first_name = first_name
+            user.admin.user.last_name = last_name
+            user.admin.user.email = email
+            user.admin.user.username = username
+            user.admin.user.password = password
 
 
-            try:
-                # First Update into Custom User Model
-                user = CEO.objects.get(id=ceo_id)
-                user.admin.user.first_name = first_name
-                user.admin.user.last_name = last_name
-                user.admin.user.email = email
-                user.admin.user.username = username
+            # Then Update Students Table
 
+            user.address = address
 
-                # Then Update Students Table
+            office = Office.objects.get(id=office)
+            user.office = office
 
-                user.address = address
+            user.save()
+            # Delete student_id SESSION after the data is updated
+            del request.session['ceo_id']
 
-                office = Office.objects.get(id=office)
-                user.office = office
-
-                user.save()
-                # Delete student_id SESSION after the data is updated
-                del request.session['ceo_id']
-
-                messages.success(request, "CEO Updated Successfully!")
-                return redirect('/edit_ceo/'+ceo_id)
-            except:
-                messages.success(request, "Failed to Update CEO.")
-                return redirect('/edit_ceo/'+ceo_id)
-        else:
+            messages.success(request, "CEO Updated Successfully!")
             return redirect('/edit_ceo/'+ceo_id)
+        except:
+            messages.success(request, "Failed to Update CEO.")
+            return redirect('/edit_ceo/'+ceo_id)
+
 
 
 @login_required(login_url='user_login')
