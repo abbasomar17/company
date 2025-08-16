@@ -1176,9 +1176,9 @@ def delete_student(request, tenant_id):
 
 @login_required(login_url='user_login')
 def add_vehicle(request):
-    form = AddVehicleForm()
+    drivers = Drivers.objects.all()
     context = {
-        "form": form
+        "drivers": drivers,
     }
     return render(request, 'hod_template/add_vehicle_template.html', context)
 
@@ -1296,9 +1296,11 @@ def delete_vehicle(request, vehicle_id):
 
 @login_required(login_url='user_login')
 def add_apartment(request):
-    form = AlbumForm()
+    session_years = SessionYearModel.objects.all()
+    owners = Apartment_owners.objects.all()
     context = {
-        "form": form
+        "sessions": session_years,
+        "owners": owners
     }
     return render(request, 'hod_template/add_apartment_template.html', context)
 
@@ -1306,66 +1308,60 @@ def add_apartment(request):
 @login_required(login_url='user_login')
 def add_apartment_save(request):
     if request.method == "POST":
-        form = AlbumForm(request.POST, request.FILES)
-        if form.is_valid():
-            title = form.cleaned_data['title']
-            spec_location = form.cleaned_data['spec_location']
-            region = form.cleaned_data['region']
-            town = form.cleaned_data['town']
-            price = form.cleaned_data['price']
-            discount_price = form.cleaned_data['discount_price']
-            quantity = form.cleaned_data['quantity']
-            booking_id = form.cleaned_data['booking_id']
-            description = form.cleaned_data['description']
-            category = form.cleaned_data['category']
-            session_year_id = form.cleaned_data['session_year_id']
-            owner_id = form.cleaned_data['owner_id']
-            labels = form.cleaned_data['labels']
+        title = request.POST.get('title')
+        spec_location = request.POST.get('spec_location')
+        region = request.POST.get('region')
+        town = request.POST.get('town')
+        price = request.POST.get('price')
+        discount_price = request.POST.get('discount_price')
+        quantity = request.POST.get('quantity')
+        booking_id = request.POST.get('booking_id')
+        description = request.POST.get('description')
+        category = request.POST.get('category')
+        session_year_id = request.POST.get('session_year_id')
+        owner_id = request.POST.get('owner_id')
+        labels = request.POST.get('labels')
 
-            if len(request.FILES) != 0:
-                thumb = request.FILES['thumb']
-                fs = FileSystemStorage()
-                filename = fs.save(thumb.name, thumb)
-                thumb_url = fs.url(filename)
-            else:
-                thumb_url = None
+        if len(request.FILES) != 0:
+            thumb = request.FILES['thumb']
+            fs = FileSystemStorage()
+            filename = fs.save(thumb.name, thumb)
+            thumb_url = fs.url(filename)
+        else:
+            thumb_url = None
 
-            session_year_obj = SessionYearModel.objects.get(id=session_year_id)
-            owner_obj = Apartment_owners.objects.get(id=owner_id)
+        session_year_obj = SessionYearModel.objects.get(id=session_year_id)
+        owner_obj = Apartment_owners.objects.get(id=owner_id)
 
-            slug = get_random_string(length=8)
+        slug = get_random_string(length=8)
 
-            album = Album(title=title, spec_location=spec_location, region=region, town=town, price=price,
-                          discount_price=discount_price, quantity=quantity, category=category, labels=labels, booking_id=booking_id,
-                          description=description, session_year_id=session_year_obj, thumb=thumb_url, owner_id=owner_obj, slug = slug, modified = datetime.now(), is_visible=True)
-            album.save()
-            if form.cleaned_data['zip'] != None:
-                zip = zipfile.ZipFile(form.cleaned_data['zip'])
-                for filename in sorted(zip.namelist()):
+        album = Album(title=title, spec_location=spec_location, region=region, town=town, price=price,
+                      discount_price=discount_price, quantity=quantity, category=category, labels=labels, booking_id=booking_id,
+                      description=description, session_year_id=session_year_obj, thumb=thumb_url, owner_id=owner_obj, slug = slug, modified = datetime.now(), is_visible=True)
+        album.save()
+        if form.cleaned_data['zip'] != None:
+            zip = zipfile.ZipFile(form.cleaned_data['zip'])
+            for filename in sorted(zip.namelist()):
 
-                    file_name = os.path.basename(filename)
-                    if not file_name:
-                        continue
+                file_name = os.path.basename(filename)
+                if not file_name:
+                    continue
 
-                    data = zip.read(filename)
-                    contentfile = ContentFile(data)
+                data = zip.read(filename)
+                contentfile = ContentFile(data)
 
-                    img = AlbumImage()
-                    img.album = album
-                    img.alt = filename
-                    filename = '{0}{1}.jpg'.format(album.slug, str(uuid.uuid4())[-13:])
-                    img.image.save(filename, contentfile)
+                img = AlbumImage()
+                img.album = album
+                img.alt = filename
+                filename = '{0}{1}.jpg'.format(album.slug, str(uuid.uuid4())[-13:])
+                img.image.save(filename, contentfile)
 
-                    img.thumb.save('thumb-{0}'.format(filename), contentfile)
-                    img.save()
-                zip.close()
-            messages.success(request, "Apartment Added Successfully!")
-            return redirect('add_apartment')
+                img.thumb.save('thumb-{0}'.format(filename), contentfile)
+                img.save()
+            zip.close()
+        messages.success(request, "Apartment Added Successfully!")
+        return redirect('add_apartment')
     else:
-        form = AlbumForm()
-        context = {
-            'form': form
-        }
         return render(request, 'hod_template/add_apartment_template.html', context)
 
 
@@ -1384,26 +1380,14 @@ def edit_apartment(request, apartment_id):
     request.session['apartment_id'] = apartment_id
 
     apartment = Album.objects.get(id=apartment_id)
-    form = EditApartmentForm()
-    # Filling the form with Data from Database
-    form.fields['title'].initial = apartment.title
-    form.fields['spec_location'].initial = apartment.spec_location
-    form.fields['region'].initial = apartment.region
-    form.fields['town'].initial = apartment.town
-    form.fields['price'].initial = apartment.price
-    form.fields['quantity'].initial = apartment.quantity
-    form.fields['discount_price'].initial = apartment.discount_price
-    form.fields['booking_id'].initial = apartment.booking_id
-    form.fields['description'].initial = apartment.description
-    form.fields['category'].initial = apartment.category
-    form.fields['labels'].initial = apartment.labels
-    form.fields['session_year_id'].initial = apartment.session_year_id.id
-    form.fields['owner_id'].initial = apartment.owner_id.id
+    session_years = SessionYearModel.objects.all()
+    owners = Apartment_owners.objects.all()
 
     context = {
         "id": apartment_id,
         "username": apartment.owner_id.admin.user.username,
-        "form": form
+        "owners": owners,
+        "sessions": session_years
     }
     return render(request, "hod_template/edit_apartment_template.html", context)
 
@@ -1417,64 +1401,59 @@ def edit_apartment_save(request):
         if apartment_id == None:
             return redirect('/manage_apartment')
 
-        form = EditApartmentForm(request.POST, request.FILES)
-        if form.is_valid():
-            title = form.cleaned_data['title']
-            spec_location = form.cleaned_data['spec_location']
-            region = form.cleaned_data['region']
-            town = form.cleaned_data['town']
-            price = form.cleaned_data['price']
-            discount_price = form.cleaned_data['discount_price']
-            quantity = form.cleaned_data['quantity']
-            booking_id = form.cleaned_data['booking_id']
-            description = form.cleaned_data['description']
-            category = form.cleaned_data['category']
-            labels = form.cleaned_data['labels']
-            session_year_id = form.cleaned_data['session_year_id']
-            owner_id = form.cleaned_data['owner_id']
+        title = request.POST.get('title')
+        spec_location = request.POST.get('spec_location')
+        region = request.POST.get('region')
+        town = request.POST.get('town')
+        price = request.POST.get('price')
+        discount_price = request.POST.get('discount_price')
+        quantity = request.POST.get('quantity')
+        booking_id = request.POST.get('booking_id')
+        description = request.POST.get('description')
+        category = request.POST.get('category')
+        session_year_id = request.POST.get('session_year_id')
+        owner_id = request.POST.get('owner_id')
+        labels = request.POST.get('labels')
 
-            session_year_obj = SessionYearModel.objects.get(id=session_year_id)
-            owner_obj = Apartment_owners.objects.get(id=owner_id)
+        session_year_obj = SessionYearModel.objects.get(id=session_year_id)
+        owner_obj = Apartment_owners.objects.get(id=owner_id)
 
-
-            if len(request.FILES) != 0:
-                thumb = request.FILES['thumb']
-                fs = FileSystemStorage()
-                filename = fs.save(thumb.name, thumb)
-                thumb_url = fs.url(filename)
-            else:
-                thumb_url = None
-
-            try:
-                # First Update into Custom User Model
-
-                # Then Update Students Table
-                apartment_model = Album.objects.get(id=apartment_id)
-                apartment_model.title = title
-                apartment_model.spec_location = spec_location
-                apartment_model.region = region
-                apartment_model.town = town
-                apartment_model.price = price
-                apartment_model.discount_price = discount_price
-                apartment_model.quantity = quantity
-                apartment_model.booking_id = booking_id
-                apartment_model.description = description
-                apartment_model.session_year_id = session_year_obj
-                apartment_model.owner_id = owner_obj
-                apartment_model.category = category
-                apartment_model.labels = labels
-                if thumb_url != None:
-                    apartment_model.thumb = thumb_url
-                apartment_model.save()
-                # Delete student_id SESSION after the data is updated
-                del request.session['apartment_id']
-
-                messages.success(request, "Apartment Updated Successfully!")
-                return redirect('/edit_apartment/' + apartment_id)
-            except:
-                messages.success(request, "Failed to Update User.")
-                return redirect('/edit_apartment/' + apartment_id)
+        if len(request.FILES) != 0:
+            thumb = request.FILES['thumb']
+            fs = FileSystemStorage()
+            filename = fs.save(thumb.name, thumb)
+            thumb_url = fs.url(filename)
         else:
+            thumb_url = None
+
+        try:
+            # First Update into Custom User Model
+
+            # Then Update Students Table
+            apartment_model = Album.objects.get(id=apartment_id)
+            apartment_model.title = title
+            apartment_model.spec_location = spec_location
+            apartment_model.region = region
+            apartment_model.town = town
+            apartment_model.price = price
+            apartment_model.discount_price = discount_price
+            apartment_model.quantity = quantity
+            apartment_model.booking_id = booking_id
+            apartment_model.description = description
+            apartment_model.session_year_id = session_year_obj
+            apartment_model.owner_id = owner_obj
+            apartment_model.category = category
+            apartment_model.labels = labels
+            if thumb_url != None:
+                apartment_model.thumb = thumb_url
+            apartment_model.save()
+            # Delete student_id SESSION after the data is updated
+            del request.session['apartment_id']
+
+            messages.success(request, "Apartment Updated Successfully!")
+            return redirect('/edit_apartment/' + apartment_id)
+        except:
+            messages.success(request, "Failed to Update User.")
             return redirect('/edit_apartment/' + apartment_id)
 
 

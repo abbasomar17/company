@@ -322,6 +322,7 @@ class AlbumForm(forms.Form):
                                       widget=forms.FileInput(attrs={"class": "form-control"}))
     zip = forms.FileField(required=False)
 
+
 class EditApartmentForm(forms.Form):
     title = forms.CharField(label="Title", max_length=50,
                             widget=forms.TextInput(attrs={"class": "form-control"}))

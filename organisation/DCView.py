@@ -12,6 +12,8 @@ from django.db.models import Q
 import json
 from django.contrib.auth.models import User
 import os
+import cv2
+import numpy as np
 import uuid
 import zipfile
 from datetime import datetime
@@ -19,6 +21,9 @@ from zipfile import ZipFile
 import string
 from django.utils.crypto import get_random_string
 from company.settings import BASE_DIR
+
+detector = cv2.CascadeClassifier(os.path.join(BASE_DIR, 'organisation/haarcascade_frontalface_default.xml'))
+recognizer = cv2.face.LBPHFaceRecognizer_create()
 
 from django.core.files.base import ContentFile
 
@@ -1122,7 +1127,75 @@ def user_add_save(request):
 
 
 def user_add(request):
-    return render(request, "dc_template/verify_user.html")
+    recognizer.read(BASE_DIR + '\\organisation\\trainer\\trainer.yml')
+    cascadePath = BASE_DIR + '\\organisation\\haarcascade_frontalface_default.xml'
+    faceCascade = cv2.CascadeClassifier(cascadePath)
+
+    font = cv2.FONT_HERSHEY_SIMPLEX
+    face_id = 0
+    # names related to ids: example ==> Marcelo: id=1,  etc
+    names = ['None', 'Abbas', 'Mwatum', 'Mama', 'Z', 'W']
+
+    confidence = 0
+
+    # Retriving names from database
+    # data = conn.execute('''select * from facedata''')
+    # for x in data:
+    #     names.append(x[1])
+
+    # Initialize and start realtime video capture
+    cam = cv2.VideoCapture(0)
+    cam.set(3, 640)  # set video width
+    cam.set(4, 480)  # set video height
+
+    # Define min window size to be recognized as a face
+    minW = 0.1 * cam.get(3)
+    minH = 0.1 * cam.get(4)
+
+    while True:
+
+        ret, img = cam.read()
+        img = cv2.flip(img, 1)  # Flip vertically
+
+        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+        faces = faceCascade.detectMultiScale(
+            gray,
+            scaleFactor=1.2,
+            minNeighbors=5,
+            minSize=(int(minW), int(minH)),
+        )
+
+        for (x, y, w, h) in faces:
+
+            cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)
+
+            face_id, confidence = recognizer.predict(gray[y:y + h, x:x + w])
+            # Check if confidence is less then 100 ==> "0" is perfect match
+            if (confidence < 15):
+                face_id = names[face_id]
+                confidence = "  {0}%".format(round(100 - confidence))
+                cv2.putText(img, str(face_id), (x + 5, y - 5), font, 1, (255, 255, 255), 2)
+                cv2.putText(img, str(confidence), (x + 5, y + h - 5), font, 1, (255, 255, 0), 1)
+                return render(request, "dc_template/user_add_template.html")
+            else:
+                face_id = "Unknown"
+                confidence = "  {0}%".format(round(100 - confidence))
+                cv2.putText(img, str(face_id), (x + 5, y - 5), font, 1, (255, 255, 255), 2)
+                cv2.putText(img, str(confidence), (x + 5, y + h - 5), font, 1, (255, 255, 0), 1)
+                return redirect('user_login')
+
+        cv2.imshow('Detect Face', img)
+
+        k = cv2.waitKey(10) & 0xff  # Press 'ESC' for exiting video
+        if k == 27:
+            break
+        if confidence > 50:
+            break
+
+    print("\n Exiting Program")
+    cam.release()
+    cv2.destroyAllWindows()
 
 
 def verify_user(request):

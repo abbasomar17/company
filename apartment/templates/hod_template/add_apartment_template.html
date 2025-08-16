@@ -20,8 +20,141 @@
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    {% url 'add_apartment_save' as action_path %}
-                    {% include 'hod_template/form_template.html' with messages=messages form=form action_path=action_path button_text="Add Apartment" %}
+					<form role="form" method="POST" action="{% url 'add_apartment_save' %}">
+                        {% csrf_token %}
+
+                        
+                                {% comment %} Display Messages {% endcomment %}
+                                {% if messages %}
+                                <div class="form-group">
+                                <div class="col-12">
+                                    {% for message in messages %}
+                                    {% if message.tags == "error" %}
+                                        <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-top: 10px;">
+                                        {{ message }}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        </div>
+                                    {% elif message.tags == "success" %}
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-top: 10px;">
+                                        {{ message }}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        </div>
+                                    {% endif %}
+                                    {% endfor %}
+                                </div>
+                                </div>
+                                {% endif %}
+                            
+
+                        <div class="card-body">
+							<div class="form-group">
+                                <label>Owner </label>
+                                <select class="form-control" name="owner_id">
+                                    {% for owner in owners %}
+                                        <option value="{{ owner.id }}">{{owner.admin.user.first_name}} {{owner.admin.user.last_name}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+							
+							<div class="form-group">
+                                <label>Session </label>
+                                <select class="form-control" name="session_year_id">
+                                    {% for session in sessions %}
+                                        <option value="{{ session.id }}">{{session.session_start_year}} to {{session.session_end_year}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+							
+							<div class="form-group">
+                                <label>Category </label>
+                                <select class="form-control" name="category">
+                                    <option value="Normal Room">Normal Room</option>
+									<option value="Self Room">Self Room</option>
+									<option value="Room with living Room">Room with living Room</option>
+									<option value="Full House">Full House</option>
+									<option value="Guest House">Guest House</option>
+									<option value="Lodge">Lodge</option>
+									<option value="Hotel">Hotel</option>
+                                </select>
+                            </div>
+							
+							<div class="form-group">
+                                <label>Label </label>
+                                <select class="form-control" name="labels">
+                                    <option value="For Sale">For Sale</option>
+									<option value="For Rent">For Rent</option>
+									<option value="Not available now">Not available now</option>
+                                </select>
+                            </div>
+							
+							<div class="form-group">
+                                <label>Apartment Name </label>
+                                <input type="text" class="form-control" name="title" placeholder="Apartment Name">
+                            </div>
+							
+							<div class="form-group">
+                                <label>Region </label>
+                                <input type="text" class="form-control" name="region" placeholder="Region">
+                            </div>
+							
+							<div class="form-group">
+                                <label>Town </label>
+                                <input type="text" class="form-control" name="town" placeholder="Town">
+                            </div>
+							
+							<div class="form-group">
+                                <label>Specific Location </label>
+                                <input type="text" class="form-control" name="spec_location" placeholder="Specific Location">
+                            </div>
+							
+							<div class="form-group">
+                                <label>Quantity </label>
+                                <input type="number" class="form-control" name="quantity" placeholder="Quantity">
+                            </div>
+							
+							<div class="form-group">
+                                <label>Price </label>
+                                <input type="number" class="form-control" name="price" placeholder="Price">
+                            </div>
+							
+							<div class="form-group">
+                                <label>Discount Price </label>
+                                <input type="number" class="form-control" name="discount_price" placeholder="Discount Price">
+                            </div>
+							
+							<div class="form-group">
+                                <label>Booking Id </label>
+                                <input type="text" class="form-control" name="booking_id" placeholder="Booking Id">
+                            </div>
+							
+							<div class="form-group">
+                                <label>Best View </label>
+                                <input type="file" class="form-control" name="thumb" placeholder="Best View">
+                            </div>
+							
+							<div class="form-group">
+                                <label>Pictures </label>
+                                <input type="file" class="form-control" name="profile_pic" placeholder="Select zip file">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Description: </label>
+                                <textarea name="description" class="form-control" rows="6" placeholder="Description"></textarea>
+                            </div>
+							
+							
+							
+							</div>
+                        <!-- /.card-body -->
+
+                        <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">Add Apartment</button>
+                        </div>
+                    </form>
 
                     </div>
                     <!-- /.card -->
