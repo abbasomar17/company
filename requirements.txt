@@ -14,7 +14,7 @@ gunicorn==23.0.0
 packaging==24.1
 pilkit==3.0
 pillow==10.3.0
-nupmy==1.23.5
+nupmy==1.23.0
 opencv-contrib-python==4.8.0.76
 python-dotenv==1.0.1
 sqlparse==0.5.0
