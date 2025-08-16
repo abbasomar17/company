@@ -192,6 +192,7 @@ def ceo_home(request):
 
     total_expenditure = total_salary + overdue_cost
 
+    all_a_p = ApartmentPayment.objects.filter(office=office)
     for a_p in all_a_p:
         amount = a_p.amount
         a_payment = a_payment + amount
