@@ -1381,7 +1381,7 @@ def manage_admin(request):
     obj = User.objects.get(id=request.user.id)
     hr_obj = Human_resource_managers.objects.get(admin__user=obj)
     office_obj = hr_obj.office
-    admins = AdminHOD.filter(office=office_obj)
+    admins = AdminHOD.objects.filter(office=office_obj)
     context = {
         "admins": admins
     }
