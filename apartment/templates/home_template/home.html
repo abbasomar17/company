@@ -38,6 +38,74 @@
 	  clear: both;
 	  display: flex;
 		}
+		
+	.container {
+		width: 50%;
+		min-width: 500px;
+		max-width:800px;
+		height: 50%;
+		min-height: 140px;
+		max-height: 400px;
+		text-align: center;
+	}
+	
+	form{
+		height: 100%;
+		min-height: 15px;
+		max-height: 30px;
+		background: transparent;
+		border-radius: 25px;
+		position: relative;
+	}
+	
+	input{
+		width: 100%;
+		height: 100%;
+		display: block;
+		border-radius: 25px;
+		font-size: 20px;
+		padding: 8px 40px 8px 20px;
+		border: none;
+	}
+	
+	input:focus{
+		outline:none;
+	}
+	
+	select{
+		width: 91.3%;
+		height: 100%;
+		display: block;
+		border-radius: 25px;
+		font-size: 20px;
+		padding: 8px 40px 8px 20px;
+		border: none;
+	}
+	
+	select:focus{
+		outline:none;
+	}
+	
+	button{
+		position: absolute;
+		top: 0;
+		right: 4.4%;
+		width: 8%;
+		height: 65%;
+		border-radius: 50%;
+		cursor: pointer;
+		border: none;
+		background: none;
+		font-size: 20px;
+	}
+	
+	button i{
+		color: rgb(93, 94, 95);
+	}
+	
+	button:hover i{
+		color: rgb(162, 163, 163);
+	}
 
   </style>
 
@@ -51,48 +119,37 @@
 	
 	{% if albums %}
 	<div class="dashboard">
-	 <div class="search__navbar">
-          <div class="search__container">
-	    <div class="row">
-            <form class="search__input" id="search-all">
-	     
-            {% csrf_token %}
-            <input type="text" name="search_query" placeholder="Search..." id="sort-selector">
-            <button type="submit" id="search-btn" aria-label="Search" class="btn btn__search">
-              <i class="fas fa-search"></i>
-            </button>
-	   
-          </form>
-          {% comment %} create form to click on category {% endcomment %}
-          <form  class="search__select" id="search-category">
+	 <div class="container">
+	<form id="search-all">
+		{% csrf_token %}
+		<input type="text" name="search_query" placeholder="Search..." id="sort-selector">
+		<button type="submit" id="search-btn" aria-label="Search"><i class="fa fa-search" aria-hidden="true"></i></button>
+	</form>
+	<form id="search-category">
 	   
             {% csrf_token %}
             {% comment %} <div class="form-group"> {% endcomment %}
               <label for="category"></label>
               <select id="category" name="search_query">
-                <option value="">Apartment Category</option>
+                <option value="">Apartment Categories</option>
                 <option value="Normal Room">Normal Room</option>
                 <option value="Self Room">Self Room</option>
                 <option value="Room with living Room">Room with living Room</option>
                 <option value="Full House">Full House</option>
                 <option value="Guest House">Guest House</option>
-		<option value="Lodge">Lodge</option>
-		<option value="Hotel">Hotel</option>
+				<option value="Lodge">Lodge</option>
+				<option value="Hotel">Hotel</option>
               </select>
             {% comment %} </div> {% endcomment %}
-            <button type="submit" id="category-btn" aria-label="Search" class="btn btn__search">
-              <i class="fas fa-search"></i>
+            <button type="submit" id="category-btn" aria-label="Search">
+              <i class="fas fa-search" aria-hidden="true"></i>
             </button>
 	   
           </form>
 	</div>
-        </div>
-      </div>
-     </div>
+    </div>
 	<div class="container">
 		<div class="row">
-			
-
 			<div class="col">
 				<div class="card dpg-album-card">
 				  <div class="column">
@@ -121,7 +178,7 @@
 		</div>
 	</div>
 	{% else %}
-	<h2> Nothing Available </h2>
+	<center><h2> Nothing Available </h2></center>
 	<div class="slider">
 		<ul class="slides">
 			<li>
